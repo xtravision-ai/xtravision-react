@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "target": "es6",
+    "module": "esnext",
+    "lib": ["es5", "es6", "esnext", "dom", "dom.Iterable"],
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "dist/esm",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
+    "types": ["node"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "declaration": true,
+    "typeRoots": ["./types"],
+    "baseUrl": "src/",
+    "paths": {
+      "common": ["src/common/*"],
+      "components": ["src/components/*"]
+    }
+  },
+  "types": ["node"],
+  "include": [
+    "src",
+    "types",
+    "node_modules/**/*.d.ts",
+    "node_modules/@types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

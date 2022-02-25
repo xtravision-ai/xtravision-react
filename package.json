@@ -1,0 +1,79 @@
+{
+  "name": "@xtravision/xtravision-react",
+  "version": "1.0.0",
+  "description": "A React hook for getting realtime feedback from XtraVision AI",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "author": "PMR, Inc.",
+  "keywords": [
+    "xtra",
+    "xtraininglive.com",
+    "xtravision"
+  ],
+  "tags": [
+    "react",
+    "xtra",
+    "ai",
+    "pose"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xtravision-ai/xtravision-react.git"
+  },
+  "homepage": "https://github.com/xtravision-ai/xtravision-react",
+  "bugs": "https://github.com/xtravision-ai/xtravision-react/issues",
+  "directories": {
+    "demo": "demo"
+  },
+  "files": [
+    "build"
+  ],
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/pose": "^0.5.1635988162",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.6",
+    "@mui/styled-engine-sc": "^5.1.0",
+    "@mui/styles": "^5.2.3",
+    "lodash": "^4.17.20",
+    "react-use-websocket": "^2.9.1",
+    "web-vitals": "^2.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^16.7.13",
+    "@types/react": "^16.14.14",
+    "@types/react-dom": "^16.9.14",
+    "babel-loader": "^8.2.2",
+    "babel-preset-react-app": "^10.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-scripts": "5.0.0",
+    "rollup": "^2.56.3",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^3.1.8",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "typescript": "^4.4.2"
+  },
+  "scripts": {
+    "lint": "eslint src/",
+    "test": "react-scripts test",
+    "build:lib": "rollup -c && yarn pack",
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs"
+  }
+}
