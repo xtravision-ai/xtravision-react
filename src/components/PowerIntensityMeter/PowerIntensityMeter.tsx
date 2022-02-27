@@ -26,7 +26,7 @@ const ActivityRange = Object.freeze({
   },
 });
 
-const usePowerIntensityMeterStyles = makeStyles((theme) => ({
+const usePowerIntensityMeterStyles = makeStyles(() => ({
   powerIntensityBox: {
     width: '500px',
     height: '15px',

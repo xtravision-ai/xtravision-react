@@ -1,30 +1,34 @@
-import { Pose } from '@mediapipe/pose';
+import { Pose, Results } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
 
 // To store reference to pose estimation model object
-let poseObj: any;
-export const initPose = async () => {
-  // console.log('-----> USER POSE ESTIMATION MODEL INITIALIZED <-----');
+let poseObj: Pose;
+const initPose = async () => {
+  console.log('-----> USER POSE ESTIMATION MODEL INITIALIZED <-----');
+
   if (!poseObj) {
-    poseObj = await new Pose({
+    poseObj = new Pose({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
       },
     });
 
     poseObj.setOptions({
-      modelComplexity: navigator?.deviceMemory <= 4 ? 1 : 2,
+      modelComplexity:
+        navigator?.deviceMemory <= 2 ? 0 : navigator?.deviceMemory <= 4 ? 1 : 2,
       smoothLandmarks: true,
       enableSegmentation: false,
       smoothSegmentation: true,
       minDetectionConfidence: 0.2,
       minTrackingConfidence: 0.2,
     });
+
+    await poseObj.initialize();
   }
 };
 
 // Initialise the pose object
-initPose();
+// initPose();
 
 let videoElement: any;
 
@@ -32,11 +36,13 @@ let videoElement: any;
 let start_camera = true;
 let camera: any;
 
-const checkUserPose = (
+export const startUserExerciseAnalysis = async (
   _videoElement: HTMLVideoElement,
-  onResultsCallback?: Function
+  onResultsCallback: (results: Results) => Promise<void> | void
 ) => {
-  console.log('PoseController >> checkUserPose');
+  console.log('Initializing pose object');
+  await initPose();
+
   videoElement = _videoElement;
 
   poseObj.onResults(onResultsCallback);
@@ -63,15 +69,9 @@ const checkUserPose = (
     camera.start();
     start_camera = false;
   }
-
-  return {
-    stop() {
-      if (camera) camera.stop();
-    },
-  };
 };
 
-export const stopUserPoseEstimation = () => {
+export const stopUserExerciseAnalysis = () => {
   if (videoElement) {
     start_camera = true;
     videoElement = null;
@@ -79,8 +79,7 @@ export const stopUserPoseEstimation = () => {
 
   // stop the camera if on
   if (camera) camera.stop();
-
   camera = null;
-};
 
-export default checkUserPose;
+  if (poseObj) poseObj.close();
+};

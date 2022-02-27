@@ -21,7 +21,7 @@ const YogaPoseEfficiency = Object.freeze({
   },
 });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   circularMeterSvg: {
     borderRadius: '90px',
     backgroundColor: 'black',
@@ -97,7 +97,7 @@ const YogaPoseQuality = ({ yogaScore }: YogaPoseQualityProps) => {
 
   const FULL_DASH_ARRAY = 283;
 
-  const getDashArray = (val) => {
+  const getDashArray = (val: number) => {
     const rawTimeFraction = (val === 0 ? 1 : val) / 100;
     const timeFraction = rawTimeFraction - (1 / 100) * (1 - rawTimeFraction);
     const circleDasharray = `${(timeFraction * FULL_DASH_ARRAY).toFixed(

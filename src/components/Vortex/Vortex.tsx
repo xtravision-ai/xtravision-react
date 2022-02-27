@@ -4,7 +4,7 @@ import { chartTheme, xtraZoneColor } from '../../styles/theme';
 import { IVortex } from './Vortex.types';
 import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   circularMeter: {
     position: 'relative',
     width: '100px',
@@ -71,6 +71,12 @@ interface IVortexProps {
   vortex: IVortex;
 }
 
+interface IActivityZoneInfo {
+  name: string;
+  value: number;
+  color: string;
+}
+
 const Vortex = ({ vortex }: IVortexProps) => {
   const classes = useStyles();
   if (!vortex?.firstCircle?.name) return <></>;
@@ -78,7 +84,7 @@ const Vortex = ({ vortex }: IVortexProps) => {
   const { firstCircle, secondCircle, thirdCircle, fourthCircle, circleUnit } =
     vortex;
 
-  const ActivityZoneInfo = ({ name, value, color }) => (
+  const ActivityZoneInfo = ({ name, value, color }: IActivityZoneInfo) => (
     <div>
       <div className={classes.activityZoneCaption} style={{ color }}>
         {name}
@@ -92,7 +98,7 @@ const Vortex = ({ vortex }: IVortexProps) => {
     </div>
   );
 
-  const getDashArray = (dashFraction, dashConstant) => {
+  const getDashArray = (dashFraction: number, dashConstant: number) => {
     const circleDasharray = `${(dashFraction * dashConstant).toFixed(0)} 283`;
     return circleDasharray;
   };

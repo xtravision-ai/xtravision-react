@@ -3,7 +3,7 @@ import { Button, CircularProgress } from '@mui/material';
 import { XTRAButtonProps, XTRAButtonType } from './XButton.types';
 import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonsContainer: {
     margin: ({ nomargin = false }: any) => (nomargin ? 0 : '5px'),
     position: 'relative',

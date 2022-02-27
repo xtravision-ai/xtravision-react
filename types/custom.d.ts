@@ -2,8 +2,9 @@ declare var React: any;
 
 declare global {
   interface Window {
-    Pose?: any; //mediapipe pose
-    Camera?: any; //mediapipe camera
+    // Pose?: any; //mediapipe pose
+    // Camera?: any; //mediapipe camera
+    user?: any;
   }
 }
 

@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useRef } from 'react';
-import checkUserPose, { stopUserPoseEstimation } from '../utils/PoseController';
+import {
+  startUserExerciseAnalysis,
+  stopUserExerciseAnalysis,
+} from '../utils/ExerciseAnalysis';
 
 export default function usePoseClassification(
   videoEleRef: any,
@@ -15,15 +18,13 @@ export default function usePoseClassification(
   }, []);
 
   useEffect(() => {
-    if (isCamOn && videoEleRef?.current?.stream) {
-      const { stop } = checkUserPose(videoEleRef?.current, resultsCallback);
+    if (isCamOn && videoEleRef?.current?.stream)
+      startUserExerciseAnalysis(videoEleRef?.current, resultsCallback);
+    else stopUserExerciseAnalysis();
 
-      return () => {
-        stop();
-      };
-    } else {
-      stopUserPoseEstimation();
-    }
+    return () => {
+      stopUserExerciseAnalysis();
+    };
   }, [isCamOn, videoEleRef, resultsCallback]);
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { CalBurnedProps } from './CalBurned.types';
 import { makeStyles } from '@mui/styles';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   coloriesBurnt: {
     color: 'white',
     fontSize: '35px',
