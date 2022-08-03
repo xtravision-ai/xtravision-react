@@ -47,6 +47,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
       setIsCamOn(false);
     }
   };
+  // asdsad
 
   const stopCamera = () => {
     var stream = videoElementRef.current.srcObject;
