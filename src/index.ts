@@ -1,5 +1,5 @@
 // init mediapipe pose
-import './utils/PoseController';
+import './utils/ExerciseAnalysis';
 
 // exports
 

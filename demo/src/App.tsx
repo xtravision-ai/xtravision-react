@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 import {
   CalBurned,
   ClassCategory,
@@ -7,7 +7,7 @@ import {
   XButton,
   XtraVisionUserProvider,
   useXtraVisionUserContext,
-} from 'xtravision-react';
+} from "xtravision-react";
 
 type AppContainerProps = {
   videoElementRef: any;
@@ -23,7 +23,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       for (let i = 0; i !== deviceInfos.length; ++i) {
         const deviceInfo = deviceInfos[i];
-        if (deviceInfo.kind === 'videoinput') {
+        if (deviceInfo.kind === "videoinput") {
           defaultCamId = deviceInfo.deviceId;
           break;
         }
@@ -47,7 +47,6 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
       setIsCamOn(false);
     }
   };
-  // asdsad
 
   const stopCamera = () => {
     var stream = videoElementRef.current.srcObject;
@@ -62,8 +61,8 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#D3D3D3', padding: '30px' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
         <XButton
           text="START"
           onClick={() => {
@@ -98,7 +97,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 function App() {
   const category = ClassCategory.HIIT;
   const features = [Features.INTENSITY, Features.CALORIES_BURNED];
-  const clientScheduleId = 'SOME-SCHEDULE-ID';
+  const clientScheduleId = "SOME-SCHEDULE-ID";
   const videoElementRef = useRef<any>(null);
   const classStartTime = new Date();
 
@@ -112,7 +111,7 @@ function App() {
       videoElementRef={videoElementRef}
       classStartTime={classStartTime}
     >
-      <video ref={videoElementRef} style={{ border: '1px solid red' }} />
+      <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
     </XtraVisionUserProvider>
   );
