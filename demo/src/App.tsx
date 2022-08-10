@@ -5,7 +5,7 @@ import {
   Features,
   PowerIntensityMeter,
   XButton,
-  XtraVisionUserProvider,
+  XtraVisionOnDemandProvider,
   useXtraVisionUserContext,
 } from "xtravision-react";
 
@@ -95,25 +95,34 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 };
 
 function App() {
-  const category = ClassCategory.HIIT;
-  const features = [Features.INTENSITY, Features.CALORIES_BURNED];
-  const clientScheduleId = "SOME-SCHEDULE-ID";
+  const category = ClassCategory.YOGA; // change as per our need
+  const features = [
+    Features.YOGA_QUALITY,
+    Features.YOGA_SCORE,
+    Features.VORTEX,
+  ];
+  // const clientScheduleId = "SOME-SCHEDULE-ID";
+  const sessionId = '';
   const videoElementRef = useRef<any>(null);
   const classStartTime = new Date();
 
+  const authToken = `
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE`;
+
   return (
-    <XtraVisionUserProvider
+    <XtraVisionOnDemandProvider
       classCategory={category}
       features={features}
       isOnDemand
-      authToken="AUTH_TOKEN"
-      clientScheduleId={clientScheduleId}
+      // authToken="AUTH_TOKEN"
+      authToken={authToken}
+      sessionId={sessionId}
       videoElementRef={videoElementRef}
       classStartTime={classStartTime}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
-    </XtraVisionUserProvider>
+    </XtraVisionOnDemandProvider>
   );
 }
 
