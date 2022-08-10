@@ -74,11 +74,7 @@ const XtraVisionUserProvider = ({
 
   // pose -> send keypoints 1s
   usePoseClassification(videoElementRef, isCamOn, sendJsonMessage);
-  useOnDemandSocket(
-    classCategory,
-    ["YOGA_QUALITY", "YOGA_SCORE", "VORTEX"],
-  );
-
+  
   // receive data from server
   const {
     intensity,

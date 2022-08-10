@@ -7,6 +7,11 @@ import { WS_URL } from "./constants";
 
 export interface IXtraVisionOnDemandContext {
   lastJsonMessage: JSON;
+  onDemandResultsCallback: any;
+  onDemandLastJsonMessage: any;
+  onDemandUserEducation: any;
+  isCamOn: boolean;
+  setIsCamOn: (isCamOn: boolean) => void;
 }
 
 export const XtraVisionOnDemandContext =
@@ -21,6 +26,7 @@ interface XtraAppProviderProps {
   isOnDemand: boolean;
   videoElementRef: any;
   classStartTime: Date;
+  isEduScreen: boolean;
 }
 
 const XtraVisionUserProvider = ({
@@ -32,6 +38,7 @@ const XtraVisionUserProvider = ({
   children,
   videoElementRef,
   classStartTime,
+  isEduScreen,
 }: XtraAppProviderProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
@@ -58,12 +65,28 @@ const XtraVisionUserProvider = ({
   // pose -> send keypoints 1s
   usePoseClassification(videoElementRef, isCamOn, sendJsonMessage);
 
-  useOnDemandSocket(classCategory, features);
+  const {
+    onDemandResultsCallback,
+    onDemandLastJsonMessage,
+    onDemandUserEducation,
+  } = useOnDemandSocket(
+    classCategory,
+    features,
+    sessionId,
+    authToken,
+    isEduScreen,
+    false
+  );
 
   return (
     <XtraVisionOnDemandContext.Provider
       value={{
         lastJsonMessage,
+        onDemandResultsCallback,
+        onDemandLastJsonMessage,
+        onDemandUserEducation,
+        isCamOn,
+        setIsCamOn,
       }}
     >
       {children}

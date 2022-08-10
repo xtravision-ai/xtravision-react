@@ -16,7 +16,7 @@ export enum Features {
 }
 
 export enum ClassCategory {
-  YOGA = "YOGA",
-  STRENGTH = "STRENGTH",
+  Yoga = "Yoga",
+  Strength = "Strength",
   HIIT = "HIIT",
 }

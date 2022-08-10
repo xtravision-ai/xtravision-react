@@ -6,15 +6,29 @@ import {
   PowerIntensityMeter,
   XButton,
   XtraVisionOnDemandProvider,
-  useXtraVisionUserContext,
+  useXtraVisionOnDemandContext,
 } from "xtravision-react";
 
 type AppContainerProps = {
   videoElementRef: any;
 };
 const AppContainer = ({ videoElementRef }: AppContainerProps) => {
-  const { intensity, calBurned, isCamOn, setIsCamOn } =
-    useXtraVisionUserContext();
+  const {
+    lastJsonMessage,
+    onDemandResultsCallback,
+    onDemandLastJsonMessage,
+    onDemandUserEducation,
+    isCamOn,
+    setIsCamOn,
+  } = useXtraVisionOnDemandContext();
+
+  console.log("lastJsonMessage: ", lastJsonMessage);
+  console.log("onDemandResultsCallback: ", onDemandResultsCallback);
+  console.log("onDemandLastJsonMessage: ", onDemandLastJsonMessage);
+  console.log("onDemandUserEducation: ", onDemandUserEducation);
+
+  const intensity = lastJsonMessage.intensity;
+  const calBurned = lastJsonMessage.calBurned;
 
   const startCamera = async () => {
     try {
@@ -102,9 +116,11 @@ function App() {
     Features.VORTEX,
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
-  const sessionId = '';
+
+  const sessionId = "b822b731-e8f5-4fd3-9e05-aa5db0736e70";
   const videoElementRef = useRef<any>(null);
   const classStartTime = new Date();
+  const isEduScreen = false;
 
   const authToken = `
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE`;
@@ -119,6 +135,7 @@ function App() {
       sessionId={sessionId}
       videoElementRef={videoElementRef}
       classStartTime={classStartTime}
+      isEduScreen={isEduScreen}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
