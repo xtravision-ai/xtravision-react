@@ -1,7 +1,3 @@
-// # 1. getOnDemandSessionId() => session_id
-// # 2. /wss/ondemand/{session_id}/{category}
-// # 3. getOnDemandStats(session_id) => statsData
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ClassCategory } from "../constants";
 import { WS_URL } from "../provider/constants";
@@ -25,10 +21,7 @@ export default function useOnDemandSocket(
   });
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    // `${WS_URL}/ondemand/${sessionId}/${category}?authToken=${authToken}&features=${features}`,
-    `${WS_URL}/ondemand/b822b731-e8f5-4fd3-9e05-aa5db0736e70/Yoga?authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE
-    &features=['YOGA_QUALITY','YOGA_SCORE', 'VORTEX']`,
-
+    `${WS_URL}/v1/ondemand/${sessionId}/${category}?authToken=${authToken}&features=${features}`,
     {
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
     }

@@ -41,6 +41,7 @@ const XtraVisionOnDemandProvider = ({
   isEduScreen,
 }: XtraAppProviderProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
+  console.log("isEduScreen:", isEduScreen);
 
   const featuresStr = encodeURIComponent(JSON.stringify(features));
 

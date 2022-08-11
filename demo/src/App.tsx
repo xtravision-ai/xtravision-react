@@ -108,21 +108,21 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 };
 
 function App() {
-  const category = ClassCategory.YOGA; // change as per our need
+  const category = ClassCategory.Yoga; // change as per our need
   const features = [
     Features.YOGA_QUALITY,
     Features.YOGA_SCORE,
-    Features.VORTEX
+    Features.VORTEX,
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
 
-  const sessionId = "b822b731-e8f5-4fd3-9e05-aa5db0736e70";
+  const sessionId = "ad7c3f16-b3b4-4f56-8f54-4169d62ba24e";
   const videoElementRef = useRef<any>(null);
   const classStartTime = new Date();
   const isEduScreen = false;
 
-  const authToken = `
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE`;
+  const authToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
 
   return (
     <XtraVisionOnDemandProvider

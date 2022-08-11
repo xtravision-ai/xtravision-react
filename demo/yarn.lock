@@ -1278,6 +1278,16 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@mediapipe/camera_utils@^0.3.1640029074":
+  version "0.3.1640029074"
+  resolved "https://registry.yarnpkg.com/@mediapipe/camera_utils/-/camera_utils-0.3.1640029074.tgz#f8b50a2c0bf6a5f4d8cff0524ed71887c4639280"
+  integrity sha512-jRV/Mp2lgqNYT68TeVRu/Xq+ptZO9F9vCjxzQsA3VM2r7oXg0TrnfO9De2KKOUTpt0p28dKHs625J8GdWjha8A==
+
+"@mediapipe/pose@^0.5.1635988162":
+  version "0.5.1635988162"
+  resolved "https://registry.yarnpkg.com/@mediapipe/pose/-/pose-0.5.1635988162.tgz#905e626cb07bce86c692d8ec057f04558ddd26fe"
+  integrity sha512-t0dpl+iG/MTPtPPxEYHyVWo+X7G+qgYUYaB4y9pxavQRNzuQQeHeSmUnT+A8qOKnuB0ccxgyrrFmGUaaL0F3wQ==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
