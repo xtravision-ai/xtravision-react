@@ -14,7 +14,7 @@ export default function useOnDemandSocket(
   sessionId: string,
   authToken: string,
   isEduScreen: boolean,
-  isTestRunning: boolean,
+  isTestRunning: boolean
 ) {
   const tempKeyPointsRef = useRef<any>({}); // hold KPs temporarily
   const tempKeySegMaskRef = useRef<any>({}); // hold Side Mask temporarily
@@ -25,7 +25,10 @@ export default function useOnDemandSocket(
   });
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/ondemand/b822b731-e8f5-4fd3-9e05-aa5db0736e70/${category}?authToken=${authToken}&features=${features}`,
+    // `${WS_URL}/ondemand/${sessionId}/${category}?authToken=${authToken}&features=${features}`,
+    `${WS_URL}/ondemand/b822b731-e8f5-4fd3-9e05-aa5db0736e70/Yoga?authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE
+    &features=['YOGA_QUALITY','YOGA_SCORE', 'VORTEX']`,
+
     {
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
     }

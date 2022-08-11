@@ -29,7 +29,7 @@ interface XtraAppProviderProps {
   isEduScreen: boolean;
 }
 
-const XtraVisionUserProvider = ({
+const XtraVisionOnDemandProvider = ({
   authToken, // Auth token
   sessionId,
   classCategory,
@@ -94,4 +94,4 @@ const XtraVisionUserProvider = ({
   );
 };
 
-export default XtraVisionUserProvider;
+export default XtraVisionOnDemandProvider;

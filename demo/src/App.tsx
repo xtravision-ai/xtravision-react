@@ -23,12 +23,11 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   } = useXtraVisionOnDemandContext();
 
   console.log("lastJsonMessage: ", lastJsonMessage);
-  console.log("onDemandResultsCallback: ", onDemandResultsCallback);
   console.log("onDemandLastJsonMessage: ", onDemandLastJsonMessage);
   console.log("onDemandUserEducation: ", onDemandUserEducation);
 
-  const intensity = lastJsonMessage.intensity;
-  const calBurned = lastJsonMessage.calBurned;
+  const intensity = lastJsonMessage?.intensity;
+  const calBurned = lastJsonMessage?.calBurned;
 
   const startCamera = async () => {
     try {
@@ -113,7 +112,7 @@ function App() {
   const features = [
     Features.YOGA_QUALITY,
     Features.YOGA_SCORE,
-    Features.VORTEX,
+    Features.VORTEX
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
 
