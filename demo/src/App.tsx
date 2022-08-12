@@ -20,7 +20,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   } = useXtraVisionOnDemandContext();
 
   console.log('lastJsonMessage: ', lastJsonMessage);
-  console.log('onDemandLastJsonMessage: ', onDemandLastJsonMessage);
+  // console.log('onDemandLastJsonMessage: ', onDemandLastJsonMessage);
   // console.log('onDemandUserEducation: ', onDemandUserEducation);
 
   const intensity = lastJsonMessage?.intensity;
@@ -111,10 +111,11 @@ function App() {
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
 
-  const sessionId = 'ad7c3f16-b3b4-4f56-8f54-4169d62ba24e';
+  const sessionId = 'c4fc8001-4727-4653-a6ac-d605937743f0';
   const videoElementRef = useRef<any>(null);
   const classStartTime = new Date();
   const isEduScreen = false;
+  const isTestRunning = false;
 
   const authToken =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE';
@@ -130,6 +131,7 @@ function App() {
       videoElementRef={videoElementRef}
       classStartTime={classStartTime}
       isEduScreen={isEduScreen}
+      isTestRunning={isTestRunning}
     >
       <video ref={videoElementRef} style={{ border: '1px solid red' }} />
       <AppContainer videoElementRef={videoElementRef} />

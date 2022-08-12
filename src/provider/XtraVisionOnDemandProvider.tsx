@@ -27,6 +27,7 @@ interface XtraAppProviderProps {
   videoElementRef: any;
   classStartTime: Date;
   isEduScreen: boolean;
+  isTestRunning: boolean;
 }
 
 const XtraVisionOnDemandProvider = ({
@@ -39,6 +40,7 @@ const XtraVisionOnDemandProvider = ({
   videoElementRef,
   classStartTime,
   isEduScreen,
+  isTestRunning,
 }: XtraAppProviderProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   console.log("isEduScreen:", isEduScreen);
@@ -76,7 +78,7 @@ const XtraVisionOnDemandProvider = ({
     sessionId,
     authToken,
     isEduScreen,
-    false
+    isTestRunning,
   );
 
   return (

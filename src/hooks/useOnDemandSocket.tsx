@@ -28,6 +28,7 @@ export default function useOnDemandSocket(
   );
 
   const resultsCallback = useCallback((landmarks, segmentationMask) => {
+    console.log("landmarks: ", landmarks);
     if (!_.isEmpty(landmarks)) {
       tempKeyPointsRef.current[Date.now()] = { landmarks };
       tempKeySegMaskRef.current = segmentationMask;
@@ -45,6 +46,7 @@ export default function useOnDemandSocket(
 
     interval = setInterval(() => {
       const keyPoints = Object.assign(tempKeyPointsRef.current, {});
+      console.log("keyPoints: ", keyPoints)
 
       // for only body posture test send segmentation mask
       let mask: any = null;
