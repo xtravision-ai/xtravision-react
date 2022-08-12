@@ -9,7 +9,7 @@ const initPose = async () => {
 
   poseObj = new Pose({
     locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`; //`https://d1z30on9khcjrk.cloudfront.net/mediapipe/${file}`;
+      return `https://d1z30on9khcjrk.cloudfront.net/@mediapipe/${file}`; //`https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
     },
   });
 
