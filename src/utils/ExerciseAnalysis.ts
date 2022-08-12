@@ -1,17 +1,14 @@
-import { Pose, Results } from "@mediapipe/pose";
-import { Camera } from "@mediapipe/camera_utils";
+import { Pose, Results } from '@mediapipe/pose';
+import { Camera } from '@mediapipe/camera_utils';
 
 // To store reference to pose estimation model object
 let poseObj: any;
-const medpipeURL =
-  process.env.REACT_APP_MEDIAPIPE_CLOUDFRONT_URL ??
-  `https://cdn.jsdelivr.net/npm/mediapipe/pose`;
 
 const initPose = async () => {
   console.log('-----> USER POSE ESTIMATION MODEL INITIALIZED <-----');
+
   poseObj = new Pose({
     locateFile: (file) => {
-      console.log("file: ", file);
       return `https://d1z30on9khcjrk.cloudfront.net/mediapipe/${file}`;
     },
   });
@@ -26,8 +23,7 @@ const initPose = async () => {
     minTrackingConfidence: 0.2,
   });
 
-
-  // await poseObj.initialize();
+  await poseObj.initialize();
 };
 
 // Initialise the pose object
@@ -43,7 +39,7 @@ export const startUserExerciseAnalysis = async (
   _videoElement: HTMLVideoElement,
   onResultsCallback: (results: Results) => Promise<void> | void
 ) => {
-  console.log("Initializing pose object");
+  console.log('Initializing pose object');
   await initPose();
 
   videoElement = _videoElement;

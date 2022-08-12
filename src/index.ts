@@ -11,8 +11,5 @@ export { default as XtraVisionOnDemandProvider } from './provider/XtraVisionOnDe
 // hooks
 export * from './hooks';
 
-// components
-export * from './components';
-
 // constants
 export { Features, ClassCategory } from './constants';

@@ -1,10 +1,8 @@
 {
-  "name": "xtravision-react",
+  "name": "xtravision-react-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/pose": "^0.5.1635988162",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -12,10 +10,10 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "xtravision-react": "file:../xtravision-xtravision-react-v1.1.0.tgz",
     "react-scripts": "5.0.0",
     "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0",
-    "xtravision-react": "link:../dist/esm"
+    "web-vitals": "^2.1.0"
   },
   "peerDependencies": {
     "react": "^16.8.0",

@@ -1,13 +1,10 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 import {
-  CalBurned,
   ClassCategory,
   Features,
-  PowerIntensityMeter,
-  XButton,
   XtraVisionOnDemandProvider,
   useXtraVisionOnDemandContext,
-} from "xtravision-react";
+} from 'xtravision-react';
 
 type AppContainerProps = {
   videoElementRef: any;
@@ -15,16 +12,16 @@ type AppContainerProps = {
 const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   const {
     lastJsonMessage,
-    onDemandResultsCallback,
+    // onDemandResultsCallback,
     onDemandLastJsonMessage,
     onDemandUserEducation,
     isCamOn,
     setIsCamOn,
   } = useXtraVisionOnDemandContext();
 
-  console.log("lastJsonMessage: ", lastJsonMessage);
-  console.log("onDemandLastJsonMessage: ", onDemandLastJsonMessage);
-  console.log("onDemandUserEducation: ", onDemandUserEducation);
+  // console.log('lastJsonMessage: ', lastJsonMessage);
+  // console.log('onDemandLastJsonMessage: ', onDemandLastJsonMessage);
+  // console.log('onDemandUserEducation: ', onDemandUserEducation);
 
   const intensity = lastJsonMessage?.intensity;
   const calBurned = lastJsonMessage?.calBurned;
@@ -36,7 +33,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       for (let i = 0; i !== deviceInfos.length; ++i) {
         const deviceInfo = deviceInfos[i];
-        if (deviceInfo.kind === "videoinput") {
+        if (deviceInfo.kind === 'videoinput') {
           defaultCamId = deviceInfo.deviceId;
           break;
         }
@@ -74,32 +71,30 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   };
 
   return (
-    <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <XButton
-          text="START"
+    <div style={{ backgroundColor: '#D3D3D3', padding: '30px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <button
           onClick={() => {
             startCamera();
           }}
           disabled={isCamOn}
-        />
-        <XButton
-          text="STOP"
+        >
+          START
+        </button>
+        <button
           onClick={() => {
             setIsCamOn(false);
             stopCamera();
           }}
           disabled={!isCamOn}
-        />
+        >
+          STOP
+        </button>
       </div>
 
       {isCamOn && (
         <div>
-          <PowerIntensityMeter power={intensity} />
-          {calBurned && <CalBurned calBurned={calBurned} />}
-          {/* {vortex && <Vortex vortex={vortex} />}  */}
-
-          {/* <YogaPoseQuality yogaScore={yogaScore} /> */}
+          <div>Intensity: {intensity ?? 0}</div>
           <div>Cal burned: {calBurned ?? 0}</div>
         </div>
       )}
@@ -116,13 +111,13 @@ function App() {
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
 
-  const sessionId = "ad7c3f16-b3b4-4f56-8f54-4169d62ba24e";
+  const sessionId = 'ad7c3f16-b3b4-4f56-8f54-4169d62ba24e';
   const videoElementRef = useRef<any>(null);
   const classStartTime = new Date();
   const isEduScreen = false;
 
   const authToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE';
 
   return (
     <XtraVisionOnDemandProvider
@@ -136,7 +131,7 @@ function App() {
       classStartTime={classStartTime}
       isEduScreen={isEduScreen}
     >
-      <video ref={videoElementRef} style={{ border: "1px solid red" }} />
+      <video ref={videoElementRef} style={{ border: '1px solid red' }} />
       <AppContainer videoElementRef={videoElementRef} />
     </XtraVisionOnDemandProvider>
   );

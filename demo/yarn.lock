@@ -7056,6 +7056,11 @@ react-scripts@5.0.0:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-use-websocket@^2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/react-use-websocket/-/react-use-websocket-2.9.1.tgz#ef4a73a618b24f2a5875829ac0a0a0573c524710"
+  integrity sha512-jV6OxXuxWi6BiPVlbAJd/uWNaoQwkeGARFO9f6HidJeWUatB4J2UopbxI/fduiGpcpHGhRAmpLdfVjeRzrcTnQ==
+
 readable-stream@^2.0.1:
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.7.tgz#1eca1cf711aef814c04f62252a36a62f6cb23b57"
@@ -7567,7 +7572,7 @@ source-map@0.6.1, source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, sourc
 source-map@^0.5.0:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
-  integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
+  integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
 source-map@^0.7.3, source-map@~0.7.2:
   version "0.7.3"
@@ -8677,9 +8682,15 @@ xtend@^4.0.2:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
 
-"xtravision-react@link:../dist/esm":
-  version "0.0.0"
-  uid ""
+"xtravision-react@file:../xtravision-xtravision-react-v1.1.0.tgz":
+  version "1.1.0"
+  resolved "file:../xtravision-xtravision-react-v1.1.0.tgz#ee5b234b5b6ab062b5603e8de1cf0eb8af37cb8b"
+  dependencies:
+    "@mediapipe/camera_utils" "^0.3.1640029074"
+    "@mediapipe/pose" "^0.5.1635988162"
+    lodash "^4.17.20"
+    react-use-websocket "^2.9.1"
+    web-vitals "^2.1.0"
 
 y18n@^5.0.5:
   version "5.0.8"
