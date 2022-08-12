@@ -1,9 +1,9 @@
-import _ from "lodash";
-import { useCallback, useEffect, useRef } from "react";
+import _ from 'lodash';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   startUserExerciseAnalysis,
   stopUserExerciseAnalysis,
-} from "../utils/ExerciseAnalysis";
+} from '../utils/ExerciseAnalysis';
 
 export default function usePoseClassification(
   videoEleRef: any,
@@ -13,7 +13,6 @@ export default function usePoseClassification(
   const tempKeyPointsRef = useRef<any>({}); // hold KPs temporarily
 
   const resultsCallback = useCallback((results) => {
-    console.log("lm >> ", results);
     const landmarks = results.poseLandmarks ?? {};
     tempKeyPointsRef.current[Date.now()] = { landmarks };
   }, []);

@@ -19,8 +19,8 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
     setIsCamOn,
   } = useXtraVisionOnDemandContext();
 
-  // console.log('lastJsonMessage: ', lastJsonMessage);
-  // console.log('onDemandLastJsonMessage: ', onDemandLastJsonMessage);
+  console.log('lastJsonMessage: ', lastJsonMessage);
+  console.log('onDemandLastJsonMessage: ', onDemandLastJsonMessage);
   // console.log('onDemandUserEducation: ', onDemandUserEducation);
 
   const intensity = lastJsonMessage?.intensity;
