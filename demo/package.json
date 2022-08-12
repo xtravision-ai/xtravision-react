@@ -10,10 +10,12 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
-    "xtravision-react": "file:../xtravision-xtravision-react-v1.1.0.tgz",
+    "xtravision-react": "link:../dist/esm",
     "react-scripts": "5.0.0",
     "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/pose": "^0.5.1635988162"
   },
   "peerDependencies": {
     "react": "^16.8.0",
