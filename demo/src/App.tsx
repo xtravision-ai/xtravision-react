@@ -1,27 +1,19 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 import {
   ClassCategory,
   Features,
   XtraVisionOnDemandProvider,
   useXtraVisionOnDemandContext,
-} from 'xtravision-react';
+} from "xtravision-react";
 
 type AppContainerProps = {
   videoElementRef: any;
 };
 const AppContainer = ({ videoElementRef }: AppContainerProps) => {
-  const {
-    lastJsonMessage,
-    // onDemandResultsCallback,
-    // onDemandLastJsonMessage,
-    // onDemandUserEducation,
-    isCamOn,
-    setIsCamOn,
-  } = useXtraVisionOnDemandContext();
+  const { lastJsonMessage, isCamOn, setIsCamOn } =
+    useXtraVisionOnDemandContext();
 
-  console.log('lastJsonMessage: ', lastJsonMessage);
-  // console.log('onDemandLastJsonMessage: ', onDemandLastJsonMessage);
-  // console.log('onDemandUserEducation: ', onDemandUserEducation);
+  console.log("lastJsonMessage: ", lastJsonMessage);
 
   const intensity = lastJsonMessage?.intensity;
   const calBurned = lastJsonMessage?.calBurned;
@@ -33,7 +25,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       for (let i = 0; i !== deviceInfos.length; ++i) {
         const deviceInfo = deviceInfos[i];
-        if (deviceInfo.kind === 'videoinput') {
+        if (deviceInfo.kind === "videoinput") {
           defaultCamId = deviceInfo.deviceId;
           break;
         }
@@ -71,8 +63,8 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#D3D3D3', padding: '30px' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
             startCamera();
@@ -111,12 +103,12 @@ function App() {
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
 
-  const sessionId = 'c4fc8001-4727-4653-a6ac-d605937743f0';
+  const sessionId = "c4fc8001-4727-4653-a6ac-d605937743f0";
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
 
   const authToken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE';
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
 
   return (
     <XtraVisionOnDemandProvider
@@ -128,7 +120,7 @@ function App() {
       videoElementRef={videoElementRef}
       isEduScreen={isEduScreen}
     >
-      <video ref={videoElementRef} style={{ border: '1px solid red' }} />
+      <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
     </XtraVisionOnDemandProvider>
   );

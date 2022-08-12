@@ -1,8 +1,8 @@
-import React, { createContext, ReactNode, useState } from 'react';
-import useWebSocket from 'react-use-websocket';
-import { ClassCategory, Features } from '../constants';
-import usePoseClassification from '../hooks/usePoseClassification';
-import { WS_URL } from '../provider/constants';
+import React, { createContext, ReactNode, useState } from "react";
+import useWebSocket from "react-use-websocket";
+import { ClassCategory, Features } from "../constants";
+import usePoseClassification from "../hooks/usePoseClassification";
+import { WS_URL } from "../provider/constants";
 
 export interface IXtraVisionOnDemandContext {
   lastJsonMessage: JSON;
@@ -33,7 +33,6 @@ const XtraVisionOnDemandProvider = ({
   isEduScreen,
 }: XtraAppProviderProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
-  console.log('isEduScreen:', isEduScreen);
 
   const featuresStr = encodeURIComponent(JSON.stringify(features));
 
@@ -47,18 +46,6 @@ const XtraVisionOnDemandProvider = ({
 
   // // pose -> send keypoints 1s
   usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, isEduScreen);
-
-  // const {
-  //   onDemandResultsCallback,
-  //   onDemandLastJsonMessage,
-  //   onDemandUserEducation,
-  // } = useOnDemandSocket(
-  //   classCategory,
-  //   features,
-  //   sessionId,
-  //   authToken,
-  //   isEduScreen
-  // );
 
   return (
     <XtraVisionOnDemandContext.Provider
