@@ -72,7 +72,7 @@ const XtraVisionUserProvider = ({
   );
 
   // pose -> send keypoints 1s
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage);
+  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, false);
 
   // receive data from server
   const {
