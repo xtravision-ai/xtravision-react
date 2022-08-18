@@ -20,3 +20,8 @@ export enum ClassCategory {
   Strength = "Strength",
   HIIT = "HIIT",
 }
+
+export enum Assessment {
+  STRENGTH_PUSH_UPS = 'STRENGTH_PUSH_UPS',
+  // 2 more
+}

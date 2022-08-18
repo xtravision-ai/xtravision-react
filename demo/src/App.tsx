@@ -2,8 +2,11 @@ import { useRef } from "react";
 import {
   ClassCategory,
   Features,
-  XtraVisionOnDemandProvider,
-  useXtraVisionOnDemandContext,
+  Assessment,
+  // XtraVisionOnDemandProvider,
+  // useXtraVisionOnDemandContext,
+  useXtraVisionAssessmentContext,
+  XtraVisionAssessmentProvider,
 } from "xtravision-react";
 
 type AppContainerProps = {
@@ -11,7 +14,7 @@ type AppContainerProps = {
 };
 const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
-    useXtraVisionOnDemandContext();
+    useXtraVisionAssessmentContext();
 
   console.log("lastJsonMessage: ", lastJsonMessage);
 
@@ -106,24 +109,36 @@ function App() {
   const sessionId = "c4fc8001-4727-4653-a6ac-d605937743f0";
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
-
   const authToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
 
+  const assessmentName = Assessment.STRENGTH_PUSH_UPS;
+
   return (
-    <XtraVisionOnDemandProvider
-      classCategory={category}
-      features={features}
-      // authToken="AUTH_TOKEN"
+    <XtraVisionAssessmentProvider
       authToken={authToken}
-      sessionId={sessionId}
       videoElementRef={videoElementRef}
       isEduScreen={isEduScreen}
+      assessmentName={assessmentName}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
-    </XtraVisionOnDemandProvider>
+    </XtraVisionAssessmentProvider>
   );
 }
 
 export default App;
+
+// return (
+//   <XtraVisionOnDemandProvider
+//     classCategory={category}
+//     features={features}
+//     // authToken="AUTH_TOKEN"
+//     authToken={authToken}
+//     sessionId={sessionId}
+//     videoElementRef={videoElementRef}
+//     isEduScreen={isEduScreen}
+//   >
+//     <video ref={videoElementRef} style={{ border: "1px solid red" }} />
+//     <AppContainer videoElementRef={videoElementRef} />
+//   </XtraVisionOnDemandProvider>
