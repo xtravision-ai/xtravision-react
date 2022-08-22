@@ -44,7 +44,7 @@ const XtraVisionOnDemandProvider = ({
     }
   );
 
-  // // pose -> send keypoints 1s
+  // pose -> send keypoints 1s
   usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, isEduScreen);
 
   return (

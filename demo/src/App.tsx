@@ -16,7 +16,9 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
     useXtraVisionAssessmentContext();
 
-  console.log("lastJsonMessage: ", lastJsonMessage);
+  if (lastJsonMessage?.error) {
+    console.log("lastJsonMessage: ", lastJsonMessage?.error);
+  } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
   const intensity = lastJsonMessage?.intensity;
   const calBurned = lastJsonMessage?.calBurned;
@@ -112,7 +114,7 @@ function App() {
   const authToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
 
-  const assessmentName = Assessment.STRENGTH_PUSH_UPS;
+  const assessmentName = Assessment.HALF_SQUAT;
 
   return (
     <XtraVisionAssessmentProvider
