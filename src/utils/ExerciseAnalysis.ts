@@ -1,11 +1,11 @@
-import { Pose, Results } from '@mediapipe/pose';
-import { Camera } from '@mediapipe/camera_utils';
+import { Pose, Results } from "@mediapipe/pose";
+import { Camera } from "@mediapipe/camera_utils";
 
 // To store reference to pose estimation model object
 let poseObj: any;
 
 const initPose = async () => {
-  console.log('-----> USER POSE ESTIMATION MODEL INITIALIZED <-----');
+  console.log("-----> USER POSE ESTIMATION MODEL INITIALIZED <-----");
 
   poseObj = new Pose({
     locateFile: (file) => {
@@ -39,7 +39,7 @@ export const startUserExerciseAnalysis = async (
   _videoElement: HTMLVideoElement,
   onResultsCallback: (results: Results) => Promise<void> | void
 ) => {
-  console.log('Initializing pose object');
+  console.log("Initializing pose object");
   await initPose();
 
   videoElement = _videoElement;
@@ -70,7 +70,7 @@ export const startUserExerciseAnalysis = async (
   }
 };
 
-export const stopUserExerciseAnalysis = () => {
+export const stopUserExerciseAnalysis = async() => {
   if (videoElement) {
     start_camera = true;
     videoElement = null;
@@ -80,5 +80,11 @@ export const stopUserExerciseAnalysis = () => {
   if (camera) camera.stop();
   camera = null;
 
-  if (poseObj) poseObj.close();
+  if (poseObj) {
+    try {
+      await poseObj.close();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 };

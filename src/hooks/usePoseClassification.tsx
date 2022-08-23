@@ -1,15 +1,15 @@
-import _ from 'lodash';
-import { useCallback, useEffect, useRef } from 'react';
+import _ from "lodash";
+import { useCallback, useEffect, useRef } from "react";
 import {
   startUserExerciseAnalysis,
   stopUserExerciseAnalysis,
-} from '../utils/ExerciseAnalysis';
+} from "../utils/ExerciseAnalysis";
 
 export default function usePoseClassification(
   videoEleRef: any,
   isCamOn: boolean,
   sendJsonMessage: (msg: any) => void,
-  isEduScreen: boolean,
+  isEduScreen: boolean
 ) {
   const tempKeyPointsRef = useRef<any>({}); // hold KPs temporarily
 
@@ -19,10 +19,13 @@ export default function usePoseClassification(
   }, []);
 
   useEffect(() => {
-    if (isCamOn && videoEleRef?.current?.stream)
-      startUserExerciseAnalysis(videoEleRef?.current, resultsCallback);
-    else stopUserExerciseAnalysis();
+    const startAnalysis = async () => {
+      if (isCamOn && videoEleRef?.current?.stream)
+        startUserExerciseAnalysis(videoEleRef?.current, resultsCallback);
+      else await stopUserExerciseAnalysis();
+    };
 
+    startAnalysis();
     return () => {
       stopUserExerciseAnalysis();
     };

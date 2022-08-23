@@ -108,12 +108,12 @@ function App() {
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
 
-  const sessionId = "c4fc8001-4727-4653-a6ac-d605937743f0";
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
-  const authToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
+  const sessionId = "SESSIONID";
+  const authToken = 'AUTHTOKEN';
 
+  // assessment name you want
   const assessmentName = Assessment.HALF_SQUAT;
 
   return (
