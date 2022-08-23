@@ -107,14 +107,13 @@ function App() {
     Features.VORTEX,
   ];
   // const clientScheduleId = "SOME-SCHEDULE-ID";
+  const sessionId = "SESSIONID";
 
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
-  const sessionId = "SESSIONID";
-  const authToken = 'AUTHTOKEN';
-
   // assessment name you want
   const assessmentName = Assessment.HALF_SQUAT;
+  const authToken = "AUTH_TOKEN";
 
   return (
     <XtraVisionAssessmentProvider
