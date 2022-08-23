@@ -16,7 +16,7 @@ npm install xtravision-react or yarn add xtravision-react
 
 # API Reference
 
- * import the components:
+ * import the relevant features you want:
 ```
 import {
     ClassCategory,
@@ -29,14 +29,15 @@ import {
 } from "xtravision-react";
 ```
 
-* use the context:
+* use the context to get the values:
   const { lastJsonMessage, isCamOn, setIsCamOn } =
     useXtraVisionAssessmentContext();
 
-* wrap the component in the context provider:
+
+* wrap the component in the context provider and pass the results from the previous context:
 
 ```
-    <XtraVisionAssessmentContext.Provider
+    <XtraVisionAssessmentProvider
       value={{
         lastJsonMessage,
         isCamOn,
@@ -44,7 +45,9 @@ import {
       }}
     >
       {children}
-    </XtraVisionAssessmentContext.Provider>
+    </XtraVisionAssessmentProvider>
 ```
+
+* for On-Demand Yoga assessment, use useXtraVisionOnDemandContext and XtraVisionOnDemandProvider
 
 For the full detailed code refer the example above
