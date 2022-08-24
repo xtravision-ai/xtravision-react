@@ -22,6 +22,8 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
   const intensity = lastJsonMessage?.intensity;
   const calBurned = lastJsonMessage?.calBurned;
+  const assessmentName = lastJsonMessage?.assessment;
+  const repCount = lastJsonMessage?.rep_count;
 
   const startCamera = async () => {
     try {
@@ -91,8 +93,10 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       {isCamOn && (
         <div>
-          <div>Intensity: {intensity ?? 0}</div>
+         <div>Intensity: {intensity ?? 0}</div>
           <div>Cal burned: {calBurned ?? 0}</div>
+          <div>assessment: {assessmentName ?? ''} </div>
+          <div>rep count: {repCount}</div>
         </div>
       )}
     </div>
