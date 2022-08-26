@@ -22,8 +22,8 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
   const intensity = lastJsonMessage?.intensity;
   const calBurned = lastJsonMessage?.calBurned;
-  const assessmentName = lastJsonMessage?.assessment;
-  const repCount = lastJsonMessage?.rep_count;
+  const assessmentName = lastJsonMessage?.data?.assessment;
+  const repCount = lastJsonMessage?.data?.reps;
 
   const startCamera = async () => {
     try {
@@ -95,8 +95,8 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
         <div>
          <div>Intensity: {intensity ?? 0}</div>
           <div>Cal burned: {calBurned ?? 0}</div>
-          <div>assessment: {assessmentName ?? ''} </div>
-          <div>rep count: {repCount}</div>
+          <div>Assessment: {assessmentName ?? ''} </div>
+          <div>Rep Count: {repCount ?? 0}</div>
         </div>
       )}
     </div>
@@ -116,8 +116,9 @@ function App() {
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
   // assessment name you want
-  const assessmentName = Assessment.HALF_SQUAT;
-  const authToken = "AUTH_TOKEN";
+  const assessmentName = Assessment.SQUATS;
+  const authToken ="_AUTH_TOKEN_";
+
 
   return (
     <XtraVisionAssessmentProvider
