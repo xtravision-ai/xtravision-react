@@ -54,3 +54,4 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 - for On-Demand Yoga assessment, use useXtraVisionOnDemandContext and XtraVisionOnDemandProvider
 
 For the full detailed code refer the example above
+
