@@ -29,7 +29,7 @@ import {
     useXtraVisionOnDemandContext,
     useXtraVisionAssessmentContext,
     XtraVisionAssessmentProvider,
-} from "xtravision-react";
+} from "@xtravision/xtravision-react";
 ```
 
 - use the context to get the values:
@@ -43,11 +43,10 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 
 ```
     <XtraVisionAssessmentProvider
-      value={{
-        lastJsonMessage,
-        isCamOn,
-        setIsCamOn,
-      }}
+      authToken={authToken}
+      videoElementRef={videoElementRef}
+      isEduScreen={isEduScreen}
+      assessmentName={assessmentName}
     >
       {children}
     </XtraVisionAssessmentProvider>
