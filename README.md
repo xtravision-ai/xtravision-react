@@ -8,9 +8,9 @@ It is an sdk for fitness related data assessments like calories, rep-count, yoga
 
 # How to install
 
-``npm install xtravision-react``  
+``npm install @xtravision/xtravision-react``  
 or  
-``yarn add xtravision-react``
+``yarn add @xtravision/xtravision-react``
 
 # Example
 
