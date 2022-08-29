@@ -76,6 +76,7 @@
     "build": "tsc",
     "build:windows": "yarn windows:clean && yarn build && yarn build:lib",
     "deploy": "cd dist && npm publish",
-    "windows:clean": "rmdir /s dist"
+    "windows:clean": "rmdir /s dist",
+    "bootstrap": "yarn && yarn build:lib "
   }
 }
