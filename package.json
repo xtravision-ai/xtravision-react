@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-react",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A React hook for getting realtime feedback from XtraVision AI",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
