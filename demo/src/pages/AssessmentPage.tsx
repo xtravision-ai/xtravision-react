@@ -1,14 +1,9 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import {
-  ClassCategory,
-  Features,
   Assessment,
-  // XtraVisionOnDemandProvider,
-  // useXtraVisionOnDemandContext,
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
 } from "xtravision-react";
-import Routes from "./Routes";
 
 type AppContainerProps = {
   videoElementRef: any;
@@ -21,8 +16,6 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
   } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const intensity = lastJsonMessage?.intensity;
-  const calBurned = lastJsonMessage?.calBurned;
   const assessmentName = lastJsonMessage?.assessment;
   const repCount = lastJsonMessage?.rep_count;
 
@@ -94,8 +87,6 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       {isCamOn && (
         <div>
-          <div>Intensity: {intensity ?? 0}</div>
-          <div>Cal burned: {calBurned ?? 0}</div>
           <div>assessment: {assessmentName ?? ""} </div>
           <div>rep count: {repCount}</div>
         </div>
@@ -104,48 +95,25 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   );
 };
 
-function App() {
-  const category = ClassCategory.Yoga; // change as per our need
-  const features = [
-    Features.YOGA_QUALITY,
-    Features.YOGA_SCORE,
-    Features.VORTEX,
-  ];
-  // const clientScheduleId = "SOME-SCHEDULE-ID";
-  const sessionId = "SESSIONID";
-
+const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
   // assessment name you want
   const assessmentName = Assessment.SINGLE_LEG_KNEE_HUGS;
-  // const authToken = process.env.REACT_APP_AUTH_TOKEN;
+  const authToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
 
   return (
-    // <XtraVisionAssessmentProvider
-    //   authToken={authToken}
-    //   videoElementRef={videoElementRef}
-    //   isEduScreen={isEduScreen}
-    //   assessmentName={assessmentName}
-    // >
-    //   <video ref={videoElementRef} style={{ border: "1px solid red" }} />
-    //   <AppContainer videoElementRef={videoElementRef} />
-    // </XtraVisionAssessmentProvider>
-    <Routes />
+    <XtraVisionAssessmentProvider
+      authToken={authToken}
+      videoElementRef={videoElementRef}
+      isEduScreen={isEduScreen}
+      assessmentName={assessmentName}
+    >
+      <video ref={videoElementRef} style={{ border: "1px solid red" }} />
+      <AppContainer videoElementRef={videoElementRef} />
+    </XtraVisionAssessmentProvider>
   );
-}
+};
 
-export default App;
-
-// return (
-//   <XtraVisionOnDemandProvider
-//     classCategory={category}
-//     features={features}
-//     // authToken="AUTH_TOKEN"
-//     authToken={authToken}
-//     sessionId={sessionId}
-//     videoElementRef={videoElementRef}
-//     isEduScreen={isEduScreen}
-//   >
-//     <video ref={videoElementRef} style={{ border: "1px solid red" }} />
-//     <AppContainer videoElementRef={videoElementRef} />
-//   </XtraVisionOnDemandProvider>
+export default AssessmentPage;
