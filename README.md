@@ -36,6 +36,11 @@ import {
 
 ```
 const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext();
+  const videoElementRef = useRef<any>(null);
+  const isEduScreen = false;
+  // assessment name you want
+  const assessmentName = Assessment.SQUATS;
+  const authToken ="__AUTH_TOKEN__";
 
 ```
 
