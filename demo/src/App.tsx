@@ -2,8 +2,11 @@ import { useRef } from "react";
 import {
   ClassCategory,
   Features,
-  XtraVisionOnDemandProvider,
-  useXtraVisionOnDemandContext,
+  Assessment,
+  // XtraVisionOnDemandProvider,
+  // useXtraVisionOnDemandContext,
+  useXtraVisionAssessmentContext,
+  XtraVisionAssessmentProvider,
 } from "xtravision-react";
 
 type AppContainerProps = {
@@ -11,12 +14,16 @@ type AppContainerProps = {
 };
 const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
-    useXtraVisionOnDemandContext();
+    useXtraVisionAssessmentContext();
 
-  console.log("lastJsonMessage: ", lastJsonMessage);
+  if (lastJsonMessage?.error) {
+    console.log("lastJsonMessage: ", lastJsonMessage?.error);
+  } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
   const intensity = lastJsonMessage?.intensity;
   const calBurned = lastJsonMessage?.calBurned;
+  const assessmentName = lastJsonMessage?.data?.assessment;
+  const repCount = lastJsonMessage?.data?.reps;
 
   const startCamera = async () => {
     try {
@@ -86,8 +93,10 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       {isCamOn && (
         <div>
-          <div>Intensity: {intensity ?? 0}</div>
+         <div>Intensity: {intensity ?? 0}</div>
           <div>Cal burned: {calBurned ?? 0}</div>
+          <div>Assessment: {assessmentName ?? ''} </div>
+          <div>Rep Count: {repCount ?? 0}</div>
         </div>
       )}
     </div>
@@ -106,23 +115,36 @@ function App() {
 
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
+  // assessment name you want
+  const assessmentName = Assessment.SQUATS;
+  const authToken ="_AUTH_TOKEN_";
 
-  const authToken = "AUTH_TOKEN";
 
   return (
-    <XtraVisionOnDemandProvider
-      classCategory={category}
-      features={features}
-      // authToken="AUTH_TOKEN"
+    <XtraVisionAssessmentProvider
       authToken={authToken}
-      sessionId={sessionId}
       videoElementRef={videoElementRef}
       isEduScreen={isEduScreen}
+      assessmentName={assessmentName}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
-    </XtraVisionOnDemandProvider>
+    </XtraVisionAssessmentProvider>
   );
 }
 
 export default App;
+
+// return (
+//   <XtraVisionOnDemandProvider
+//     classCategory={category}
+//     features={features}
+//     // authToken="AUTH_TOKEN"
+//     authToken={authToken}
+//     sessionId={sessionId}
+//     videoElementRef={videoElementRef}
+//     isEduScreen={isEduScreen}
+//   >
+//     <video ref={videoElementRef} style={{ border: "1px solid red" }} />
+//     <AppContainer videoElementRef={videoElementRef} />
+//   </XtraVisionOnDemandProvider>

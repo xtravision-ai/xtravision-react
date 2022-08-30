@@ -1,54 +1,46 @@
 import React, { createContext, ReactNode, useState } from "react";
 import useWebSocket from "react-use-websocket";
-import { ClassCategory, Features } from "../constants";
+import { Assessment } from "../constants";
 import usePoseClassification from "../hooks/usePoseClassification";
 import { WS_URL } from "../provider/constants";
 
-export interface IXtraVisionOnDemandContext {
+export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
   isCamOn: boolean;
   setIsCamOn: (isCamOn: boolean) => void;
 }
 
-export const XtraVisionOnDemandContext =
-  createContext<IXtraVisionOnDemandContext>(null!);
+export const XtraVisionAssessmentContext =
+  createContext<IXtraVisionAssessmentContext>(null!);
 
-interface XtraAppProviderProps {
+interface XtraVisionAssessmentAppProps {
   children: ReactNode;
-  classCategory: ClassCategory;
-  features: Features[];
-  authToken: string;
-  sessionId: string;
   videoElementRef: any;
+  authToken: string;
+  assessmentName: Assessment;
   isEduScreen: boolean;
 }
 
-const XtraVisionOnDemandProvider = ({
-  authToken, // Auth token
-  sessionId,
-  classCategory,
-  features, // Array of features
+const XtraVisionAssessmentProvider = ({
   children,
+  authToken,
+  assessmentName,
   videoElementRef,
   isEduScreen,
-}: XtraAppProviderProps) => {
+}: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
-  const featuresStr = encodeURIComponent(JSON.stringify(features));
-
-  // connect ws
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/v1/ondemand/${sessionId}/${classCategory}?authToken=${authToken}&features=${featuresStr}`,
+    `${WS_URL}/v1/assessment/fitness/${assessmentName}?authToken=${authToken}`,
     {
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
     }
   );
 
-  // pose -> send keypoints 1s
   usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, isEduScreen);
 
   return (
-    <XtraVisionOnDemandContext.Provider
+    <XtraVisionAssessmentContext.Provider
       value={{
         lastJsonMessage,
         isCamOn,
@@ -56,8 +48,8 @@ const XtraVisionOnDemandProvider = ({
       }}
     >
       {children}
-    </XtraVisionOnDemandContext.Provider>
+    </XtraVisionAssessmentContext.Provider>
   );
 };
 
-export default XtraVisionOnDemandProvider;
+export default XtraVisionAssessmentProvider;

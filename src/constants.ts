@@ -20,3 +20,7 @@ export enum ClassCategory {
   Strength = "Strength",
   HIIT = "HIIT",
 }
+
+export enum Assessment {
+  SQUATS = 'SQUATS',
+}

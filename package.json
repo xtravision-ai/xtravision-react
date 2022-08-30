@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-react",
-  "version": "1.1.0",
+  "version": "1.2.2",
   "description": "A React hook for getting realtime feedback from XtraVision AI",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -76,6 +76,7 @@
     "build": "tsc",
     "build:windows": "yarn windows:clean && yarn build && yarn build:lib",
     "deploy": "cd dist && npm publish",
-    "windows:clean": "rmdir /s dist"
+    "windows:clean": "rmdir /s dist",
+    "bootstrap": "yarn && yarn build:lib "
   }
 }
