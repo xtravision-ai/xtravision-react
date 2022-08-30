@@ -1,8 +1,8 @@
-import usePoseClassification from '../hooks/usePoseClassification';
-import useParseResponse from '../hooks/useParseResponse';
 import React, { createContext, ReactNode, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { ClassCategory, Features } from '../constants';
+import useParseResponse from '../hooks/useParseResponse';
+import usePoseClassification from '../hooks/usePoseClassification';
 import { WS_URL } from './constants';
 
 export interface IXtraVisionUserContext {
@@ -72,7 +72,7 @@ const XtraVisionUserProvider = ({
   );
 
   // pose -> send keypoints 1s
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage);
+  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, false);
 
   // receive data from server
   const {

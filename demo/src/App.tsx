@@ -1,20 +1,29 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 import {
-  CalBurned,
   ClassCategory,
   Features,
-  PowerIntensityMeter,
-  XButton,
-  XtraVisionUserProvider,
-  useXtraVisionUserContext,
-} from 'xtravision-react';
+  Assessment,
+  // XtraVisionOnDemandProvider,
+  // useXtraVisionOnDemandContext,
+  useXtraVisionAssessmentContext,
+  XtraVisionAssessmentProvider,
+} from "xtravision-react";
 
 type AppContainerProps = {
   videoElementRef: any;
 };
 const AppContainer = ({ videoElementRef }: AppContainerProps) => {
-  const { intensity, calBurned, isCamOn, setIsCamOn } =
-    useXtraVisionUserContext();
+  const { lastJsonMessage, isCamOn, setIsCamOn } =
+    useXtraVisionAssessmentContext();
+
+  if (lastJsonMessage?.error) {
+    console.log("lastJsonMessage: ", lastJsonMessage?.error);
+  } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
+
+  const intensity = lastJsonMessage?.intensity;
+  const calBurned = lastJsonMessage?.calBurned;
+  const assessmentName = lastJsonMessage?.data?.assessment;
+  const repCount = lastJsonMessage?.data?.reps;
 
   const startCamera = async () => {
     try {
@@ -23,7 +32,7 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
       for (let i = 0; i !== deviceInfos.length; ++i) {
         const deviceInfo = deviceInfos[i];
-        if (deviceInfo.kind === 'videoinput') {
+        if (deviceInfo.kind === "videoinput") {
           defaultCamId = deviceInfo.deviceId;
           break;
         }
@@ -61,33 +70,33 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#D3D3D3', padding: '30px' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <XButton
-          text="START"
+    <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <button
           onClick={() => {
             startCamera();
           }}
           disabled={isCamOn}
-        />
-        <XButton
-          text="STOP"
+        >
+          START
+        </button>
+        <button
           onClick={() => {
             setIsCamOn(false);
             stopCamera();
           }}
           disabled={!isCamOn}
-        />
+        >
+          STOP
+        </button>
       </div>
 
       {isCamOn && (
         <div>
-          <PowerIntensityMeter power={intensity} />
-          {calBurned && <CalBurned calBurned={calBurned} />}
-          {/* {vortex && <Vortex vortex={vortex} />}  */}
-
-          {/* <YogaPoseQuality yogaScore={yogaScore} /> */}
+         <div>Intensity: {intensity ?? 0}</div>
           <div>Cal burned: {calBurned ?? 0}</div>
+          <div>Assessment: {assessmentName ?? ''} </div>
+          <div>Rep Count: {repCount ?? 0}</div>
         </div>
       )}
     </div>
@@ -95,26 +104,47 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 };
 
 function App() {
-  const category = ClassCategory.HIIT;
-  const features = [Features.INTENSITY, Features.CALORIES_BURNED];
-  const clientScheduleId = 'SOME-SCHEDULE-ID';
+  const category = ClassCategory.Yoga; // change as per our need
+  const features = [
+    Features.YOGA_QUALITY,
+    Features.YOGA_SCORE,
+    Features.VORTEX,
+  ];
+  // const clientScheduleId = "SOME-SCHEDULE-ID";
+  const sessionId = "SESSIONID";
+
   const videoElementRef = useRef<any>(null);
-  const classStartTime = new Date();
+  const isEduScreen = false;
+  // assessment name you want
+  const assessmentName = Assessment.SQUATS;
+  const authToken ="_AUTH_TOKEN_";
+
 
   return (
-    <XtraVisionUserProvider
-      classCategory={category}
-      features={features}
-      isOnDemand
-      authToken="AUTH_TOKEN"
-      clientScheduleId={clientScheduleId}
+    <XtraVisionAssessmentProvider
+      authToken={authToken}
       videoElementRef={videoElementRef}
-      classStartTime={classStartTime}
+      isEduScreen={isEduScreen}
+      assessmentName={assessmentName}
     >
-      <video ref={videoElementRef} style={{ border: '1px solid red' }} />
+      <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer videoElementRef={videoElementRef} />
-    </XtraVisionUserProvider>
+    </XtraVisionAssessmentProvider>
   );
 }
 
 export default App;
+
+// return (
+//   <XtraVisionOnDemandProvider
+//     classCategory={category}
+//     features={features}
+//     // authToken="AUTH_TOKEN"
+//     authToken={authToken}
+//     sessionId={sessionId}
+//     videoElementRef={videoElementRef}
+//     isEduScreen={isEduScreen}
+//   >
+//     <video ref={videoElementRef} style={{ border: "1px solid red" }} />
+//     <AppContainer videoElementRef={videoElementRef} />
+//   </XtraVisionOnDemandProvider>
