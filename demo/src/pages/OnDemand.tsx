@@ -26,8 +26,8 @@ const AppContainer = ({
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
   } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const intensity = lastJsonMessage?.intensity;
-  const calBurned = lastJsonMessage?.calBurned;
+  const intensity = lastJsonMessage?.data?.intensity;
+  const calBurned = lastJsonMessage?.data?.calBurned;
 
   const startCamera = async () => {
     try {
@@ -134,9 +134,9 @@ const OnDemand = () => {
     Features.YOGA_SCORE,
     Features.VORTEX,
   ];
-  const [sessionId, setSessionId] = useState("SESSIONID");
+  const [sessionId, setSessionId] = useState(""); // enter your session Id here
 
-  const [authToken, setAuthToken] = useState("");
+  const [authToken, setAuthToken] = useState(""); // enter your authToken here
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
 
@@ -144,7 +144,6 @@ const OnDemand = () => {
     <XtraVisionOnDemandProvider
       classCategory={category}
       features={features}
-      // authToken="AUTH_TOKEN"
       authToken={authToken}
       sessionId={sessionId}
       videoElementRef={videoElementRef}

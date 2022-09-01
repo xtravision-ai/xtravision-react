@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Assessment,
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
 } from "xtravision-react";
@@ -40,8 +39,8 @@ const AppContainer = ({
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
   } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const assessment = lastJsonMessage?.assessment;
-  const repCount = lastJsonMessage?.rep_count;
+  const assessment = lastJsonMessage?.data?.assessment;
+  const repCount = lastJsonMessage?.data?.reps;
 
   const startCamera = async () => {
     try {
@@ -89,32 +88,39 @@ const AppContainer = ({
 
   return (
     <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
-      <div
-        style={{ display: "flex", flexDirection: "column", maxWidth: "300px" }}
-      >
-        <label>select your assessment: </label>
-        <select
-          value={assessmentName}
-          onChange={(e) => setAssessmentName(e.target.value)}
+      {!isCamOn && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: "300px",
+          }}
         >
-          {assessmentList.map((item, index) => {
-            return (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            );
-          })}
-        </select>
-        <br />
-        <label>Enter your Auth Token: </label>
-        <input
-          type="text"
-          id="authToken"
-          name="authToken"
-          onChange={(e) => setAuthToken(e.target.value)}
-        />
-        <br />
-      </div>
+          <label>Select your assessment: </label>
+          <select
+            value={assessmentName}
+            onChange={(e) => setAssessmentName(e.target.value)}
+          >
+            {assessmentList.map((item, index) => {
+              return (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
+          <br />
+          <label>Enter your Auth Token: </label>
+          <input
+            type="text"
+            id="authToken"
+            name="authToken"
+            onChange={(e) => setAuthToken(e.target.value)}
+          />
+          <br />
+        </div>
+      )}
+
       <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
@@ -148,8 +154,10 @@ const AppContainer = ({
 const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
-  const [assessmentName, setAssessmentName] = useState("");
-  const [authToken, setAuthToken] = useState("");
+  const [assessmentName, setAssessmentName] = useState(
+    "BANDED_ALTERNATING_DIAGNOLS"
+  ); // enter your assessment name here
+  const [authToken, setAuthToken] = useState(""); // enter your auth Token here
 
   return (
     <XtraVisionAssessmentProvider
