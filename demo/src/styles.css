@@ -1,15 +1,42 @@
+.homepage-root {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  transform: translate(100%, 50%);
+  font-family: Roboto;
+}
+
+.homepage-main-text {
+  font-size: 40px;
+  color: #ff5b36;
+  align-self: center;
+}
+
+.homepage-button-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    color: #ffffff;
-    background-color: #FF5B36   ;
-    margin: 30px;
-    border: 10px;
-    border-radius: 10px;
-    font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  margin: 30px;
+  border: 10px;
+  font-size: 20px;
+
+  padding: 10px 20px;
+  line-height: 20px;
+  border-radius: 5px;
+}
+.button#assessment {
+  background-color: #ffc044;
+}
+.button#on-demand {
+  background-color: #ff5b36;
 }
 .button:hover {
-    cursor: pointer;
+  cursor: pointer;
+  background-color: black!important;
 }

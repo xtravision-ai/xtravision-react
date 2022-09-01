@@ -1,18 +1,27 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   ClassCategory,
   Features,
   XtraVisionOnDemandProvider,
-  useXtraVisionAssessmentContext,
+  useXtraVisionOnDemandContext,
 } from "xtravision-react";
 
 type AppContainerProps = {
   videoElementRef: any;
+  sessionId: string;
+  setSessionId: any;
+  authToken: string;
+  setAuthToken: any;
 };
-const AppContainer = ({ videoElementRef }: AppContainerProps) => {
+const AppContainer = ({
+  videoElementRef,
+  sessionId,
+  setSessionId,
+  authToken,
+  setAuthToken,
+}: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
-    useXtraVisionAssessmentContext();
-
+    useXtraVisionOnDemandContext();
   if (lastJsonMessage?.error) {
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
   } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
@@ -66,6 +75,28 @@ const AppContainer = ({ videoElementRef }: AppContainerProps) => {
 
   return (
     <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", maxWidth: "300px" }}
+      >
+        <label>Enter your session id: </label>
+        <input
+          type="text"
+          id="sessionId"
+          name="sessionId"
+          value={sessionId}
+          onChange={(e) => setSessionId(e.target.value)}
+        />
+        <br />
+        <label>Enter your Auth Token: </label>
+        <input
+          type="text"
+          id="authToken"
+          name="authToken"
+          value={authToken}
+          onChange={(e) => setAuthToken(e.target.value)}
+        />
+        <br />
+      </div>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
@@ -103,10 +134,9 @@ const OnDemand = () => {
     Features.YOGA_SCORE,
     Features.VORTEX,
   ];
-  // const clientScheduleId = "SOME-SCHEDULE-ID";
-  const sessionId = "SESSIONID";
-  const authToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjMwN2JkZi0yNjVmLTQxM2ItODU2ZC1mMDcyODVhMzc3NjkiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjYwMDQzNzAxLCJleHAiOjE2OTE2MDEzMDF9.czzQWj22X6FY9wjTkWCDPvvDUgBWT-UgpjLfCKGxbRE";
+  const [sessionId, setSessionId] = useState("SESSIONID");
+
+  const [authToken, setAuthToken] = useState("");
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
 
@@ -121,7 +151,13 @@ const OnDemand = () => {
       isEduScreen={isEduScreen}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
-      <AppContainer videoElementRef={videoElementRef} />
+      <AppContainer
+        videoElementRef={videoElementRef}
+        sessionId={sessionId}
+        setSessionId={setSessionId}
+        authToken={authToken}
+        setAuthToken={setAuthToken}
+      />
     </XtraVisionOnDemandProvider>
   );
 };

@@ -1,36 +1,12 @@
-import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AssessmentPage from "./pages/AssessmentPage";
+import HomePage from "./pages/HomePage";
 import OnDemand from "./pages/OnDemand";
-import "./styles.css";
 
-const AppRoute = Object.freeze({
+export const AppRoute = Object.freeze({
   Assessment: "/app/assessment",
   OnDemand: "/app/ondemand",
 });
-
-const HomePage = () => {
-  return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <button
-        className="button"
-        onClick={() => {
-          window.location.href = AppRoute.Assessment;
-        }}
-      >
-        Assessment
-      </button>
-      <button
-        className="button"
-        onClick={() => {
-          window.location.href = AppRoute.OnDemand;
-        }}
-      >
-        On Demand
-      </button>
-    </div>
-  );
-};
 
 const Routes = () => {
   return (
