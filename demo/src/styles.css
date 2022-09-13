@@ -1,0 +1,42 @@
+.homepage-root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  place-content: center;
+  font-family: Roboto;
+}
+
+.homepage-main-text {
+  font-size: 40px;
+  color: #ff5b36;
+  align-self: center;
+}
+
+.homepage-button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  margin: 30px;
+  border: 10px;
+  font-size: 20px;
+
+  padding: 10px 20px;
+  line-height: 20px;
+  border-radius: 5px;
+}
+.button#assessment {
+  background-color: #ffc044;
+}
+.button#on-demand {
+  background-color: #ff5b36;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: black!important;
+}

@@ -3,7 +3,7 @@ import useParseResponse from '../hooks/useParseResponse';
 import React, { createContext, ReactNode, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { ClassCategory, Features } from '../constants';
-import { WS_URL } from './constants';
+import { WS_URL } from "../provider/constants";
 
 export interface IXtraVisionTrainerContext {
   intensity: number;
