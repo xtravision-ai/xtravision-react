@@ -8,18 +8,8 @@ import {
 
 type AppContainerProps = {
   videoElementRef: any;
-  sessionId: string;
-  setSessionId: any;
-  authToken: string;
-  setAuthToken: any;
 };
-const AppContainer = ({
-  videoElementRef,
-  sessionId,
-  setSessionId,
-  authToken,
-  setAuthToken,
-}: AppContainerProps) => {
+const AppContainer = ({ videoElementRef }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
     useXtraVisionOnDemandContext();
   if (lastJsonMessage?.error) {
@@ -75,28 +65,6 @@ const AppContainer = ({
 
   return (
     <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
-      <div
-        style={{ display: "flex", flexDirection: "column", maxWidth: "300px" }}
-      >
-        <label>Enter your session id: </label>
-        <input
-          type="text"
-          id="sessionId"
-          name="sessionId"
-          value={sessionId}
-          onChange={(e) => setSessionId(e.target.value)}
-        />
-        <br />
-        <label>Enter your Auth Token: </label>
-        <input
-          type="text"
-          id="authToken"
-          name="authToken"
-          value={authToken}
-          onChange={(e) => setAuthToken(e.target.value)}
-        />
-        <br />
-      </div>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
@@ -134,9 +102,9 @@ const OnDemand = () => {
     Features.YOGA_SCORE,
     Features.VORTEX,
   ];
-  const [sessionId, setSessionId] = useState(""); // enter your session Id here
+  const sessionId = ""; // enter your session Id here
 
-  const [authToken, setAuthToken] = useState(""); // enter your authToken here
+  const AUTH_TOKEN = "_AUTH_TOKEN_"; // enter your authToken here
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
 
@@ -144,19 +112,13 @@ const OnDemand = () => {
     <XtraVisionOnDemandProvider
       classCategory={category}
       features={features}
-      authToken={authToken}
+      authToken={AUTH_TOKEN}
       sessionId={sessionId}
       videoElementRef={videoElementRef}
       isEduScreen={isEduScreen}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
-      <AppContainer
-        videoElementRef={videoElementRef}
-        sessionId={sessionId}
-        setSessionId={setSessionId}
-        authToken={authToken}
-        setAuthToken={setAuthToken}
-      />
+      <AppContainer videoElementRef={videoElementRef} />
     </XtraVisionOnDemandProvider>
   );
 };

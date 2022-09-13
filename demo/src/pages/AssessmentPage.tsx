@@ -4,33 +4,13 @@ import {
   XtraVisionAssessmentProvider,
 } from "xtravision-react";
 
-const assessmentList = [
-  "BANDED_ALTERNATING_DIAGNOLS",
-  "BANDED_BOW_AND_ARROW",
-  "BANDED_EXTERNAL_ROTATION",
-  "BANDED_T",
-  "DOUBLE_LEG_KNEE_HUGS",
-  "GLUTE_BRIDGE",
-  "HALF_SQUAT",
-  "OVERHEAD_STRETCH",
-  "QUADS_STRETCH",
-  "SHOULDER_SCAPTION",
-  "SINGLE_LEG_KNEE_HUGS",
-];
-
 type AppContainerProps = {
   videoElementRef: any;
   assessmentName: string;
-  setAssessmentName: any;
-  authToken: string;
-  setAuthToken: any;
 };
 const AppContainer = ({
   videoElementRef,
   assessmentName,
-  setAssessmentName,
-  authToken,
-  setAuthToken,
 }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
     useXtraVisionAssessmentContext();
@@ -88,39 +68,6 @@ const AppContainer = ({
 
   return (
     <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
-      {!isCamOn && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: "300px",
-          }}
-        >
-          <label>Select your assessment: </label>
-          <select
-            value={assessmentName}
-            onChange={(e) => setAssessmentName(e.target.value)}
-          >
-            {assessmentList.map((item, index) => {
-              return (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
-          <br />
-          <label>Enter your Auth Token: </label>
-          <input
-            type="text"
-            id="authToken"
-            name="authToken"
-            onChange={(e) => setAuthToken(e.target.value)}
-          />
-          <br />
-        </div>
-      )}
-
       <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
@@ -141,12 +88,10 @@ const AppContainer = ({
         </button>
       </div>
 
-      {isCamOn && (
-        <div>
-          <div>assessment: {assessment ?? ""} </div>
-          <div>rep count: {repCount}</div>
-        </div>
-      )}
+      <div>
+        <div>assessment: {assessmentName} </div>
+        <div>rep count: {repCount}</div>
+      </div>
     </div>
   );
 };
@@ -154,14 +99,12 @@ const AppContainer = ({
 const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
-  const [assessmentName, setAssessmentName] = useState(
-    "BANDED_ALTERNATING_DIAGNOLS"
-  ); // enter your assessment name here
-  const [authToken, setAuthToken] = useState(""); // enter your auth Token here
+  const assessmentName = "BANDED_ALTERNATING_DIAGNOLS"; // enter your assessment name here
+  const AUTH_TOKEN = "_AUTH_TOKEN_";
 
   return (
     <XtraVisionAssessmentProvider
-      authToken={authToken}
+      authToken={AUTH_TOKEN}
       videoElementRef={videoElementRef}
       isEduScreen={isEduScreen}
       assessmentName={assessmentName}
@@ -170,9 +113,6 @@ const AssessmentPage = () => {
       <AppContainer
         videoElementRef={videoElementRef}
         assessmentName={assessmentName}
-        setAssessmentName={setAssessmentName}
-        authToken={authToken}
-        setAuthToken={setAuthToken}
       />
     </XtraVisionAssessmentProvider>
   );
