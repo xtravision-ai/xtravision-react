@@ -78,6 +78,6 @@
     "deploy": "cd dist && npm publish",
     "windows:clean": "rmdir /s dist",
     "bootstrap": "yarn && yarn build:lib ",
-    "demo:setup" :  "yarn --cwd demo ",
+    "demo:setup" :  "yarn --cwd demo "
   }
 }
