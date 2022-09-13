@@ -3,7 +3,7 @@ import useWebSocket from 'react-use-websocket';
 import { ClassCategory, Features } from '../constants';
 import useParseResponse from '../hooks/useParseResponse';
 import usePoseClassification from '../hooks/usePoseClassification';
-import { WS_URL } from "../provider/constants";
+import { WS_URL } from './constants';
 
 export interface IXtraVisionUserContext {
   intensity: number;

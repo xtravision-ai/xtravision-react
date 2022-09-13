@@ -31,7 +31,7 @@ const XtraVisionAssessmentProvider = ({
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/assessment/fitness/${assessmentName}?authToken=${authToken}`,
+    `${WS_URL}/v1/assessment/fitness/${assessmentName}?authToken=${authToken}`,
     {
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
     }

@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-react",
-  "version": "1.1.0",
+  "version": "1.2.2",
   "description": "A React hook for getting realtime feedback from XtraVision AI",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -34,18 +34,17 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/pose": "^0.5.1635988162",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/pose": "^0.5.1635988162"
   },
   "dependencies": {
-    "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/pose": "^0.5.1635988162",
-    "dotenv": "^16.0.1",
     "lodash": "^4.17.20",
     "react-use-websocket": "^2.9.1",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/pose": "^0.5.1635988162"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
@@ -77,6 +76,7 @@
     "build": "tsc",
     "build:windows": "yarn windows:clean && yarn build && yarn build:lib",
     "deploy": "cd dist && npm publish",
-    "windows:clean": "rmdir /s dist"
+    "windows:clean": "rmdir /s dist",
+    "bootstrap": "yarn && yarn build:lib "
   }
 }

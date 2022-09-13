@@ -8,7 +8,9 @@ It is an sdk for fitness related data assessments like calories, rep-count, yoga
 
 # How to install
 
-npm install xtravision-react or yarn add xtravision-react
+``npm install @xtravision/xtravision-react``  
+or  
+``yarn add @xtravision/xtravision-react``
 
 # Example
 
@@ -27,13 +29,18 @@ import {
     useXtraVisionOnDemandContext,
     useXtraVisionAssessmentContext,
     XtraVisionAssessmentProvider,
-} from "xtravision-react";
+} from "@xtravision/xtravision-react";
 ```
 
 - use the context to get the values:
 
 ```
 const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext();
+  const videoElementRef = useRef<any>(null);
+  const isEduScreen = false;
+  // assessment name you want
+  const assessmentName = Assessment.SQUATS;
+  const authToken ="__AUTH_TOKEN__";
 
 ```
 
@@ -41,11 +48,10 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 
 ```
     <XtraVisionAssessmentProvider
-      value={{
-        lastJsonMessage,
-        isCamOn,
-        setIsCamOn,
-      }}
+      authToken={authToken}
+      videoElementRef={videoElementRef}
+      isEduScreen={isEduScreen}
+      assessmentName={assessmentName}
     >
       {children}
     </XtraVisionAssessmentProvider>

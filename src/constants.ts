@@ -22,7 +22,5 @@ export enum ClassCategory {
 }
 
 export enum Assessment {
-  STRENGTH_PUSH_UPS = 'STRENGTH_PUSH_UPS',
-  HALF_SQUAT = 'HALF_SQUAT',
-  SINGLE_LEG_KNEE_HUGS = "SINGLE_LEG_KNEE_HUGS",
+  SQUATS = 'SQUATS',
 }

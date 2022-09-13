@@ -38,7 +38,7 @@ const XtraVisionOnDemandProvider = ({
 
   // connect ws
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/ondemand/${sessionId}/${classCategory}?authToken=${authToken}&features=${featuresStr}`,
+    `${WS_URL}/v1/ondemand/${sessionId}/${classCategory}?authToken=${authToken}&features=${featuresStr}`,
     {
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
     }
