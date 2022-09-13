@@ -99,7 +99,7 @@ const AppContainer = ({
 const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
-  const assessmentName = "BANDED_ALTERNATING_DIAGNOLS"; // enter your assessment name here
+  const assessmentName = "SQUATS"; // enter your assessment name here
   const AUTH_TOKEN = "_AUTH_TOKEN_";
 
   return (
