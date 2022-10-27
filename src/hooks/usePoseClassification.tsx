@@ -9,7 +9,7 @@ export default function usePoseClassification(
   videoEleRef: any,
   isCamOn: boolean,
   sendJsonMessage: (msg: any) => void,
-  isEduScreen: boolean
+  isEduScreen?: boolean
 ) {
   const tempKeyPointsRef = useRef<any>({}); // hold KPs temporarily
 

@@ -16,28 +16,43 @@ export const XtraVisionAssessmentContext =
 interface XtraVisionAssessmentAppProps {
   children: ReactNode;
   videoElementRef: any;
-  authToken: string;
-  assessmentName: Assessment;
-  isEduScreen: boolean;
+  // authToken: string;
+  // assessmentName: Assessment;
+  // isEduScreen: boolean;
+
+  connectionData: {
+    assessment_name: string;
+    auth_token: string;
+    assessment_config?: object;
+    user_config?: object;
+  };
+  requestData: {
+    isPreJoin?: boolean;
+  };
+  // libData: {
+  //   onServerResponse(serverResponse: any): void;
+  //   cameraPosition: 'front' | 'back';
+  // }
 }
 
 const XtraVisionAssessmentProvider = ({
   children,
-  authToken,
-  assessmentName,
   videoElementRef,
-  isEduScreen,
+  connectionData,
+  requestData
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/v1/assessment/fitness/${assessmentName}?authToken=${authToken}`,
+    `${WS_URL}/assessment/fitness/${connectionData.assessment_name}?authToken=${connectionData.auth_token}&user_config=${connectionData.user_config}&assessment_config=${connectionData.assessment_config}`,
     {
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
     }
   );
 
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, isEduScreen);
+  console.log('lastJsonMessage:', lastJsonMessage);
+
+  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, requestData.isPreJoin);
 
   return (
     <XtraVisionAssessmentContext.Provider
