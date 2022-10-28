@@ -16,10 +16,6 @@ export const XtraVisionAssessmentContext =
 interface XtraVisionAssessmentAppProps {
   children: ReactNode;
   videoElementRef: any;
-  // authToken: string;
-  // assessmentName: Assessment;
-  // isEduScreen: boolean;
-
   connectionData: {
     assessment_name: string;
     auth_token: string;
@@ -29,10 +25,6 @@ interface XtraVisionAssessmentAppProps {
   requestData: {
     isPreJoin?: boolean;
   };
-  // libData: {
-  //   onServerResponse(serverResponse: any): void;
-  //   cameraPosition: 'front' | 'back';
-  // }
 }
 
 const XtraVisionAssessmentProvider = ({
@@ -43,11 +35,26 @@ const XtraVisionAssessmentProvider = ({
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
+  let queryParams: { [key: string]: any } = {};
+
+  if (connectionData.auth_token) {
+    queryParams['auth_token'] = connectionData.auth_token;
+  }
+
+  if (connectionData.user_config) {
+    queryParams['user_config'] = encodeURIComponent(`${JSON.stringify(connectionData.user_config)}`);
+  }
+
+  if (connectionData.assessment_config) {
+    queryParams['assessment_config'] = encodeURIComponent(`${JSON.stringify(connectionData.assessment_config)}`);
+  }
+
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/assessment/fitness/${connectionData.assessment_name}?authToken=${connectionData.auth_token}&user_config=${connectionData.user_config}&assessment_config=${connectionData.assessment_config}`,
+    `${WS_URL}/assessment/fitness/${connectionData.assessment_name}`,
     {
+      queryParams: queryParams,
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
-    }
+    },
   );
 
   console.log('lastJsonMessage:', lastJsonMessage);
