@@ -110,6 +110,7 @@ const AssessmentPage = () => {
   const requestData = {
     isPreJoin
   }
+
   return (
     <XtraVisionAssessmentProvider
       videoElementRef={videoElementRef}

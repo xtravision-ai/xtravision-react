@@ -39,8 +39,17 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
   // assessment name you want
-  const assessmentName = Assessment.SQUATS;
-  const authToken ="__AUTH_TOKEN__";
+  const assessment_name = 'SQUATS';
+  const auth_token ="__AUTH_TOKEN__";
+
+  const connectionData = {
+    assessment_name,
+    auth_token,
+  }
+
+  const requestData = {
+    isPreJoin
+  }
 
 ```
 
@@ -48,10 +57,9 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 
 ```
     <XtraVisionAssessmentProvider
-      authToken={authToken}
       videoElementRef={videoElementRef}
-      isEduScreen={isEduScreen}
-      assessmentName={assessmentName}
+      connectionData={connectionData}
+      requestData={requestData}
     >
       {children}
     </XtraVisionAssessmentProvider>
