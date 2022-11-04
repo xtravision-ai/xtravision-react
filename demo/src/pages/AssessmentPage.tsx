@@ -100,7 +100,7 @@ const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
   const assessment_name = "SQUATS"; // enter your assessment name here
-  const auth_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzZjcwMTRlYi0yNmVmLTQ1MGItODQwNS1lYzJkOGIxYmIyZjciLCJhcHBJZCI6ImJiMzQ4MmZkLTQzY2MtMTFlZC1iYWM5LTA0OTIyNjFkY2Y3NyIsIm9yZ0lkIjoiYjg2ZmEzNDYtNDNjYy0xMWVkLWJhYzktMDQ5MjI2MWRjZjc3IiwiaWF0IjoxNjY3NDY5NDE0LCJleHAiOjE2Njc1NTU4MTR9.ISeCP4RjZp-2yiwryl1-8JRHSng_mSJEuR6lB_CA9Ss";
+  const auth_token = "_AUTH_TOKEN_";
 
   const connectionData = {
     assessment_name,
