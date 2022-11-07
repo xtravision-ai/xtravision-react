@@ -9,7 +9,7 @@ export default function usePoseClassification(
   videoEleRef: any,
   isCamOn: boolean,
   sendJsonMessage: (msg: any) => void,
-  isEduScreen: boolean
+  isEduScreen?: boolean
 ) {
   const tempKeyPointsRef = useRef<any>({}); // hold KPs temporarily
 
@@ -43,7 +43,7 @@ export default function usePoseClassification(
     interval = setInterval(() => {
       const keyPoints = Object.assign(tempKeyPointsRef.current, {});
       tempKeyPointsRef.current = {};
-      if (!_.isEmpty(keyPoints)) {
+      if (!_.isEmpty(keyPoints) && !_.isUndefined(isEduScreen)) {
         // WS SEND Kps -> 1s
         sendJsonMessage({
           timestamp: Date.now(),

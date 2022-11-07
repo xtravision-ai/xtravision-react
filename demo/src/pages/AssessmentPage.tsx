@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, } from "react";
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
@@ -19,11 +19,11 @@ const AppContainer = ({
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
   } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const assessment = lastJsonMessage?.data?.assessment;
   const repCount = lastJsonMessage?.data?.reps;
 
   const startCamera = async () => {
     try {
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
       const deviceInfos = await navigator.mediaDevices.enumerateDevices();
       let defaultCamId;
 
@@ -98,21 +98,29 @@ const AppContainer = ({
 
 const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
-  const isEduScreen = false;
-  const assessmentName = "SQUATS"; // enter your assessment name here
-  const AUTH_TOKEN = "_AUTH_TOKEN_";
+  const isPreJoin = false;
+  const assessment_name = "SQUATS"; // enter your assessment name here
+  const auth_token = "_AUTH_TOKEN_";
+
+  const connectionData = {
+    assessment_name,
+    auth_token,
+  }
+
+  const requestData = {
+    isPreJoin
+  }
 
   return (
     <XtraVisionAssessmentProvider
-      authToken={AUTH_TOKEN}
       videoElementRef={videoElementRef}
-      isEduScreen={isEduScreen}
-      assessmentName={assessmentName}
+      connectionData={connectionData}
+      requestData={requestData}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer
         videoElementRef={videoElementRef}
-        assessmentName={assessmentName}
+        assessmentName={assessment_name}
       />
     </XtraVisionAssessmentProvider>
   );
