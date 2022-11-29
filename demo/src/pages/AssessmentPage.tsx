@@ -1,4 +1,4 @@
-import React, { useRef, } from "react";
+import React, { useRef, useState } from "react";
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
@@ -7,10 +7,14 @@ import {
 type AppContainerProps = {
   videoElementRef: any;
   assessmentName: string;
+  setDisplayText: any;
+  displayText: string;
 };
 const AppContainer = ({
   videoElementRef,
   assessmentName,
+  displayText,
+  setDisplayText,
 }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
     useXtraVisionAssessmentContext();
@@ -19,7 +23,20 @@ const AppContainer = ({
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
   } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const repCount = lastJsonMessage?.data?.reps;
+  const additional_response = lastJsonMessage?.data?.additional_response;
+  const assessment = lastJsonMessage?.data?.assessment;
+
+  switch (assessment) {
+    // add more cases as per the assessment 
+    case 'GLUTE_BRIDGE':
+      setDisplayText(`in Pose: ${additional_response?.in_pose}; Reps:${additional_response?.reps?.total}`);
+      break;
+    case 'PUSH_UPS':
+      setDisplayText(`Reps: ${lastJsonMessage?.data?.reps} `);
+      break;
+    default:
+      setDisplayText(`Reps: ${lastJsonMessage?.data?.reps ?? 0} `);
+  }
 
   const startCamera = async () => {
     try {
@@ -90,21 +107,33 @@ const AppContainer = ({
 
       <div>
         <div>assessment: {assessmentName} </div>
-        <div>rep count: {repCount}</div>
+        <div>{displayText}</div>
       </div>
     </div>
   );
 };
 
 const AssessmentPage = () => {
+  const [displayText, setDisplayText] = useState() as any;
+
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
-  const assessment_name = "SQUATS"; // enter your assessment name here
-  const auth_token = "_AUTH_TOKEN_";
+  const assessment_name = "GLUTE_BRIDGE"; // enter your assessment name here
+  const auth_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkOTU1NTVkNS0wNmFhLTExZWQtOGJkYy0xMmZhYjRmZmFiZWQiLCJhcHBJZCI6IjY5YTdmMmU2LTA2YWEtMTFlZC04YmRjLTEyZmFiNGZmYWJlZCIsIm9yZ0lkIjoiNmQ5MWZlN2YtMDZhOS0xMWVkLThiZGMtMTJmYWI0ZmZhYmVkIiwiaWF0IjoxNjYwMTA3MjI0LCJleHAiOjE2OTE2NjQ4MjR9._i4MJbwPznHzxoStcRAcK7N7k_xGdUjvKwmHXv1zixM";
+  let assessment_config = {}
+  let user_config = {}
+
+  // adjust these as per time based assessment requirement 
+  assessment_config = {
+    reps_threshold: 5,
+    grace_time_threshold: 20,
+  }
 
   const connectionData = {
     assessment_name,
     auth_token,
+    assessment_config,
+    user_config
   }
 
   const requestData = {
@@ -121,6 +150,8 @@ const AssessmentPage = () => {
       <AppContainer
         videoElementRef={videoElementRef}
         assessmentName={assessment_name}
+        displayText={displayText}
+        setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
   );
