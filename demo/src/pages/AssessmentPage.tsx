@@ -119,7 +119,7 @@ const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
   const assessment_name = "GLUTE_BRIDGE"; // enter your assessment name here
-  const auth_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkOTU1NTVkNS0wNmFhLTExZWQtOGJkYy0xMmZhYjRmZmFiZWQiLCJhcHBJZCI6IjY5YTdmMmU2LTA2YWEtMTFlZC04YmRjLTEyZmFiNGZmYWJlZCIsIm9yZ0lkIjoiNmQ5MWZlN2YtMDZhOS0xMWVkLThiZGMtMTJmYWI0ZmZhYmVkIiwiaWF0IjoxNjYwMTA3MjI0LCJleHAiOjE2OTE2NjQ4MjR9._i4MJbwPznHzxoStcRAcK7N7k_xGdUjvKwmHXv1zixM";
+  const auth_token = "_AUTH_TOKEN_";
   let assessment_config = {}
   let user_config = {}
 
