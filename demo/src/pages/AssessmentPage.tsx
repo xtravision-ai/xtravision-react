@@ -32,6 +32,12 @@ const AppContainer = ({
       setDisplayText(`in Pose: ${additional_response?.in_pose}; Reps:${additional_response?.reps?.total}`);
       break;
     case 'PUSH_UPS':
+      setDisplayText(`Reps: ${additional_response?.reps?.total} `);
+      break;
+    case 'JUMPING_SQUATS':
+      setDisplayText(`Reps: ${lastJsonMessage?.data?.reps} `);
+      break;
+    case 'BURPEES':
       setDisplayText(`Reps: ${lastJsonMessage?.data?.reps} `);
       break;
     default:
@@ -118,7 +124,7 @@ const AssessmentPage = () => {
 
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
-  const assessment_name = "GLUTE_BRIDGE"; // enter your assessment name here
+  const assessment_name = "BURPEES"; // enter your assessment name here
   const auth_token = "_AUTH_TOKEN_";
   let assessment_config = {}
   let user_config = {}
