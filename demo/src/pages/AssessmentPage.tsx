@@ -34,11 +34,11 @@ const AppContainer = ({
     case 'PUSH_UPS':
       setDisplayText(`Reps: ${additional_response?.reps?.total} `);
       break;
-    case 'JUMPING_SQUATS':
-      setDisplayText(`Reps: ${lastJsonMessage?.data?.reps} `);
+    case 'JUMPING_SQUAT':
+      setDisplayText(`Reps: ${additional_response?.reps?.total} `);
       break;
     case 'BURPEES':
-      setDisplayText(`Reps: ${lastJsonMessage?.data?.reps} `);
+      setDisplayText(`Reps: ${additional_response?.reps?.total} `);
       break;
     default:
       setDisplayText(`Reps: ${lastJsonMessage?.data?.reps ?? 0} `);
@@ -124,8 +124,8 @@ const AssessmentPage = () => {
 
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
-  const assessment_name = "BURPEES"; // enter your assessment name here
-  const auth_token = "_AUTH_TOKEN_";
+  const assessment_name = "JUMPING_SQUAT"; // enter your assessment name here
+  const auth_token = "_AUTH_TOKEN_.eyJ1c2VySWQiOiIwOGRmMjM3Yi03NzljLTRlYzItYWY2Ny1iNGE5OTdlOGJjOGQiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjY5MzY3NDg1LCJleHAiOjE2NzE5NTk0ODV9.U0MHfGYZyColqrcB1VclbxTNTD2PpFzyr78f9p-hI9c";
   let assessment_config = {}
   let user_config = {}
 
