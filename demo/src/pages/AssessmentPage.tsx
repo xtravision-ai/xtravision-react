@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
@@ -21,28 +21,27 @@ const AppContainer = ({
 
   if (lastJsonMessage?.error) {
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
-  } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
+  } 
+  else {
+    console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const additional_response = lastJsonMessage?.data?.additional_response;
-  const assessment = lastJsonMessage?.data?.assessment;
+    const additional_response = lastJsonMessage?.data?.additional_response;
+    const assessment = lastJsonMessage?.data?.assessment;
 
-  switch (assessment) {
-    // add more cases as per the assessment 
-    case 'GLUTE_BRIDGE':
-      setDisplayText(`in Pose: ${additional_response?.in_pose}; Reps:${additional_response?.reps?.total}`);
-      break;
-    case 'PUSH_UPS':
-      setDisplayText(`Reps: ${additional_response?.reps?.total} `);
-      break;
-    case 'JUMPING_SQUAT':
-      setDisplayText(`Reps: ${additional_response?.reps?.total} `);
-      break;
-    case 'BURPEES':
-      setDisplayText(`Reps: ${additional_response?.reps?.total} `);
-      break;
-    default:
-      setDisplayText(`Reps: ${lastJsonMessage?.data?.reps ?? 0} `);
+    switch (assessment) {
+      // add more cases as per the assessment 
+      case 'GLUTE_BRIDGE':
+      case 'PUSH_UPS':
+      case 'JUMPING_SQUAT':
+      case 'BURPEES':
+      default:
+        setDisplayText(`In-Pose: ${additional_response?.in_pose ?? 'false'} Reps-Count: ${additional_response?.reps?.total ?? 0} `);
+    }
+
   }
+    
+
+  
 
   const startCamera = async () => {
     try {
@@ -112,7 +111,7 @@ const AppContainer = ({
       </div>
 
       <div>
-        <div>assessment: {assessmentName} </div>
+        <div>Assessment: {assessmentName} </div>
         <div>{displayText}</div>
       </div>
     </div>
@@ -124,8 +123,8 @@ const AssessmentPage = () => {
 
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
-  const assessment_name = "JUMPING_SQUAT"; // enter your assessment name here
-  const auth_token = "_AUTH_TOKEN_.eyJ1c2VySWQiOiIwOGRmMjM3Yi03NzljLTRlYzItYWY2Ny1iNGE5OTdlOGJjOGQiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjY5MzY3NDg1LCJleHAiOjE2NzE5NTk0ODV9.U0MHfGYZyColqrcB1VclbxTNTD2PpFzyr78f9p-hI9c";
+  const assessment_name = "SQUATS"; // enter your assessment name here
+  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "__AUTH_TOKEN__";
   let assessment_config = {}
   let user_config = {}
 
