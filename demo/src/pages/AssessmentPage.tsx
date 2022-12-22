@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
@@ -7,23 +7,45 @@ import {
 type AppContainerProps = {
   videoElementRef: any;
   assessmentName: string;
+  setDisplayText: any;
+  displayText: string;
 };
 const AppContainer = ({
   videoElementRef,
   assessmentName,
+  displayText,
+  setDisplayText,
 }: AppContainerProps) => {
   const { lastJsonMessage, isCamOn, setIsCamOn } =
     useXtraVisionAssessmentContext();
 
   if (lastJsonMessage?.error) {
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
-  } else console.log("lastJsonMessage: ", lastJsonMessage?.data);
+  } 
+  else {
+    console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
-  const assessment = lastJsonMessage?.data?.assessment;
-  const repCount = lastJsonMessage?.data?.reps;
+    const additional_response = lastJsonMessage?.data?.additional_response;
+    const assessment = lastJsonMessage?.data?.assessment;
+
+    switch (assessment) {
+      // add more cases as per the assessment 
+      case 'GLUTE_BRIDGE':
+      case 'PUSH_UPS':
+      case 'JUMPING_SQUAT':
+      case 'BURPEES':
+      default:
+        setDisplayText(`In-Pose: ${additional_response?.in_pose ?? 'false'} Reps-Count: ${additional_response?.reps?.total ?? 0} `);
+    }
+
+  }
+    
+
+  
 
   const startCamera = async () => {
     try {
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
       const deviceInfos = await navigator.mediaDevices.enumerateDevices();
       let defaultCamId;
 
@@ -89,30 +111,52 @@ const AppContainer = ({
       </div>
 
       <div>
-        <div>assessment: {assessmentName} </div>
-        <div>rep count: {repCount}</div>
+        <div>Assessment: {assessmentName} </div>
+        <div>{displayText}</div>
       </div>
     </div>
   );
 };
 
 const AssessmentPage = () => {
+  const [displayText, setDisplayText] = useState() as any;
+
   const videoElementRef = useRef<any>(null);
-  const isEduScreen = false;
-  const assessmentName = "SQUATS"; // enter your assessment name here
-  const AUTH_TOKEN = "_AUTH_TOKEN_";
+  const isPreJoin = false;
+  const assessment_name = "SQUATS"; // enter your assessment name here
+  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "__AUTH_TOKEN__";
+  let assessment_config = {}
+  let user_config = {}
+
+  // adjust these as per time based assessment requirement 
+  assessment_config = {
+    reps_threshold: 5,
+    grace_time_threshold: 20,
+  }
+
+  const connectionData = {
+    assessment_name,
+    auth_token,
+    assessment_config,
+    user_config
+  }
+
+  const requestData = {
+    isPreJoin
+  }
 
   return (
     <XtraVisionAssessmentProvider
-      authToken={AUTH_TOKEN}
       videoElementRef={videoElementRef}
-      isEduScreen={isEduScreen}
-      assessmentName={assessmentName}
+      connectionData={connectionData}
+      requestData={requestData}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer
         videoElementRef={videoElementRef}
-        assessmentName={assessmentName}
+        assessmentName={assessment_name}
+        displayText={displayText}
+        setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
   );
