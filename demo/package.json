@@ -1,6 +1,6 @@
 {
   "name": "xtravision-react-demo",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "dependencies": {
     "@mediapipe/camera_utils": "^0.3.1640029074",
