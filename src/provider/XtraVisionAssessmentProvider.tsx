@@ -57,8 +57,6 @@ const XtraVisionAssessmentProvider = ({
     },
   );
 
-  console.log('lastJsonMessage:', lastJsonMessage);
-
   usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, requestData.isPreJoin);
 
   return (
