@@ -34,17 +34,17 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
     "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/pose": "^0.5.1635988162"
+    "@mediapipe/pose": "^0.5.1635988162",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/pose": "^0.5.1635988162",
     "lodash": "^4.17.20",
     "react-use-websocket": "^2.9.1",
-    "web-vitals": "^2.1.0",
-    "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/pose": "^0.5.1635988162"
+    "web-vitals": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
@@ -78,9 +78,8 @@
     "deploy": "cd dist && npm publish",
     "windows:clean": "rmdir /s dist",
     "bootstrap": "yarn && yarn build:lib ",
-    "demo:setup" :  "yarn --cwd demo ",
+    "demo:setup": "yarn --cwd demo ",
     "start:local": "yarn build:lib && cd demo && REACT_APP_ENV='development' yarn start",
     "start:prod": "yarn build:lib && cd demo &&  yarn start"
-
   }
 }
