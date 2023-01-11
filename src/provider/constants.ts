@@ -7,4 +7,4 @@ if (process.env.REACT_APP_ENV && process.env.REACT_APP_ENV == 'development') {
     serverUrl = 'ws://localhost:8000/wss/v2';
 }
 
-export const WS_URL = serverUrl
+export const WS_URL = serverUrl;

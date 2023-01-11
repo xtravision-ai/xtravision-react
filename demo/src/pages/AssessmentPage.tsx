@@ -138,7 +138,8 @@ const AssessmentPage = () => {
     assessment_name,
     auth_token,
     assessment_config,
-    user_config
+    user_config,
+    session_id: null
   }
 
   const requestData = {
@@ -159,6 +160,8 @@ const AssessmentPage = () => {
         setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
+
+    
   );
 };
 
