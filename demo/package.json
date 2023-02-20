@@ -17,14 +17,16 @@
     "xtravision-react": "link:../dist/esm",
     "react-scripts": "5.0.0",
     "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "@material-ui/core": "^4.11.0",
+    "@types/react-hot-loader": "^4.1.1"
   },
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
