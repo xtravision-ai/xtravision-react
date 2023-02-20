@@ -3,8 +3,6 @@
   "version": "2.1.0",
   "private": true,
   "dependencies": {
-    "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/pose": "^0.5.1635988162",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -19,7 +17,14 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
     "@material-ui/core": "^4.11.0",
-    "@types/react-hot-loader": "^4.1.1"
+    "@material-ui/icons": "^4.9.1",
+    "@types/react-hot-loader": "^4.1.1",
+    "moment": "^2.29.1",
+    "framer-motion": "^4.1.17",
+    "react-howler": "^5.2.0",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/drawing_utils": "^0.3.1620248257",
+    "@mediapipe/pose": "^0.5.1635988162"
   },
   "peerDependencies": {
     "react": "^16.8.0",
