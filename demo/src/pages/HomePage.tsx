@@ -302,7 +302,7 @@ const Dashboard = ({ history }) => {
 
   const lastExMenu = {
     header: "",
-    menuOption: `Strength`,
+    menuOption: `Repetitions`,
     description: "Do 10 squats to see the stats",
     feature: Features.REPETITIONS,
     backgroundImage: `url('/Xtra Cards/strength.jpg')`,
@@ -311,7 +311,7 @@ const Dashboard = ({ history }) => {
   return (
     <Box className={classes.dashBoardContainer}>
       <div style={{ fontSize: "50px", fontWeight: "bold", color: "#FBFBFB" }}>
-        Welcome to XTRA demo, try the strength feature to get started!
+        Welcome to XTRA demo, try the reps feature to get started!
         <div
           style={{
             display: "flex",

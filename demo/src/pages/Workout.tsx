@@ -6,6 +6,7 @@ import {
   XtraVisionAssessmentProvider,
 } from "xtravision-react";
 import { AppRoute } from "../Routes";
+import Repetitions from "./components/Repetitions";
 
 declare global {
   interface Window {
@@ -266,6 +267,9 @@ const AppContainer = ({
 
   useEffect(() => {
     if (lastJsonMessage?.isPassed) setTimeout(() => setIsPreJoin(false), 2000);
+
+    if (lastJsonMessage?.data?.additional_response?.reps?.total === 10)
+      history.push(AppRoute.HomePage);
   }, [lastJsonMessage]);
 
   const onCancel = () => {
@@ -461,42 +465,16 @@ const AppContainer = ({
             </Box>
           </>
         ) : (
-          <></>
+          <Repetitions
+            reps={lastJsonMessage?.data?.additional_response?.reps?.total ?? 0}
+          />
         )}
       </div>
     </div>
-    // <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
-    //   <div style={{ display: "flex", flexDirection: "row" }}>
-    //     <button
-    //       onClick={() => {
-    //         startCamera();
-    //       }}
-    //       disabled={isCamOn}
-    //     >
-    //       START
-    //     </button>
-    //     <button
-    //       onClick={() => {
-    //         setIsCamOn(false);
-    //         stopCamera();
-    //       }}
-    //       disabled={!isCamOn}
-    //     >
-    //       STOP
-    //     </button>
-    //   </div>
-
-    //   <div>
-    //     <div>Assessment: {assessmentName} </div>
-    //     <div>{displayText}</div>
-    //   </div>
-    // </div>
   );
 };
 
 const Workout = ({ history }) => {
-  const feature = history?.location?.state?.feature;
-
   const { innerHeight, innerWidth } = window;
   const classes = useStyles({ innerHeight, innerWidth });
 
