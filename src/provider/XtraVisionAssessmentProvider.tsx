@@ -15,6 +15,7 @@ export const XtraVisionAssessmentContext =
 interface XtraVisionAssessmentAppProps {
   children: ReactNode;
   videoElementRef: any;
+  canvasElementRef: any;
   connectionData: {
     assessment_name: string;
     auth_token: string;
@@ -30,27 +31,34 @@ interface XtraVisionAssessmentAppProps {
 const XtraVisionAssessmentProvider = ({
   children,
   videoElementRef,
+  canvasElementRef,
   connectionData,
-  requestData
+  requestData,
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
-  let tempQueryParam = {}
-  
-  tempQueryParam['auth_token'] = connectionData.auth_token;
-  tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null ;
-  tempQueryParam['requested_at'] = Date.now();
+  let tempQueryParam = {};
+
+  tempQueryParam["auth_token"] = connectionData.auth_token;
+  tempQueryParam["session_id"] = connectionData.session_id
+    ? connectionData.session_id
+    : null;
+  tempQueryParam["requested_at"] = Date.now();
 
   if (connectionData.user_config) {
-    tempQueryParam['user_config'] = encodeURIComponent(`${JSON.stringify(connectionData.user_config)}`);
+    tempQueryParam["user_config"] = encodeURIComponent(
+      `${JSON.stringify(connectionData.user_config)}`
+    );
   }
 
   if (connectionData.assessment_config) {
-    tempQueryParam['assessment_config'] = encodeURIComponent(`${JSON.stringify(connectionData.assessment_config)}`);
+    tempQueryParam["assessment_config"] = encodeURIComponent(
+      `${JSON.stringify(connectionData.assessment_config)}`
+    );
   }
 
-  // IMP: set only once  
-  const [queryParams] = useState(tempQueryParam)
+  // IMP: set only once
+  const [queryParams] = useState(tempQueryParam);
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
     `${WS_URL}/assessment/fitness/${connectionData.assessment_name}`,
@@ -62,11 +70,18 @@ const XtraVisionAssessmentProvider = ({
       // retryOnError: true,
       // onOpen: (event: WebSocketEventMap['open']) => console.log("WS Open ===>", event),
       // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
-      onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
-    },
+      onError: (event: WebSocketEventMap["error"]) =>
+        console.error("WS Error ===>", event),
+    }
   );
 
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, requestData.isPreJoin);
+  usePoseClassification(
+    videoElementRef,
+    canvasElementRef,
+    isCamOn,
+    sendJsonMessage,
+    requestData.isPreJoin
+  );
 
   return (
     <XtraVisionAssessmentContext.Provider
