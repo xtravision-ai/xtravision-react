@@ -224,8 +224,6 @@ type AppContainerProps = {
   videoElementRef: any;
   canvasElementRef: any;
   assessmentName: string;
-  //   setDisplayText: any;
-  //   displayText: string;
 };
 const AppContainer = ({
   classes,
@@ -233,12 +231,10 @@ const AppContainer = ({
   videoElementRef,
   canvasElementRef,
   assessmentName,
-}: //   displayText,
-//   setDisplayText,
-AppContainerProps) => {
+}: AppContainerProps) => {
   //   const classes = useStyles();
 
-  const { lastJsonMessage, isCamOn, setIsCamOn } =
+  const { lastJsonMessage, isCamOn, setIsCamOn, isPreJoin, setIsPreJoin } =
     useXtraVisionAssessmentContext();
 
   if (lastJsonMessage?.error) {
@@ -266,28 +262,14 @@ AppContainerProps) => {
 
   useEffect(() => {
     getCam();
-
-    // if (!videoFileName) setVideoFileName(nanoid()); //generate video filename
-
-    return () => {
-      //   aiResRef.current = {};
-    };
   }, []);
 
+  useEffect(() => {
+    if (lastJsonMessage?.isPassed) setTimeout(() => setIsPreJoin(false), 2000);
+  }, [lastJsonMessage]);
+
   const onCancel = () => {
-    // if (classEnded) return;
-
-    // setPlaySound(CUE.TEST_ENDED);
-
-    // stopRecording();
     stopCam();
-
-    // // setClassEnded(true);
-    // clearCanvas();
-
-    // aiResRef.current = results;
-
-    // setIsTestLoading(true);
     setTimeout(() => history?.push(AppRoute.HomePage), 500);
     // setIsShowResDialog(true);
   };
@@ -324,58 +306,101 @@ AppContainerProps) => {
     videoElementRef.current.srcObject = null;
   };
 
-  const startCamera = async () => {
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-      const deviceInfos = await navigator.mediaDevices.enumerateDevices();
-      let defaultCamId;
-
-      for (let i = 0; i !== deviceInfos.length; ++i) {
-        const deviceInfo = deviceInfos[i];
-        if (deviceInfo.kind === "videoinput") {
-          defaultCamId = deviceInfo.deviceId;
-          break;
-        }
-      }
-
-      if (!defaultCamId) return;
-
-      const constraints = {
-        video: {
-          deviceId: { exact: defaultCamId },
-        },
-      };
-
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      videoElementRef.current.stream = stream;
-      videoElementRef.current.srcObject = stream;
-      videoElementRef.current.play();
-      setIsCamOn(true);
-    } catch (err) {
-      console.log(err);
-      setIsCamOn(false);
-    }
-  };
-
-  const stopCamera = () => {
-    var stream = videoElementRef.current.srcObject;
-    var tracks = stream.getTracks();
-
-    for (var i = 0; i < tracks.length; i++) {
-      var track = tracks[i];
-      track.stop();
-    }
-
-    videoElementRef.current.srcObject = null;
-  };
-
   return (
     <div className={classes.root}>
       <div className={classes.left}>
-        <video
-          ref={videoElementRef}
-          className={classes.vid} /* style={{ border: "1px solid red" }} */
-        />
+        {isPreJoin && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                height: "calc(100%/1.1)",
+                left: "calc(70%/8)",
+                top: "5%",
+                width: "calc(100%/2)",
+                zIndex: 999,
+              }}
+            >
+              <svg
+                width="100%"
+                height={`calc(100%)`}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line
+                  x1="0"
+                  x2="0"
+                  y1="0"
+                  y2="calc(100% - 75%)"
+                  className={classes.svgLine}
+                />
+                <line
+                  x1="0"
+                  x2="calc(100% - 85%)"
+                  y1="0"
+                  y2="0"
+                  className={classes.svgLine}
+                />
+
+                <line
+                  x1="calc(100%)"
+                  x2="calc(100%)"
+                  y1="0"
+                  y2="calc(100% - 75%)"
+                  className={classes.svgLine}
+                  style={{ strokeWidth: "10px" }}
+                />
+                <line
+                  x1="calc(100%)"
+                  x2="calc(100% - 15%)"
+                  y1="0"
+                  y2="0"
+                  className={classes.svgLine}
+                />
+
+                <line
+                  x1="0"
+                  x2="calc(100% - 85%)"
+                  y1="calc(100%)"
+                  y2="calc(100%)"
+                  className={classes.svgLine}
+                />
+                <line
+                  x1="0"
+                  x2="0"
+                  y1="calc(100%)"
+                  y2="calc(100% - 25%)"
+                  className={classes.svgLine}
+                />
+
+                <line
+                  x1="calc(100%)"
+                  x2="calc(100% - 15%)"
+                  y1="calc(100%)"
+                  y2="calc(100%)"
+                  className={classes.svgLine}
+                />
+                <line
+                  x1="calc(100%)"
+                  x2="calc(100%)"
+                  y1="calc(100%)"
+                  y2="calc(100% - 25%)"
+                  className={classes.svgLine}
+                  style={{ strokeWidth: "10px" }}
+                />
+              </svg>
+            </div>
+            <div
+              className={classes.videoFrame}
+              style={{
+                background: !lastJsonMessage?.isPassed
+                  ? "linear-gradient(156.43deg, rgba(255, 180, 79, 0.21) 0%, rgba(255, 60, 71, 0.65) 100%)"
+                  : "linear-gradient(156.43deg, rgba(24, 255, 255, 0.22275) 0%, #00B8D4 100%)",
+              }}
+            ></div>
+          </>
+        )}
+
+        <video ref={videoElementRef} className={classes.vid}></video>
         <canvas ref={canvasElementRef} className={classes.canvasVid}></canvas>
       </div>
       <div className={classes.right}>
@@ -396,7 +421,49 @@ AppContainerProps) => {
           style={{ color: "red" }}
         />
       </div>
-      <div className={classes.featureCntr}></div>
+      <div className={classes.featureCntr}>
+        {isPreJoin ? (
+          <>
+            <div className={classes.eduMsgCntr}>{lastJsonMessage?.message}</div>
+            <div className={classes.educationCircleContainer}>
+              <div
+                className={classes.educationCircle}
+                style={{
+                  width: "calc(100vw/7.5)",
+                  height: "calc(100vw/7.5)",
+                }}
+              ></div>
+              <div
+                className={classes.educationCircle}
+                style={{
+                  width: "calc(100vw/9.5)",
+                  height: "calc(100vw/9.5)",
+                }}
+              ></div>
+              <div
+                className={classes.educationCircle}
+                style={{
+                  width: "calc(100vw/13.5)",
+                  height: "calc(100vw/13.5)",
+                }}
+              ></div>
+            </div>
+            <Box className={classes.actionButtons}>
+              <Button
+                color="primary"
+                onClick={() => setIsPreJoin(false)}
+                variant="outlined"
+              >
+                <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
+                  Skip Education
+                </Typography>
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
     // <div style={{ backgroundColor: "#D3D3D3", padding: "30px" }}>
     //   <div style={{ display: "flex", flexDirection: "row" }}>
@@ -433,14 +500,10 @@ const Workout = ({ history }) => {
   const { innerHeight, innerWidth } = window;
   const classes = useStyles({ innerHeight, innerWidth });
 
-  //   console.log("feature > ", feature);
-
-  //   const [displayText, setDisplayText] = useState() as any;
-
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const isPreJoin = false;
+  const isPreJoin = true;
   const assessment_name = "SQUATS"; // enter your assessment name here
   const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN
     ? process.env.REACT_APP_XTRA_AUTH_TOKEN
@@ -479,8 +542,6 @@ const Workout = ({ history }) => {
         videoElementRef={videoRef}
         canvasElementRef={canvasRef}
         assessmentName={assessment_name}
-        //   displayText={displayText}
-        //   setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
   );
