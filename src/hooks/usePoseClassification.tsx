@@ -110,7 +110,7 @@ export default function usePoseClassification(
     return () => {
       cleanUp();
     };
-  }, [isCamOn, sendJsonMessage]);
+  }, [isCamOn, sendJsonMessage, isEduScreen]);
 
   // draw landmarks
   const drawLandmarksHandler = (landmarks: any) => {

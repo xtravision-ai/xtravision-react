@@ -7,6 +7,8 @@ export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
   isCamOn: boolean;
   setIsCamOn: (isCamOn: boolean) => void;
+  isPreJoin: boolean;
+  setIsPreJoin: (isPreJoin: boolean) => void;
 }
 
 export const XtraVisionAssessmentContext =
@@ -36,6 +38,9 @@ const XtraVisionAssessmentProvider = ({
   requestData,
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
+  const [isPreJoin, setIsPreJoin] = useState<boolean>(
+    requestData?.isPreJoin ?? true
+  );
 
   let tempQueryParam = {};
 
@@ -80,7 +85,7 @@ const XtraVisionAssessmentProvider = ({
     canvasElementRef,
     isCamOn,
     sendJsonMessage,
-    requestData.isPreJoin
+    isPreJoin
   );
 
   return (
@@ -89,6 +94,8 @@ const XtraVisionAssessmentProvider = ({
         lastJsonMessage,
         isCamOn,
         setIsCamOn,
+        isPreJoin,
+        setIsPreJoin,
       }}
     >
       {children}
