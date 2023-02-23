@@ -1,1 +1,1 @@
-declare module 'xtravision-react';
+declare module "xtravision-react";
