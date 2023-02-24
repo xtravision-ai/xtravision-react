@@ -61,7 +61,7 @@ const XtraVisionAssessmentProvider = ({
       // reconnectAttempts: 5,
       // retryOnError: true,
       // onOpen: (event: WebSocketEventMap['open']) => console.log("WS Open ===>", event),
-      // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
+      onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
       onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
     },
   );

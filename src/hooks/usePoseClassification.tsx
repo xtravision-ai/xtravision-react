@@ -43,7 +43,7 @@ export default function usePoseClassification(
     interval = setInterval(() => {
       const keyPoints = Object.assign(tempKeyPointsRef.current, {});
       tempKeyPointsRef.current = {};
-      if (!_.isEmpty(keyPoints) && !_.isUndefined(isEduScreen)) {
+      if (!_.isEmpty(keyPoints)) {
         // WS SEND Kps -> 1s
         sendJsonMessage({
           timestamp: Date.now(),

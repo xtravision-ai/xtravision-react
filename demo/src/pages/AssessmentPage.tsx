@@ -21,7 +21,7 @@ const AppContainer = ({
 
   if (lastJsonMessage?.error) {
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
-  } 
+  }
   else {
     console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
@@ -39,9 +39,6 @@ const AppContainer = ({
     }
 
   }
-    
-
-  
 
   const startCamera = async () => {
     try {
@@ -69,7 +66,6 @@ const AppContainer = ({
       videoElementRef.current.stream = stream;
       videoElementRef.current.srcObject = stream;
       videoElementRef.current.play();
-      setIsCamOn(true);
     } catch (err) {
       console.log(err);
       setIsCamOn(false);
@@ -86,6 +82,7 @@ const AppContainer = ({
     }
 
     videoElementRef.current.srcObject = null;
+
   };
 
   return (
@@ -93,6 +90,7 @@ const AppContainer = ({
       <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
+            setIsCamOn(true);
             startCamera();
           }}
           disabled={isCamOn}
@@ -124,7 +122,8 @@ const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
   const assessment_name = "SQUATS"; // enter your assessment name here
-  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "__AUTH_TOKEN__";
+  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "_AUTH_TOKEN_";
+  // const auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwOGRmMjM3Yi03NzljLTRlYzItYWY2Ny1iNGE5OTdlOGJjOGQiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjc3MjE5MTM3LCJleHAiOjE2Nzk4MTExMzd9.CkKKLtXQpLyCCkUXYrcOq0W-GZ7KMhDJg_n7YtCD3QM'
   let assessment_config = {}
   let user_config = {}
 
@@ -152,7 +151,7 @@ const AssessmentPage = () => {
       connectionData={connectionData}
       requestData={requestData}
     >
-      <video ref={videoElementRef} style={{ border: "1px solid red" }} />
+      <video ref={videoElementRef} style={{ border: "1px solid red", transform: 'rotateY(180deg)', }} />
       <AppContainer
         videoElementRef={videoElementRef}
         assessmentName={assessment_name}
@@ -161,7 +160,7 @@ const AssessmentPage = () => {
       />
     </XtraVisionAssessmentProvider>
 
-    
+
   );
 };
 

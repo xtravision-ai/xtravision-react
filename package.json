@@ -76,7 +76,7 @@
     "build": "tsc",
     "build:windows": "yarn windows:clean && yarn build && yarn build:lib",
     "deploy": "cd dist && npm publish",
-    "windows:clean": "rmdir /s dist",
+    "windows:clean": "rmdir /s dist && build:lib",
     "bootstrap": "yarn && yarn build:lib ",
     "demo:setup": "yarn --cwd demo ",
     "start:local": "yarn build:lib && cd demo && REACT_APP_ENV='development' yarn start",
