@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#FBFBFB",
     padding: "20px",
     [theme.breakpoints.down("lg")]: {
-      fontSize: "60px",
+      fontSize: "50px",
     },
     [theme.breakpoints.down("md")]: {
       fontSize: "40px",
