@@ -36,9 +36,9 @@ const XtraVisionAssessmentProvider = ({
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
 
   let tempQueryParam = {}
-  
+
   tempQueryParam['auth_token'] = connectionData.auth_token;
-  tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null ;
+  tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null;
   tempQueryParam['requested_at'] = Date.now();
 
   if (connectionData.user_config) {
@@ -61,7 +61,7 @@ const XtraVisionAssessmentProvider = ({
       // reconnectAttempts: 5,
       // retryOnError: true,
       // onOpen: (event: WebSocketEventMap['open']) => console.log("WS Open ===>", event),
-      onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
+      // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
       onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
     },
   );

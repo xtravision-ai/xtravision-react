@@ -66,6 +66,8 @@ const AppContainer = ({
       videoElementRef.current.stream = stream;
       videoElementRef.current.srcObject = stream;
       videoElementRef.current.play();
+      // turn camera on after vid ref has been set
+      setIsCamOn(true);
     } catch (err) {
       console.log(err);
       setIsCamOn(false);
@@ -81,8 +83,10 @@ const AppContainer = ({
       track.stop();
     }
 
+    if (videoElementRef.current === null) return;
+    videoElementRef.current.stream = null;
     videoElementRef.current.srcObject = null;
-
+    setIsCamOn(false);
   };
 
   return (
@@ -90,7 +94,6 @@ const AppContainer = ({
       <div style={{ display: "flex", flexDirection: "row" }}>
         <button
           onClick={() => {
-            setIsCamOn(true);
             startCamera();
           }}
           disabled={isCamOn}
@@ -122,8 +125,8 @@ const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
   const assessment_name = "SQUATS"; // enter your assessment name here
-  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "_AUTH_TOKEN_";
-  // const auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwOGRmMjM3Yi03NzljLTRlYzItYWY2Ny1iNGE5OTdlOGJjOGQiLCJhcHBJZCI6Ijk1ZWFjZDQ1LTgyZjUtMTFlYy1hOWY1LWE0YmI2ZDZlZGM0ZSIsIm9yZ0lkIjoiZGQ4MzA1OWMtODJmMy0xMWVjLWE5ZjUtYTRiYjZkNmVkYzRlIiwiaWF0IjoxNjc3MjE5MTM3LCJleHAiOjE2Nzk4MTExMzd9.CkKKLtXQpLyCCkUXYrcOq0W-GZ7KMhDJg_n7YtCD3QM'
+  // const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkOTU1NTVkNS0wNmFhLTExZWQtOGJkYy0xMmZhYjRmZmFiZWQiLCJhcHBJZCI6IjY5YTdmMmU2LTA2YWEtMTFlZC04YmRjLTEyZmFiNGZmYWJlZCIsIm9yZ0lkIjoiNmQ5MWZlN2YtMDZhOS0xMWVkLThiZGMtMTJmYWI0ZmZhYmVkIiwiaWF0IjoxNjYwMTA3MjI0LCJleHAiOjE2OTE2NjQ4MjR9._i4MJbwPznHzxoStcRAcK7N7k_xGdUjvKwmHXv1zixM";
+  const auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkOTU1NTVkNS0wNmFhLTExZWQtOGJkYy0xMmZhYjRmZmFiZWQiLCJhcHBJZCI6IjY5YTdmMmU2LTA2YWEtMTFlZC04YmRjLTEyZmFiNGZmYWJlZCIsIm9yZ0lkIjoiNmQ5MWZlN2YtMDZhOS0xMWVkLThiZGMtMTJmYWI0ZmZhYmVkIiwiaWF0IjoxNjYwMTA3MjI0LCJleHAiOjE2OTE2NjQ4MjR9._i4MJbwPznHzxoStcRAcK7N7k_xGdUjvKwmHXv1zixM'
   let assessment_config = {}
   let user_config = {}
 
