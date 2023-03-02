@@ -20,6 +20,7 @@ interface XtraAppProviderProps {
   authToken: string;
   sessionId: string;
   videoElementRef: any;
+  canvasElementRef: any;
   isEduScreen: boolean;
 }
 
@@ -30,6 +31,7 @@ const XtraVisionOnDemandProvider = ({
   features, // Array of features
   children,
   videoElementRef,
+  canvasElementRef,
   isEduScreen,
 }: XtraAppProviderProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
@@ -45,7 +47,13 @@ const XtraVisionOnDemandProvider = ({
   );
 
   // pose -> send keypoints 1s
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, isEduScreen);
+  usePoseClassification(
+    videoElementRef,
+    canvasElementRef,
+    isCamOn,
+    sendJsonMessage,
+    isEduScreen
+  );
 
   return (
     <XtraVisionOnDemandContext.Provider

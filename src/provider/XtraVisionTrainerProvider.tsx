@@ -1,8 +1,8 @@
-import usePoseClassification from '../hooks/usePoseClassification';
-import useParseResponse from '../hooks/useParseResponse';
-import React, { createContext, ReactNode, useState } from 'react';
-import useWebSocket from 'react-use-websocket';
-import { ClassCategory, Features } from '../constants';
+import usePoseClassification from "../hooks/usePoseClassification";
+import useParseResponse from "../hooks/useParseResponse";
+import React, { createContext, ReactNode, useState } from "react";
+import useWebSocket from "react-use-websocket";
+import { ClassCategory, Features } from "../constants";
 import { WS_URL } from "../provider/constants";
 
 export interface IXtraVisionTrainerContext {
@@ -32,6 +32,7 @@ interface Props {
   isOnDemand: boolean;
   trainerId?: string;
   videoElementRef: any;
+  canvasElementRef: any;
   classStartTime: Date;
 }
 
@@ -43,6 +44,7 @@ const XtraVisionTrainerProvider = ({
   features, // Array of features
   children,
   videoElementRef,
+  canvasElementRef,
   classStartTime,
 }: Props) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
@@ -60,7 +62,7 @@ const XtraVisionTrainerProvider = ({
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
     `${WS_URL}/${classCategory}/${clientScheduleId}`,
     {
-      onOpen: (e) => console.log(' ws connected'),
+      onOpen: (e) => console.log(" ws connected"),
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
       onError: (e) => console.log(e),
       queryParams,
@@ -68,7 +70,13 @@ const XtraVisionTrainerProvider = ({
   );
 
   // pose -> send keypoints 1s
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, false);
+  usePoseClassification(
+    videoElementRef,
+    canvasElementRef,
+    isCamOn,
+    sendJsonMessage,
+    false
+  );
 
   // receive data from server
   const {
