@@ -20,6 +20,7 @@
     "@types/react-router-dom": "^5.3.3",
     "framer-motion": "^4.1.17",
     "moment": "^2.29.1",
+    "react-circular-progressbar": "^2.1.0",
     "react-howler": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",

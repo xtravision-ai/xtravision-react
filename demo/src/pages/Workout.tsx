@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Box, Button, makeStyles, Typography } from "@material-ui/core";
-import CallEndIcon from "@material-ui/icons/CallEnd";
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import CallEndIcon from '@material-ui/icons/CallEnd';
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
-} from "xtravision-react";
-import { AppRoute } from "../Routes";
-import Repetitions from "./components/Repetitions";
+} from 'xtravision-react';
+import { AppRoute } from '../Routes';
+import Repetitions from './components/Repetitions';
+import { Assessment } from '../common';
+import RangeOfMotion from './components/RangeOfMotion';
+import TimeUnderLoad from './components/TimeUnderLoad';
 
 declare global {
   interface Window {
@@ -16,206 +19,206 @@ declare global {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    background: "#1E1E1E",
-    width: "100vw",
-    height: "100vh",
-    overflow: "hidden",
+    display: 'flex',
+    background: '#1E1E1E',
+    width: '100vw',
+    height: '100vh',
+    overflow: 'hidden',
   },
   left: {
-    width: "70%",
-    background: "grey",
-    borderRadius: "0px 40px 40px 0px",
+    width: '70%',
+    background: 'grey',
+    borderRadius: '0px 40px 40px 0px',
   },
   right: {
-    width: "30%",
-    background: "#1E1E1E",
+    width: '30%',
+    background: '#1E1E1E',
   },
   videoFrame: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
-    marginRight: "calc(100%/3)",
-    width: "calc(100%/2)",
-    height: "calc(100%/1.1)",
-    left: "calc(70%/8)",
-    top: "5vh",
-    opacity: "0.5",
+    marginRight: 'calc(100%/3)',
+    width: 'calc(100%/2)',
+    height: 'calc(100%/1.1)',
+    left: 'calc(70%/8)',
+    top: '5vh',
+    opacity: '0.5',
     boxShadow:
-      "0px 0px 41px #FFB44F, 0px 0px 17.8734px rgba(24, 255, 255, 0.22275), 0px 0px 6.6625px #FFB44F, 0px 0px 2.37031px rgba(24, 255, 255, 0.10725)",
-    borderRadius: "8px",
+      '0px 0px 41px #FFB44F, 0px 0px 17.8734px rgba(24, 255, 255, 0.22275), 0px 0px 6.6625px #FFB44F, 0px 0px 2.37031px rgba(24, 255, 255, 0.10725)',
+    borderRadius: '8px',
   },
   leaveBtn: {
-    right: "20px",
-    top: "30px",
-    position: "absolute",
-    fontSize: "bold",
-    cursor: "pointer",
+    right: '20px',
+    top: '30px',
+    position: 'absolute',
+    fontSize: 'bold',
+    cursor: 'pointer',
   },
   logoDiv: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   featureCntr: {
-    position: "absolute",
-    right: "5%",
-    top: "15%",
-    borderRadius: "10px",
-    background: "#2C2F3A",
+    position: 'absolute',
+    right: '5%',
+    top: '15%',
+    borderRadius: '10px',
+    background: '#2C2F3A',
     boxShadow:
-      "0px 0px 34px rgba(0, 0, 0, 0.26), 0px 0px 17.7344px rgba(0, 0, 0, 0.188032), 0px 0px 8.3232px rgba(0, 0, 0, 0.146016), 0px 0px 3.6448px rgba(0, 0, 0, 0.113984), 0px 0px 1.5776px rgba(0, 0, 0, 0.071968)",
-    minHeight: "80vh", //'({ innerHeight }: any) => innerHeight - innerHeight / 3',
+      '0px 0px 34px rgba(0, 0, 0, 0.26), 0px 0px 17.7344px rgba(0, 0, 0, 0.188032), 0px 0px 8.3232px rgba(0, 0, 0, 0.146016), 0px 0px 3.6448px rgba(0, 0, 0, 0.113984), 0px 0px 1.5776px rgba(0, 0, 0, 0.071968)',
+    minHeight: '80vh', //'({ innerHeight }: any) => innerHeight - innerHeight / 3',
     width: ({ innerWidth }: any) => innerWidth - innerWidth / 1.4,
     zIndex: 999,
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
   },
   vid: {
-    height: "100%",
-    objectFit: "cover",
-    width: "100%",
-    transform: "rotateY(180deg)",
-    borderRadius: "40px 0px 0px 4px",
+    height: '100%',
+    objectFit: 'cover',
+    width: '100%',
+    transform: 'rotateY(180deg)',
+    borderRadius: '40px 0px 0px 4px',
   },
   canvasVid: {
-    height: "100vh", //({ innerHeight }: any) => innerHeight,
-    width: "70%", // ({ innerWidth }: any) => innerWidth,
-    transform: "rotateY(180deg)",
-    position: "absolute",
+    height: '100vh', //({ innerHeight }: any) => innerHeight,
+    width: '70%', // ({ innerWidth }: any) => innerWidth,
+    transform: 'rotateY(180deg)',
+    position: 'absolute',
     // objectFit: 'cover', //
     left: 0,
     top: 0,
-    borderRadius: "40px 0px 0px 4px",
+    borderRadius: '40px 0px 0px 4px',
   },
   eduMsgCntr: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "center",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: "50px",
-    lineHeight: "120%",
-    letterSpacing: "-0.0368em",
-    color: "#FBFBFB",
-    padding: "20px",
-    height: "50%",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "30px",
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: '50px',
+    lineHeight: '120%',
+    letterSpacing: '-0.0368em',
+    color: '#FBFBFB',
+    padding: '20px',
+    height: '50%',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '30px',
     },
   },
   prejoinCountContainer: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 9,
-    left: "40%",
-    bottom: "40%",
-    color: "#fff",
+    left: '40%',
+    bottom: '40%',
+    color: '#fff',
   },
   prejoinCount: {
-    borderRadius: "50%",
-    height: "300px",
-    width: "300px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    borderRadius: '50%',
+    height: '300px',
+    width: '300px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   prejoinCountTxt: {
-    fontSize: "200px",
-    fontWeight: "bold",
+    fontSize: '200px',
+    fontWeight: 'bold',
   },
   actionButtons: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingRight: "20px",
-    paddingBottom: "20px",
-    bottom: "0",
-    right: "0",
-    position: "absolute",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: '20px',
+    paddingBottom: '20px',
+    bottom: '0',
+    right: '0',
+    position: 'absolute',
   },
   bodyAnglesItm: {
-    display: "flex",
-    flexDirection: "column",
-    padding: "5px 20px 5px 10px",
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '5px 20px 5px 10px',
   },
   bodyAnglesTxt: {
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "center",
-    fontSize: "20px",
-    color: "#fff",
-    marginBottom: "5px",
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    fontSize: '20px',
+    color: '#fff',
+    marginBottom: '5px',
   },
   bodyAnglesVal: {
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   bodyAnglesSubVal: {
-    display: "flex",
-    fontSize: "30px",
-    gap: "10px",
+    display: 'flex',
+    fontSize: '30px',
+    gap: '10px',
   },
   bodyAnglesInfo: {
-    marginTop: "-10px",
+    marginTop: '-10px',
   },
   bodyAnglesContainer: {
-    position: "absolute",
-    bottom: "75px",
-    right: "25px",
-    height: "650px",
-    width: "380px",
-    background: "rgba(0, 0, 0, 0.4)",
-    color: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    borderRadius: "20px",
-    fontFamily: "CircularStd",
-    border: "2px solid #fff",
+    position: 'absolute',
+    bottom: '75px',
+    right: '25px',
+    height: '650px',
+    width: '380px',
+    background: 'rgba(0, 0, 0, 0.4)',
+    color: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '20px',
+    fontFamily: 'CircularStd',
+    border: '2px solid #fff',
   },
   correctiveFB: {
-    background: "#2C2F3A",
-    color: "#FBFBFB",
-    fontWeight: "bold",
-    fontSize: "65px",
-    lineHeight: "120%",
+    background: '#2C2F3A',
+    color: '#FBFBFB',
+    fontWeight: 'bold',
+    fontSize: '65px',
+    lineHeight: '120%',
     zIndex: 999,
-    position: "absolute",
-    bottom: "50px",
-    left: "10px",
-    padding: "0px 5px 0px 5px",
-    maxWidth: "68%",
+    position: 'absolute',
+    bottom: '50px',
+    left: '10px',
+    padding: '0px 5px 0px 5px',
+    maxWidth: '68%',
   },
   svgLine: {
-    stroke: "#ffb44f",
-    strokeWidth: "10px",
+    stroke: '#ffb44f',
+    strokeWidth: '10px',
   },
   educationCircleContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     // marginTop: '15vh',
-    height: "inherit",
-    transform: "translateY(15vh)",
+    height: 'inherit',
+    transform: 'translateY(15vh)',
   },
   educationCircle: {
-    position: "absolute",
-    background: "#FF823C",
-    opacity: "0.1",
-    justifyContent: "center",
-    borderRadius: "300px",
+    position: 'absolute',
+    background: '#FF823C',
+    opacity: '0.1',
+    justifyContent: 'center',
+    borderRadius: '300px',
   },
   instructionMsgContainer: {
-    background: "#2C2F3A",
-    color: "#FBFBFB",
-    fontWeight: "bold",
-    fontSize: "58px",
-    lineHeight: "120%",
+    background: '#2C2F3A',
+    color: '#FBFBFB',
+    fontWeight: 'bold',
+    fontSize: '58px',
+    lineHeight: '120%',
     zIndex: 999,
-    position: "absolute",
-    bottom: "50px",
-    left: "10px",
-    padding: "0px 5px 0px 5px",
-    maxWidth: "68%",
+    position: 'absolute',
+    bottom: '50px',
+    left: '10px',
+    padding: '0px 5px 0px 5px',
+    maxWidth: '68%',
   },
 }));
 
@@ -239,26 +242,13 @@ const AppContainer = ({
     useXtraVisionAssessmentContext();
 
   if (lastJsonMessage?.error) {
-    // console.log("lastJsonMessage: ", lastJsonMessage?.error);
+    console.log('lastJsonMessage: ', lastJsonMessage.error);
   } else {
-    // console.log("lastJsonMessage: ", lastJsonMessage?.data);
+    console.log('lastJsonMessage: ', lastJsonMessage?.data);
 
-    const additional_response = lastJsonMessage?.data?.additional_response;
-    const assessment = lastJsonMessage?.data?.assessment;
-
-    switch (assessment) {
-      // add more cases as per the assessment
-      case "GLUTE_BRIDGE":
-      case "PUSH_UPS":
-      case "JUMPING_SQUAT":
-      case "BURPEES":
-      default:
-      // setDisplayText(
-      //   `In-Pose: ${additional_response?.in_pose ?? "false"} Reps-Count: ${
-      //     additional_response?.reps?.total ?? 0
-      //   } `
-      // );
-    }
+    // const additional_response = lastJsonMessage?.data?.additional_response;
+    // console.log(additional_response);
+    // const assessment = lastJsonMessage?.data?.assessment;
   }
 
   useEffect(() => {
@@ -317,11 +307,11 @@ const AppContainer = ({
           <>
             <div
               style={{
-                position: "absolute",
-                height: "calc(100%/1.1)",
-                left: "calc(70%/8)",
-                top: "5%",
-                width: "calc(100%/2)",
+                position: 'absolute',
+                height: 'calc(100%/1.1)',
+                left: 'calc(70%/8)',
+                top: '5%',
+                width: 'calc(100%/2)',
                 zIndex: 999,
               }}
             >
@@ -351,7 +341,7 @@ const AppContainer = ({
                   y1="0"
                   y2="calc(100% - 75%)"
                   className={classes.svgLine}
-                  style={{ strokeWidth: "10px" }}
+                  style={{ strokeWidth: '10px' }}
                 />
                 <line
                   x1="calc(100%)"
@@ -389,7 +379,7 @@ const AppContainer = ({
                   y1="calc(100%)"
                   y2="calc(100% - 25%)"
                   className={classes.svgLine}
-                  style={{ strokeWidth: "10px" }}
+                  style={{ strokeWidth: '10px' }}
                 />
               </svg>
             </div>
@@ -397,8 +387,8 @@ const AppContainer = ({
               className={classes.videoFrame}
               style={{
                 background: !lastJsonMessage?.isPassed
-                  ? "linear-gradient(156.43deg, rgba(255, 180, 79, 0.21) 0%, rgba(255, 60, 71, 0.65) 100%)"
-                  : "linear-gradient(156.43deg, rgba(24, 255, 255, 0.22275) 0%, #00B8D4 100%)",
+                  ? 'linear-gradient(156.43deg, rgba(255, 180, 79, 0.21) 0%, rgba(255, 60, 71, 0.65) 100%)'
+                  : 'linear-gradient(156.43deg, rgba(24, 255, 255, 0.22275) 0%, #00B8D4 100%)',
               }}
             ></div>
           </>
@@ -413,7 +403,7 @@ const AppContainer = ({
             src={`/assets/logo-new.svg`}
             alt="logo"
             width="150px"
-            style={{ marginLeft: "15px", padding: "30px" }}
+            style={{ marginLeft: '15px', padding: '30px' }}
           />
         </div>
 
@@ -422,7 +412,7 @@ const AppContainer = ({
           className={classes.leaveBtn}
           fontSize="large"
           color="secondary"
-          style={{ color: "red" }}
+          style={{ color: 'red' }}
         />
       </div>
       <div className={classes.featureCntr}>
@@ -433,22 +423,22 @@ const AppContainer = ({
               <div
                 className={classes.educationCircle}
                 style={{
-                  width: "calc(100vw/7.5)",
-                  height: "calc(100vw/7.5)",
+                  width: 'calc(100vw/7.5)',
+                  height: 'calc(100vw/7.5)',
                 }}
               ></div>
               <div
                 className={classes.educationCircle}
                 style={{
-                  width: "calc(100vw/9.5)",
-                  height: "calc(100vw/9.5)",
+                  width: 'calc(100vw/9.5)',
+                  height: 'calc(100vw/9.5)',
                 }}
               ></div>
               <div
                 className={classes.educationCircle}
                 style={{
-                  width: "calc(100vw/13.5)",
-                  height: "calc(100vw/13.5)",
+                  width: 'calc(100vw/13.5)',
+                  height: 'calc(100vw/13.5)',
                 }}
               ></div>
             </div>
@@ -458,16 +448,28 @@ const AppContainer = ({
                 onClick={() => setIsPreJoin(false)}
                 variant="outlined"
               >
-                <Typography variant="subtitle2" style={{ fontWeight: "bold" }}>
+                <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
                   Skip Education
                 </Typography>
               </Button>
             </Box>
           </>
-        ) : (
+        ) : assessmentName === Assessment.SQUATS ? (
           <Repetitions
             reps={lastJsonMessage?.data?.additional_response?.reps?.total ?? 0}
           />
+        ) : assessmentName === Assessment.RANGE_OF_MOTION ? (
+          <RangeOfMotion angles={lastJsonMessage?.data?.angles ?? {}} />
+        ) : assessmentName === Assessment.SIDE_FLAMINGO ? (
+          <TimeUnderLoad
+            timeLeft={
+              60 - (lastJsonMessage?.data?.additional_response?.seconds ?? 0)
+            }
+            restTimeLeft={0}
+            prediction={'prediction'}
+          />
+        ) : (
+          <></>
         )}
       </div>
     </div>
@@ -482,10 +484,10 @@ const Workout = ({ history }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const isPreJoin = true;
-  const assessment_name = "SQUATS"; // enter your assessment name here
+  const assessment_name = history?.location?.state?.assessment_name ?? 'SQUATS'; // enter your assessment name here
   const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN
     ? process.env.REACT_APP_XTRA_AUTH_TOKEN
-    : "__AUTH_TOKEN__";
+    : '__AUTH_TOKEN__';
   let assessment_config = {};
   let user_config = {};
 

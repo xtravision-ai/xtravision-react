@@ -23,11 +23,8 @@ export const backPoseConnections: Array<[number, number]> = [
 ];
 
 // new demo feature based
-export enum Features {
-  REPETITIONS = "REPETITIONS",
-  TIME_UNDER_LOAD = "TIME_UNDER_LOAD",
-  CORRECTIVE_FEEDBACK = "CORRECTIVE_FEEDBACK",
-  OVERHEAD_SQUAT_ANALYSIS = "OVERHEAD_SQUAT_ANALYSIS",
-  RANGE_OF_MOTION = "RANGE_OF_MOTION",
-  CARDIO = "CARDIO",
+export enum Assessment {
+  SQUATS = 'SQUATS',
+  RANGE_OF_MOTION = 'RANGE_OF_MOTION',
+  SIDE_FLAMINGO = 'SIDE_FLAMINGO',
 }
