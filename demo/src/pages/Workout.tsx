@@ -242,7 +242,7 @@ const AppContainer = ({
     useXtraVisionAssessmentContext();
 
   if (lastJsonMessage?.error) {
-    console.log('lastJsonMessage: ', lastJsonMessage.error);
+    console.error('lastJsonMessage-error: ', lastJsonMessage.error);
   } else {
     console.log('lastJsonMessage: ', lastJsonMessage?.data);
 

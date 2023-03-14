@@ -71,9 +71,13 @@ export default function usePoseClassification(
   // mediapipe response fps
   const resultsCallback = useCallback((results) => {
     const landmarks = results.poseLandmarks ?? {};
-    tempKeyPointsRef.current[Date.now()] = { landmarks };
 
-    drawLandmarksHandler(landmarks);
+    // do not send any request if landmark is empty
+    if (!_.isEmpty(landmarks)){
+      tempKeyPointsRef.current[Date.now()] = { landmarks };
+      drawLandmarksHandler(landmarks);
+    }
+    
   }, []);
 
   // start/stop pose model on `isCamOn`
