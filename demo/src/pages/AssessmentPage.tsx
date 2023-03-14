@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, useState } from "react";
 import {
   useXtraVisionAssessmentContext,
@@ -21,27 +22,26 @@ const AppContainer = ({
 
   if (lastJsonMessage?.error) {
     console.log("lastJsonMessage: ", lastJsonMessage?.error);
-  } 
-  else {
+  } else {
     console.log("lastJsonMessage: ", lastJsonMessage?.data);
 
     const additional_response = lastJsonMessage?.data?.additional_response;
     const assessment = lastJsonMessage?.data?.assessment;
 
     switch (assessment) {
-      // add more cases as per the assessment 
-      case 'GLUTE_BRIDGE':
-      case 'PUSH_UPS':
-      case 'JUMPING_SQUAT':
-      case 'BURPEES':
+      // add more cases as per the assessment
+      case "GLUTE_BRIDGE":
+      case "PUSH_UPS":
+      case "JUMPING_SQUAT":
+      case "BURPEES":
       default:
-        setDisplayText(`In-Pose: ${additional_response?.in_pose ?? 'false'} Reps-Count: ${additional_response?.reps?.total ?? 0} `);
+        setDisplayText(
+          `In-Pose: ${additional_response?.in_pose ?? "false"} Reps-Count: ${
+            additional_response?.reps?.total ?? 0
+          } `
+        );
     }
-
   }
-    
-
-  
 
   const startCamera = async () => {
     try {
@@ -124,27 +124,29 @@ const AssessmentPage = () => {
   const videoElementRef = useRef<any>(null);
   const isPreJoin = false;
   const assessment_name = "SQUATS"; // enter your assessment name here
-  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN ? process.env.REACT_APP_XTRA_AUTH_TOKEN : "__AUTH_TOKEN__";
-  let assessment_config = {}
-  let user_config = {}
+  const auth_token = process.env.REACT_APP_XTRA_AUTH_TOKEN
+    ? process.env.REACT_APP_XTRA_AUTH_TOKEN
+    : "__AUTH_TOKEN__";
+  let assessment_config = {};
+  let user_config = {};
 
-  // adjust these as per time based assessment requirement 
+  // adjust these as per time based assessment requirement
   assessment_config = {
     reps_threshold: 5,
     grace_time_threshold: 20,
-  }
+  };
 
   const connectionData = {
     assessment_name,
     auth_token,
     assessment_config,
     user_config,
-    session_id: null
-  }
+    session_id: null,
+  };
 
   const requestData = {
-    isPreJoin
-  }
+    isPreJoin,
+  };
 
   return (
     <XtraVisionAssessmentProvider

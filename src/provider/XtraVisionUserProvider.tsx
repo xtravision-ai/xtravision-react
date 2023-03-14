@@ -1,9 +1,9 @@
-import React, { createContext, ReactNode, useState } from 'react';
-import useWebSocket from 'react-use-websocket';
-import { ClassCategory, Features } from '../constants';
-import useParseResponse from '../hooks/useParseResponse';
-import usePoseClassification from '../hooks/usePoseClassification';
-import { WS_URL } from './constants';
+import React, { createContext, ReactNode, useState } from "react";
+import useWebSocket from "react-use-websocket";
+import { ClassCategory, Features } from "../constants";
+import useParseResponse from "../hooks/useParseResponse";
+import usePoseClassification from "../hooks/usePoseClassification";
+import { WS_URL } from "./constants";
 
 export interface IXtraVisionUserContext {
   intensity: number;
@@ -33,6 +33,7 @@ interface XtraAppProviderProps {
   isOnDemand: boolean;
   trainerId?: string;
   videoElementRef: any;
+  canvasElementRef: any;
   classStartTime: Date;
 }
 
@@ -45,6 +46,7 @@ const XtraVisionUserProvider = ({
   trainerId,
   children,
   videoElementRef,
+  canvasElementRef,
   classStartTime,
 }: XtraAppProviderProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
@@ -58,13 +60,13 @@ const XtraVisionUserProvider = ({
     classStartTime: classStartTime.getTime(),
   };
 
-  if (trainerId) queryParams['trainerId'] = trainerId;
+  if (trainerId) queryParams["trainerId"] = trainerId;
 
   // connect ws
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
     `${WS_URL}/${classCategory}/${clientScheduleId}`,
     {
-      onOpen: (e) => console.log(' ws connected'),
+      onOpen: (e) => console.log(" ws connected"),
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events
       onError: (e) => console.log(e),
       queryParams,
@@ -72,7 +74,13 @@ const XtraVisionUserProvider = ({
   );
 
   // pose -> send keypoints 1s
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, false);
+  usePoseClassification(
+    videoElementRef,
+    canvasElementRef,
+    isCamOn,
+    sendJsonMessage,
+    false
+  );
 
   // receive data from server
   const {

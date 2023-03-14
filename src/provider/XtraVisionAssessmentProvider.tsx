@@ -7,6 +7,8 @@ export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
   isCamOn: boolean;
   setIsCamOn: (isCamOn: boolean) => void;
+  isPreJoin: boolean;
+  setIsPreJoin: (isPreJoin: boolean) => void;
 }
 
 export const XtraVisionAssessmentContext =
@@ -15,6 +17,7 @@ export const XtraVisionAssessmentContext =
 interface XtraVisionAssessmentAppProps {
   children: ReactNode;
   videoElementRef: any;
+  canvasElementRef: any;
   connectionData: {
     assessment_name: string;
     auth_token: string;
@@ -30,27 +33,37 @@ interface XtraVisionAssessmentAppProps {
 const XtraVisionAssessmentProvider = ({
   children,
   videoElementRef,
+  canvasElementRef,
   connectionData,
-  requestData
+  requestData,
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
+  const [isPreJoin, setIsPreJoin] = useState<boolean>(
+    requestData?.isPreJoin ?? true
+  );
 
-  let tempQueryParam = {}
-  
-  tempQueryParam['auth_token'] = connectionData.auth_token;
-  tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null ;
-  tempQueryParam['requested_at'] = Date.now();
+  let tempQueryParam = {};
+
+  tempQueryParam["auth_token"] = connectionData.auth_token;
+  tempQueryParam["session_id"] = connectionData.session_id
+    ? connectionData.session_id
+    : null;
+  tempQueryParam["requested_at"] = Date.now();
 
   if (connectionData.user_config) {
-    tempQueryParam['user_config'] = encodeURIComponent(`${JSON.stringify(connectionData.user_config)}`);
+    tempQueryParam["user_config"] = encodeURIComponent(
+      `${JSON.stringify(connectionData.user_config)}`
+    );
   }
 
   if (connectionData.assessment_config) {
-    tempQueryParam['assessment_config'] = encodeURIComponent(`${JSON.stringify(connectionData.assessment_config)}`);
+    tempQueryParam["assessment_config"] = encodeURIComponent(
+      `${JSON.stringify(connectionData.assessment_config)}`
+    );
   }
 
-  // IMP: set only once  
-  const [queryParams] = useState(tempQueryParam)
+  // IMP: set only once
+  const [queryParams] = useState(tempQueryParam);
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
     `${WS_URL}/assessment/fitness/${connectionData.assessment_name}`,
@@ -62,11 +75,18 @@ const XtraVisionAssessmentProvider = ({
       // retryOnError: true,
       // onOpen: (event: WebSocketEventMap['open']) => console.log("WS Open ===>", event),
       // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
-      onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
-    },
+      onError: (event: WebSocketEventMap["error"]) =>
+        console.error("WS Error ===>", event),
+    }
   );
 
-  usePoseClassification(videoElementRef, isCamOn, sendJsonMessage, requestData.isPreJoin);
+  usePoseClassification(
+    videoElementRef,
+    canvasElementRef,
+    isCamOn,
+    sendJsonMessage,
+    isPreJoin
+  );
 
   return (
     <XtraVisionAssessmentContext.Provider
@@ -74,6 +94,8 @@ const XtraVisionAssessmentProvider = ({
         lastJsonMessage,
         isCamOn,
         setIsCamOn,
+        isPreJoin,
+        setIsPreJoin,
       }}
     >
       {children}

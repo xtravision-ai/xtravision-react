@@ -1,42 +1,56 @@
-.homepage-root {
-  display: flex;
+@font-face {
+  font-family: 'Fjalla One';
+  src: local('Fjalla One'),
+    url(./fonts/FjallaOne/FjallaOne-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(./fonts/Inter/Inter-Black.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto'),
+    url(./fonts/Roboto/Roboto-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: local('CircularStd'),
+    url(./fonts/CircularStd/CircularStd-Black.ttf) format('truetype');
+}
+
+:root {
+  /* Colors - Main */
+  --xtra-red: #ff4495;
+  --xtra-green: #32cd32;
+  --xtra-dark-blue: #3434eb;
+  --xtra-blue: #00b3df;
+  --xtra-purple: #cc8899;
+  --xtra-grey: #8f94ab;
+  --xtra-light-grey: #b4b8cd;
+  --xtra-orange: #ff5b36;
+  --xtra-light-blue: #add8e6;
+
+  --xtra-brand-0: #1a1a21;
+  --xtra-brand-2: #32323e;
+  --xtra-brand-4: #40424f;
+  --xtra-contrast: #ffffff;
+
+  --xtra-brand-main: #142163;
+}
+
+html,
+body,
+#root {
   height: 100%;
-  width: 100%;
-  place-content: center;
-  font-family: Roboto;
 }
 
-.homepage-main-text {
-  font-size: 40px;
-  color: #ff5b36;
-  align-self: center;
-}
-
-.homepage-button-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #ffffff;
-  margin: 30px;
-  border: 10px;
-  font-size: 20px;
-
-  padding: 10px 20px;
-  line-height: 20px;
-  border-radius: 5px;
-}
-.button#assessment {
-  background-color: #ffc044;
-}
-.button#on-demand {
-  background-color: #ff5b36;
-}
-.button:hover {
-  cursor: pointer;
-  background-color: black!important;
+body {
+  /* color: #000; */
+  font-family: 'Fjalla One';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
 }
