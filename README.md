@@ -20,7 +20,7 @@ or
 
 - import the relevant features you want:
 
-```
+```javascript
 import {
     ClassCategory,
     Features,
@@ -34,7 +34,7 @@ import {
 
 - use the context to get the values:
 
-```
+```javascript
 const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext();
   const videoElementRef = useRef<any>(null);
   const isEduScreen = false;
@@ -55,7 +55,7 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 
 - wrap the component in the context provider and pass the results from the previous context:
 
-```
+```javascript
     <XtraVisionAssessmentProvider
       videoElementRef={videoElementRef}
       connectionData={connectionData}
