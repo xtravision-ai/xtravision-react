@@ -37,6 +37,9 @@ import {
 ```javascript
 const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext();
   const videoElementRef = useRef<any>(null);
+  // use for draw skeleton
+  const canvasRef = useRef<any>(null);
+
   const isEduScreen = false;
   // assessment name you want
   const assessment_name = 'SQUATS';
@@ -60,11 +63,16 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
       videoElementRef={videoElementRef}
       connectionData={connectionData}
       requestData={requestData}
+      canvasElementRef={canvasRef}
     >
       {children}
     </XtraVisionAssessmentProvider>
 ```
 
-- for On-Demand Yoga assessment, use useXtraVisionOnDemandContext and XtraVisionOnDemandProvider
+- `{children}` elements must have below code and need to connected media input devices using `navigator.mediaDevices`. Please take further reference from demo app. 
+```javascript
+        <video ref={videoElementRef} ></video>
+        <!-- <canvas ref={canvasElementRef}></canvas>  // use canvas if you need skeleton -->
+  ```
 
-For the full detailed code refer the example above
+**NOTE:** For the full detailed code refer demo app
