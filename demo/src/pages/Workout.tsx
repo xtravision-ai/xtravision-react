@@ -491,6 +491,24 @@ const Workout = ({ history }) => {
   let assessment_config = {};
   let user_config = {};
 
+  const [frameSize, setFrameSize] = useState({
+    height: 480,
+    width: 640,
+  });
+
+  useEffect(() => {
+    const handleReSize = () => {
+      setFrameSize({
+        height: window.innerHeight,
+        // the width of the vid element is set to 70% so matching that
+        width: Number((window.innerWidth * 0.7).toFixed(2)),
+      })
+    }
+    window.addEventListener('resize', handleReSize)
+    handleReSize();
+    return () => window.removeEventListener('resize', handleReSize)
+  }, [])
+
   // adjust these as per time based assessment requirement
   assessment_config = {
     // reps_threshold: 5,
@@ -515,6 +533,7 @@ const Workout = ({ history }) => {
       canvasElementRef={canvasRef}
       connectionData={connectionData}
       requestData={requestData}
+      frameSize={frameSize}
     >
       <AppContainer
         classes={classes}
