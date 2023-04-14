@@ -62,10 +62,7 @@ export default function usePoseClassification(
   const stopCam = () => {
     window?.stream?.getTracks()?.forEach((track: any) => track.stop());
 
-    if (videoEleRef.current === null) {
-      return
-    };
-
+    if (videoEleRef.current === null) return;
     const stream = videoEleRef.current.srcObject as MediaStream;
     stream?.getTracks()?.forEach((track) => track.stop());
     videoEleRef.current.srcObject = null;
@@ -74,13 +71,9 @@ export default function usePoseClassification(
   // mediapipe response fps
   const resultsCallback = useCallback((results) => {
     const landmarks = results.poseLandmarks ?? {};
+    tempKeyPointsRef.current[Date.now()] = { landmarks };
 
-    // do not send any request if landmark is empty
-    if (!_.isEmpty(landmarks)){
-      tempKeyPointsRef.current[Date.now()] = { landmarks };
-      drawLandmarksHandler(landmarks);
-    }
-    
+    drawLandmarksHandler(landmarks);
   }, []);
 
   // start/stop pose model on `isCamOn`
@@ -122,12 +115,7 @@ export default function usePoseClassification(
   }, [isCamOn, sendJsonMessage, isEduScreen]);
 
   // draw landmarks
-  const drawLandmarksHandler = (landmarks: any) => {  
-    // no need to draw anything
-    if (!canvasEleRef || !canvasEleRef.current){
-      return 
-    }
-
+  const drawLandmarksHandler = (landmarks: any) => {
     const canvasEl = canvasEleRef.current;
     const ctx = canvasEl?.getContext('2d');
 

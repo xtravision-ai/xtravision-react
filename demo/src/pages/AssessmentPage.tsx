@@ -162,8 +162,6 @@ const AssessmentPage = () => {
         setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
-
-    
   );
 };
 
