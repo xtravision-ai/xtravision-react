@@ -14,7 +14,11 @@ export default function usePoseClassification(
   canvasEleRef: any,
   isCamOn: boolean,
   sendJsonMessage: (msg: any) => void,
-  isEduScreen?: boolean
+  isEduScreen?: boolean,
+  frameSize?: {
+    width: number,
+    height: number,
+  },
 ) {
   let pose: any;
   const medpipeURL =
@@ -76,11 +80,11 @@ export default function usePoseClassification(
     const landmarks = results.poseLandmarks ?? {};
 
     // do not send any request if landmark is empty
-    if (!_.isEmpty(landmarks)){
+    if (!_.isEmpty(landmarks)) {
       tempKeyPointsRef.current[Date.now()] = { landmarks };
       drawLandmarksHandler(landmarks);
     }
-    
+
   }, []);
 
   // start/stop pose model on `isCamOn`
@@ -112,6 +116,9 @@ export default function usePoseClassification(
           timestamp: Date.now(),
           user_keypoints: keyPoints,
           isprejoin: isEduScreen,
+          // frame data
+          frame_width: _.isUndefined(frameSize) ? 640 : frameSize.width,
+          frame_height: _.isUndefined(frameSize) ? 480 : frameSize.height,
         });
       }
     }, 1000);
@@ -122,10 +129,10 @@ export default function usePoseClassification(
   }, [isCamOn, sendJsonMessage, isEduScreen]);
 
   // draw landmarks
-  const drawLandmarksHandler = (landmarks: any) => {  
+  const drawLandmarksHandler = (landmarks: any) => {
     // no need to draw anything
-    if (!canvasEleRef || !canvasEleRef.current){
-      return 
+    if (!canvasEleRef || !canvasEleRef.current) {
+      return
     }
 
     const canvasEl = canvasEleRef.current;

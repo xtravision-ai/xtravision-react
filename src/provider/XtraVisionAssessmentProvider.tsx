@@ -25,6 +25,10 @@ interface XtraVisionAssessmentAppProps {
     user_config?: object;
     session_id?: string | null;
   };
+  frameSize: {
+    width: number;
+    height: number;
+  };
   requestData: {
     isPreJoin?: boolean;
   };
@@ -36,6 +40,7 @@ const XtraVisionAssessmentProvider = ({
   canvasElementRef,
   connectionData,
   requestData,
+  frameSize,
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
@@ -43,9 +48,9 @@ const XtraVisionAssessmentProvider = ({
   );
 
   let tempQueryParam = {}
-  
+
   tempQueryParam['auth_token'] = connectionData.auth_token;
-  tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null ;
+  tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null;
   tempQueryParam['requested_at'] = Date.now();
 
   if (connectionData.user_config) {
@@ -78,7 +83,9 @@ const XtraVisionAssessmentProvider = ({
     canvasElementRef,
     isCamOn,
     sendJsonMessage,
-    isPreJoin
+    isPreJoin,
+    // frame data
+    frameSize,
   );
 
   return (
