@@ -27,4 +27,5 @@ export enum Assessment {
   SQUATS = 'SQUATS',
   RANGE_OF_MOTION = 'RANGE_OF_MOTION',
   SIDE_FLAMINGO = 'SIDE_FLAMINGO',
+  CARDIO = "CARDIO",
 }
