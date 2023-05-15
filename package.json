@@ -1,6 +1,6 @@
 {
   "name": "@xtravision/xtravision-react",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A React hook for getting realtime feedback from XtraVision AI",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -71,14 +71,14 @@
   },
   "scripts": {
     "lint": "eslint src/",
-    "build:lib": "rollup -c",
+    "build:sdk": "rollup -c",
     "build": "tsc",
-    "build:windows": "yarn windows:clean && yarn build && yarn build:lib",
+    "build:windows": "yarn windows:clean && yarn build && yarn build:sdk",
     "deploy": "cd dist && npm publish",
     "windows:clean": "rmdir /s dist",
-    "bootstrap": "yarn && yarn build:lib ",
+    "bootstrap": "yarn && yarn build:sdk ",
     "demo:setup": "yarn --cwd demo ",
-    "start:local": "yarn build:lib && cd demo && REACT_APP_ENV='development' yarn start",
-    "start:prod": "yarn build:lib && cd demo && yarn start"
+    "start:local": "yarn build:sdk && cd demo && REACT_APP_ENV='development' yarn start",
+    "start:prod": "yarn build:sdk && cd demo && yarn start"
   }
 }
