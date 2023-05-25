@@ -302,20 +302,35 @@ const Dashboard = ({ history }) => {
 
   const menuItems = [
     {
-      name: `Squats`,
-      assessment_name: Assessment.SQUATS,
-      backgroundImage: `url('/Xtra Cards/strength.jpg')`,
+      name: 'Half Squat',
+      assessment_name: Assessment.HALF_SQUAT,
+      backgroundImage: `url('/Xtra Cards/sa.jpg')`,
     },
     {
-      name: `Range of Motion`,
-      assessment_name: Assessment.RANGE_OF_MOTION,
+      name: 'Banded Diagonal',
+      assessment_name: Assessment.BANDED_ALTERNATING_DIAGNOLS,
+      backgroundImage: `url('/Xtra Cards/2.jpg')`,
+    },
+    {
+      name: 'Sit Wall',
+      assessment_name: Assessment.SIT_WALL,
       backgroundImage: `url('/Xtra Cards/5.jpg')`,
     },
-    // {
-    //   name: `Side Flamingo`,
-    //   assessment_name: Assessment.SIDE_FLAMINGO,
-    //   backgroundImage: `url('/Xtra Cards/6.jpg')`,
-    // },
+    {
+      name: 'Push Ups',
+      assessment_name: Assessment.PUSH_UPS,
+      backgroundImage: `url('/Xtra Cards/6.jpg')`,
+    },
+    {
+      name: 'V Sit and Reach',
+      assessment_name: Assessment.SIT_AND_REACH_T2,
+      backgroundImage: `url('/Xtra Cards/cf.jpg')`,
+    },
+    {
+      name: 'Sit Ups',
+      assessment_name: Assessment.SIT_UPS_T2,
+      backgroundImage: `url('/Xtra Cards/strength.jpg')`,
+    }
   ];
 
   return (
