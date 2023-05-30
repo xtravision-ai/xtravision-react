@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
 } from "xtravision-react";
+import axios from "axios";
 
 type AppContainerProps = {
   videoElementRef: any;
@@ -36,8 +37,7 @@ const AppContainer = ({
       case "BURPEES":
       default:
         setDisplayText(
-          `In-Pose: ${additional_response?.in_pose ?? "false"} Reps-Count: ${
-            additional_response?.reps?.total ?? 0
+          `In-Pose: ${additional_response?.in_pose ?? "false"} Reps-Count: ${additional_response?.reps?.total ?? 0
           } `
         );
     }
@@ -148,11 +148,71 @@ const AssessmentPage = () => {
     isPreJoin,
   };
 
+  const [connectionDetails, setConnectionDetails] = useState() as any;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://ipapi.co/json/')
+        const { data } = response;
+        setConnectionDetails({
+          ipAddress: data?.ip,
+          location: `${data?.city}, ${data?.region_code}, ${data?.country}`
+        })
+
+      } catch (err) {
+        console.log("axios fetch ip details error:", err);
+      }
+    };
+    fetchData();
+  }, [])
+
+  // const connectionDetails = {
+  //   ipAddress: data?.ip,
+  //   location: `${data?.city}, ${data?.region_code}, ${data?.country}`
+  // }
+
+  const deviceDetails = {
+    osDetails: {
+      // name: os.platform() || "Unknown OS",
+      // version: os.release() || "Unknown OS Version",
+      // apiVersion: process.versions.node || "Unknown OS apiVersion",
+      name: window.navigator.platform || "Unknown OS",
+      version: window.navigator.userAgent || "Unknown OS Version",
+      apiVersion: window.navigator.appVersion || "Unknown OS apiVersion",
+    },
+    // needs to be checked:
+    manufacturerDetails: {
+      make: "Samsung",
+      model: "Galaxy S10",
+      variant: "SM-G973U"
+    }
+  };
+
+  const sdkDetails = {
+    name: process.env.npm_package_name || "Unknown SDK",
+    version: process.env.npm_package_version || "Unknown SDK Version",
+  };
+
+  const apiRequest = {
+    query: "mutation CreateUserSession($metaData: JSON) { createUserSession(metaData: $metaData) { id, metaData, userId } }",
+    variables: {
+      metaData: {
+        connectionDetails: connectionDetails,
+        deviceDetails: deviceDetails,
+        sdkDetails: sdkDetails
+      }
+    }
+  }
+
+  console.log("apiRequest:", apiRequest)
+
   return (
     <XtraVisionAssessmentProvider
       videoElementRef={videoElementRef}
       connectionData={connectionData}
       requestData={requestData}
+      apiRequest={apiRequest}
     >
       <video ref={videoElementRef} style={{ border: "1px solid red" }} />
       <AppContainer
@@ -162,8 +222,6 @@ const AssessmentPage = () => {
         setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
-
-    
   );
 };
 

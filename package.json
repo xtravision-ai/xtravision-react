@@ -10,8 +10,12 @@
     "node": ">=10"
   },
   "keywords": [
-    "body keypoints", "pose detection", "body tracking", "body pose estimation", 
-    "xtravision.ai", "xtravision"
+    "body keypoints",
+    "pose detection",
+    "body tracking",
+    "body pose estimation",
+    "xtravision.ai",
+    "xtravision"
   ],
   "tags": [
     "react",
@@ -48,7 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@rollup/plugin-commonjs": "^17.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-typescript": "^8.3.1",
     "@types/lodash": "^4.14.168",
     "@types/node": "^16.7.13",

@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import usePoseClassification from "../hooks/usePoseClassification";
-import { WS_URL } from "../provider/constants";
+import { API_SERVER_URL, WS_URL } from "../provider/constants";
 
 export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
@@ -32,6 +32,7 @@ interface XtraVisionAssessmentAppProps {
   requestData: {
     isPreJoin?: boolean;
   };
+  apiRequest: any;
 }
 
 const XtraVisionAssessmentProvider = ({
@@ -41,6 +42,7 @@ const XtraVisionAssessmentProvider = ({
   connectionData,
   requestData,
   frameSize,
+  apiRequest
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
@@ -64,6 +66,31 @@ const XtraVisionAssessmentProvider = ({
   // IMP: set only once  
   const [queryParams] = useState(tempQueryParam)
 
+  const WebSocketOpenHandler = async () => {
+    if (apiRequest) {
+      try {
+        const response = await fetch(API_SERVER_URL, {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            // add the same auth_token
+            Authorization: `Bearer ${connectionData.auth_token}`,
+          },
+          body: JSON.stringify(apiRequest),
+        })
+
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log("----responseData------: ", responseData);
+        } else {
+          console.log("Server returned an error :", response.status, response.statusText)
+        }
+      } catch (err) {
+        console.log("Error on server API request:", err);
+      }
+    }
+  };
+
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
     `${WS_URL}/assessment/fitness/${connectionData.assessment_name}`,
     {
@@ -72,7 +99,10 @@ const XtraVisionAssessmentProvider = ({
       // reconnectInterval: 1000, //in 1 sec
       // reconnectAttempts: 5,
       // retryOnError: true,
-      // onOpen: (event: WebSocketEventMap['open']) => console.log("WS Open ===>", event),
+      onOpen: (event: WebSocketEventMap['open']) => {
+        console.log("WS Open ===>", event);
+        // WebSocketOpenHandler();
+      },
       // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
       onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
     },
