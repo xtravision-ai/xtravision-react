@@ -48,6 +48,7 @@ const XtraVisionAssessmentProvider = ({
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
     requestData?.isPreJoin ?? true
   );
+  const [initialSendingDone, setInitialSendingDone] = useState(false);
 
   let tempQueryParam = {}
 
@@ -67,7 +68,7 @@ const XtraVisionAssessmentProvider = ({
   const [queryParams] = useState(tempQueryParam)
 
   const WebSocketOpenHandler = async () => {
-    if (apiRequest) {
+    if (apiRequest && !initialSendingDone) {
       try {
         const response = await fetch(API_SERVER_URL, {
           method: 'POST',
@@ -81,6 +82,7 @@ const XtraVisionAssessmentProvider = ({
         if (response.ok) {
           const responseData = await response.json();
           console.log("----responseData------: ", responseData);
+          setInitialSendingDone(true);
         } else {
           console.log("Server returned an error :", response.status, response.statusText)
         }
@@ -100,7 +102,7 @@ const XtraVisionAssessmentProvider = ({
       // retryOnError: true,
       onOpen: (event: WebSocketEventMap['open']) => {
         console.log("WS Open ===>", event);
-        // WebSocketOpenHandler();
+        WebSocketOpenHandler();
       },
       // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
       onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
