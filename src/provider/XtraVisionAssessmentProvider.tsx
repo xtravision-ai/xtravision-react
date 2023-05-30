@@ -32,7 +32,7 @@ interface XtraVisionAssessmentAppProps {
   requestData: {
     isPreJoin?: boolean;
   };
-  apiRequest: any;
+  apiRequest?: any;
 }
 
 const XtraVisionAssessmentProvider = ({
@@ -73,7 +73,6 @@ const XtraVisionAssessmentProvider = ({
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
-            // add the same auth_token
             Authorization: `Bearer ${connectionData.auth_token}`,
           },
           body: JSON.stringify(apiRequest),

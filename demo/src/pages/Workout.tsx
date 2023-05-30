@@ -4,12 +4,14 @@ import CallEndIcon from '@material-ui/icons/CallEnd';
 import {
   useXtraVisionAssessmentContext,
   XtraVisionAssessmentProvider,
+  runtimeConfig
 } from 'xtravision-react';
 import { AppRoute } from '../Routes';
 import Repetitions from './components/Repetitions';
 import { Assessment } from '../common';
 import RangeOfMotion from './components/RangeOfMotion';
 import TimeUnderLoad from './components/TimeUnderLoad';
+import axios from 'axios';
 
 declare global {
   interface Window {
@@ -527,6 +529,56 @@ const Workout = ({ history }) => {
     isPreJoin,
   };
 
+  const [connectionDetails, setConnectionDetails] = useState() as any;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://ipapi.co/json/')
+        const { data } = response;
+        setConnectionDetails({
+          ipAddress: data?.ip,
+          location: `${data?.city}, ${data?.region_code}, ${data?.country}`
+        })
+
+      } catch (err) {
+        console.log("axios fetch ip details error:", err);
+      }
+    };
+    fetchData();
+  }, [])
+
+  const deviceDetails = {
+    osDetails: {
+      name: window.navigator.platform || "Unknown OS",
+      version: window.navigator.userAgent || "Unknown OS Version",
+      apiVersion: window.navigator.appVersion || "Unknown OS apiVersion",
+    },
+    // ignoring for now:
+    // manufacturerDetails: {
+    //   make: "Samsung",
+    //   model: "Galaxy S10",
+    //   variant: "SM-G973U"
+    // }
+  };
+
+  const sdkDetails = {
+    name: runtimeConfig.PACKAGE_NAME || "Unknown SDK",
+    version: runtimeConfig.PACKAGE_VERSION || "Unknown SDK Version",
+  };
+
+
+  const apiRequest = {
+    query: "mutation CreateUserSession($metaData: JSON) { createUserSession(metaData: $metaData) { id, metaData, userId } }",
+    variables: {
+      metaData: {
+        connectionDetails: connectionDetails,
+        deviceDetails: deviceDetails,
+        sdkDetails: sdkDetails
+      }
+    }
+  }
+
   return (
     <XtraVisionAssessmentProvider
       videoElementRef={videoRef}
@@ -534,6 +586,7 @@ const Workout = ({ history }) => {
       connectionData={connectionData}
       requestData={requestData}
       frameSize={frameSize}
+      apiRequest={apiRequest}
     >
       <AppContainer
         classes={classes}
