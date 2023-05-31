@@ -1,5 +1,6 @@
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import useWebSocket from "react-use-websocket";
+import { runtimeConfig } from "../config";
 import usePoseClassification from "../hooks/usePoseClassification";
 import { API_SERVER_URL, WS_URL } from "../provider/constants";
 
@@ -32,7 +33,6 @@ interface XtraVisionAssessmentAppProps {
   requestData: {
     isPreJoin?: boolean;
   };
-  apiRequest?: any;
 }
 
 const XtraVisionAssessmentProvider = ({
@@ -42,7 +42,7 @@ const XtraVisionAssessmentProvider = ({
   connectionData,
   requestData,
   frameSize,
-  apiRequest
+  // apiRequest
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
@@ -50,11 +50,16 @@ const XtraVisionAssessmentProvider = ({
   );
   const [initialSendingDone, setInitialSendingDone] = useState(false);
 
+  const [connectionDetails, setConnectionDetails] = useState() as any;
+
+
+
+
   let tempQueryParam = {}
 
   tempQueryParam['auth_token'] = connectionData.auth_token;
   tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null;
-  tempQueryParam['requested_at'] = Date.now();
+  tempQueryParam['requested_at'] = String(Date.now());
 
   if (connectionData.user_config) {
     tempQueryParam['user_config'] = encodeURIComponent(`${JSON.stringify(connectionData.user_config)}`);
@@ -66,6 +71,62 @@ const XtraVisionAssessmentProvider = ({
 
   // IMP: set only once  
   const [queryParams] = useState(tempQueryParam)
+
+  useEffect(() => {
+
+    //TODO: change implementation later
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json();
+        setConnectionDetails({
+          ipAddress: data?.ip,
+          location: `${data?.city}, ${data?.region_code}, ${data?.country}`
+        })
+      } catch (err) {
+        console.log("fetch ip details error:", err);
+      }
+    };
+    fetchData();
+  }, [])
+
+  const deviceDetails = {
+    osDetails: {
+      name: window.navigator.platform || "Unknown OS",
+      version: window.navigator.userAgent || "Unknown OS Version",
+      apiVersion: window.navigator.appVersion || "Unknown OS apiVersion",
+    },
+    // ignoring for now:
+    // manufacturerDetails: {
+    //   make: "Samsung",
+    //   model: "Galaxy S10",
+    //   variant: "SM-G973U"
+    // }
+  };
+
+  const sdkDetails = {
+    name: runtimeConfig.PACKAGE_NAME || "Unknown SDK",
+    version: runtimeConfig.PACKAGE_VERSION || "Unknown SDK Version",
+  };
+
+  const apiRequest = {
+    query: `mutation userSessionSaveMetaData($metaData: JSON, $requestedAt: String) { 
+              userSessionSaveMetaData(metaData: $metaData, requestedAt: $requestedAt) { 
+                id
+                userId
+                requestedAt
+                metaData
+              } 
+            }`,
+    variables: {
+      metaData: {
+        connectionDetails: connectionDetails,
+        deviceDetails: deviceDetails,
+        sdkDetails: sdkDetails
+      },
+      requestedAt: tempQueryParam['requested_at']
+    }
+  }
 
   const WebSocketOpenHandler = async () => {
     if (apiRequest && !initialSendingDone) {
