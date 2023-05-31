@@ -11,7 +11,6 @@ import Repetitions from './components/Repetitions';
 import { Assessment } from '../common';
 import RangeOfMotion from './components/RangeOfMotion';
 import TimeUnderLoad from './components/TimeUnderLoad';
-import axios from 'axios';
 
 declare global {
   interface Window {

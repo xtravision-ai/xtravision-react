@@ -52,14 +52,11 @@ const XtraVisionAssessmentProvider = ({
 
   const [connectionDetails, setConnectionDetails] = useState() as any;
 
-
-
-
   let tempQueryParam = {}
 
   tempQueryParam['auth_token'] = connectionData.auth_token;
   tempQueryParam['session_id'] = connectionData.session_id ? connectionData.session_id : null;
-  tempQueryParam['requested_at'] = String(Date.now());
+  tempQueryParam['requested_at'] = Date.now();
 
   if (connectionData.user_config) {
     tempQueryParam['user_config'] = encodeURIComponent(`${JSON.stringify(connectionData.user_config)}`);
@@ -110,12 +107,9 @@ const XtraVisionAssessmentProvider = ({
   };
 
   const apiRequest = {
-    query: `mutation userSessionSaveMetaData($metaData: JSON, $requestedAt: String) { 
+    query: `mutation userSessionSaveMetaData($metaData: JSON, $requestedAt: Float) { 
               userSessionSaveMetaData(metaData: $metaData, requestedAt: $requestedAt) { 
                 id
-                userId
-                requestedAt
-                metaData
               } 
             }`,
     variables: {
@@ -124,7 +118,8 @@ const XtraVisionAssessmentProvider = ({
         deviceDetails: deviceDetails,
         sdkDetails: sdkDetails
       },
-      requestedAt: tempQueryParam['requested_at']
+      //@ts-ignore
+      requestedAt: queryParams.requested_at
     }
   }
 
