@@ -134,8 +134,7 @@ const XtraVisionAssessmentProvider = ({
         })
 
         if (response.ok) {
-          const responseData = await response.json();
-          console.log("----responseData------: ", responseData);
+          // setting this so that we dont send multiple times when wss dissconnects and reconnects
           setInitialSendingDone(true);
         } else {
           console.log("Server returned an error :", response.status, response.statusText)
