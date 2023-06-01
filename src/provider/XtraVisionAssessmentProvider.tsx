@@ -42,7 +42,6 @@ const XtraVisionAssessmentProvider = ({
   connectionData,
   requestData,
   frameSize,
-  // apiRequest
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
@@ -67,7 +66,7 @@ const XtraVisionAssessmentProvider = ({
   }
 
   // IMP: set only once  
-  const [queryParams] = useState(tempQueryParam)
+  const [queryParams] = useState<any>(tempQueryParam)
 
   useEffect(() => {
 
@@ -118,7 +117,6 @@ const XtraVisionAssessmentProvider = ({
         deviceDetails: deviceDetails,
         sdkDetails: sdkDetails
       },
-      //@ts-ignore
       requestedAt: queryParams.requested_at
     }
   }

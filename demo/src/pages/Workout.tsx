@@ -537,7 +537,6 @@ const Workout = ({ history }) => {
       connectionData={connectionData}
       requestData={requestData}
       frameSize={frameSize}
-    // apiRequest={apiRequest}
     >
       <AppContainer
         classes={classes}

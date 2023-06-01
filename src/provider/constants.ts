@@ -11,10 +11,10 @@ export const WS_URL = 'ws://localhost:8000/wss/v2';
 
 
 // local
-export const API_SERVER_URL = "http://localhost:4000/api/v1/graphql";
+// export const API_SERVER_URL = "http://localhost:4000/api/v1/graphql";
 
 // staging
-// export const API_SERVER_URL = "https://saasstagingapi/api/v1/graphql"
+// export const API_SERVER_URL = "https://saasstagingapi.xtravision.ai/api/v1/graphql"
 
 // prod
-// export const API_SERVER_URL = "https://saasapi/api/v1/graphql"
+export const API_SERVER_URL = "https://saasapi.xtravision.ai/api/v1/graphql"
