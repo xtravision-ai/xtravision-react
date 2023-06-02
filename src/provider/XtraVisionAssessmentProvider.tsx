@@ -137,10 +137,10 @@ const XtraVisionAssessmentProvider = ({
           // setting this so that we dont send multiple times when wss dissconnects and reconnects
           setInitialSendingDone(true);
         } else {
-          console.log("Server returned an error :", response.status, response.statusText)
+          console.error("Server returned an error :", response.status, response.statusText)
         }
       } catch (err) {
-        console.log("Error on server API request:", err);
+        console.error("Error on server API request:", err);
       }
     }
   };
