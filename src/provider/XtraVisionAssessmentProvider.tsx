@@ -25,6 +25,10 @@ interface XtraVisionAssessmentAppProps {
     assessment_config?: object;
     user_config?: object;
     session_id?: string | null;
+    pkgDetails?: {
+      name: string | null,
+      version: string | null,
+    }
   };
   frameSize: {
     width: number;
@@ -101,8 +105,8 @@ const XtraVisionAssessmentProvider = ({
   };
 
   const sdkDetails = {
-    name: runtimeConfig.PACKAGE_NAME || "Unknown SDK",
-    version: runtimeConfig.PACKAGE_VERSION || "Unknown SDK Version",
+    name: connectionData?.pkgDetails?.name ? connectionData?.pkgDetails?.name : runtimeConfig.PACKAGE_NAME || "Unknown SDK",
+    version: connectionData?.pkgDetails?.version ? connectionData?.pkgDetails?.version : runtimeConfig.PACKAGE_VERSION || "Unknown SDK Version",
   };
 
   const apiRequest = {
