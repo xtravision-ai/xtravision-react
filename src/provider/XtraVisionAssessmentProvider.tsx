@@ -77,7 +77,7 @@ const XtraVisionAssessmentProvider = ({
         const data = await response.json();
         setConnectionDetails({
           ipAddress: data?.ip,
-          location: `${data?.city}, ${data?.region_code}, ${data?.country}`
+          location: `${data}`
         })
       } catch (err) {
         console.log("fetch ip details error:", err);
