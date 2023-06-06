@@ -491,9 +491,6 @@ const Workout = ({ history }) => {
   let assessment_config = {};
   let user_config = {};
 
-  // use this to specify a set value
-  const setThreshold = 10;
-
   const [frameSize, setFrameSize] = useState({
     height: 480,
     width: 640,
@@ -516,7 +513,7 @@ const Workout = ({ history }) => {
   assessment_config = {
     // reps_threshold: 5,
     // grace_time_threshold: 20,
-    set_threshold: setThreshold ? setThreshold : -1
+    sets_threshold: -1 // set as -1 to disable sets
   };
 
   const connectionData = {
