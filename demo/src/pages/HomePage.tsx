@@ -342,7 +342,8 @@ const Dashboard = ({ history }) => {
             display: 'flex',
             flexDirection: 'row',
             marginTop: '30px',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
+            flexWrap: 'wrap'
           }}
         >
           {menuItems.map((item, indx) => (
