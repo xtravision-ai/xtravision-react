@@ -59,7 +59,6 @@ const TimeUnderLoad = ({ timeLeft, restTimeLeft, prediction }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.head}>Side Flamingo</div>
       <div className={classes.body}>
         <div>
           <Timer val={timeLeft === 999 ? 60 : timeLeft} />
@@ -69,7 +68,7 @@ const TimeUnderLoad = ({ timeLeft, restTimeLeft, prediction }) => {
         </div> */}
         {timeLeft !== 999 && (
           <div className={classes.cntrMsg}>
-            Please go into the flamingo position to get started!
+            Please go into the original position to get started!
           </div>
         )}
         {/* {restTimeLeft > 0 && !prediction && (
