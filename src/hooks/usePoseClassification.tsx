@@ -224,7 +224,6 @@ export default function usePoseClassification(
         y: Math.floor(landmarks[28]?.y * height),
         key: 'r_ankle',
       };
-      console.log(l_wrist);
       // custom
       const neck = {
         x: (l_shoulder.x + r_shoulder.x) / 2,
