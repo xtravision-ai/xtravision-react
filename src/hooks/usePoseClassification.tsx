@@ -150,81 +150,80 @@ export default function usePoseClassification(
 
       // calc x/y
       const l_eye = {
-        x: landmarks[2]?.x * width,
-        y: landmarks[2]?.y * height,
+        x: Math.floor(landmarks[2]?.x * width),
+        y: Math.floor(landmarks[2]?.y * height),
         key: 'l_eye',
       };
       const r_eye = {
-        x: landmarks[5]?.x * width,
-        y: landmarks[5]?.y * height,
+        x: Math.floor(landmarks[5]?.x * width),
+        y: Math.floor(landmarks[5]?.y * height),
         key: 'r_eye',
       };
       const l_mouth = {
-        x: landmarks[9]?.x * width,
-        y: landmarks[9]?.y * height,
+        x: Math.floor(landmarks[9]?.x * width),
+        y: Math.floor(landmarks[9]?.y * height),
         key: 'l_mouth',
       };
       const l_shoulder = {
-        x: landmarks[11]?.x * width,
-        y: landmarks[11]?.y * height,
+        x: Math.floor(landmarks[11]?.x * width),
+        y: Math.floor(landmarks[11]?.y * height),
         key: 'l_shoulder',
       };
       const r_shoulder = {
-        x: landmarks[12]?.x * width,
-        y: landmarks[12]?.y * height,
+        x: Math.floor(landmarks[12]?.x * width),
+        y: Math.floor(landmarks[12]?.y * height),
         key: 'r_shoulder',
       };
       const l_elbow = {
-        x: landmarks[13]?.x * width,
-        y: landmarks[13]?.y * height,
+        x: Math.floor(landmarks[13]?.x * width),
+        y: Math.floor(landmarks[13]?.y * height),
         key: 'l_elbow',
       };
       const r_elbow = {
-        x: landmarks[14]?.x * width,
-        y: landmarks[14]?.y * height,
+        x: Math.floor(landmarks[14]?.x * width),
+        y: Math.floor(landmarks[14]?.y * height),
         key: 'r_elbow',
       };
       const l_wrist = {
-        x: landmarks[15]?.x * width,
-        y: landmarks[15]?.y * height,
+        x: Math.floor(landmarks[15]?.x * width),
+        y: Math.floor(landmarks[15]?.y * height),
         key: 'l_wrist',
       };
       const r_wrist = {
-        x: landmarks[16]?.x * width,
-        y: landmarks[16]?.y * height,
+        x: Math.floor(landmarks[16]?.x * width),
+        y: Math.floor(landmarks[16]?.y * height),
         key: 'r_wrist',
       };
       const l_hip = {
-        x: landmarks[23]?.x * width,
-        y: landmarks[23]?.y * height,
+        x: Math.floor(landmarks[23]?.x * width),
+        y: Math.floor(landmarks[23]?.y * height),
         key: 'l_hip',
       };
       const r_hip = {
-        x: landmarks[24]?.x * width,
-        y: landmarks[24]?.y * height,
+        x: Math.floor(landmarks[24]?.x * width),
+        y: Math.floor(landmarks[24]?.y * height),
         key: 'r_hip',
       };
       const l_knee = {
-        x: landmarks[25]?.x * width,
-        y: landmarks[25]?.y * height,
+        x: Math.floor(landmarks[25]?.x * width),
+        y: Math.floor(landmarks[25]?.y * height),
         key: 'l_knee',
       };
       const r_knee = {
-        x: landmarks[26]?.x * width,
-        y: landmarks[26]?.y * height,
+        x: Math.floor(landmarks[26]?.x * width),
+        y: Math.floor(landmarks[26]?.y * height),
         key: 'r_knee',
       };
       const l_ankle = {
-        x: landmarks[27]?.x * width,
-        y: landmarks[27]?.y * height,
+        x: Math.floor(landmarks[27]?.x * width),
+        y: Math.floor(landmarks[27]?.y * height),
         key: 'l_ankle',
       };
       const r_ankle = {
-        x: landmarks[28]?.x * width,
-        y: landmarks[28]?.y * height,
+        x: Math.floor(landmarks[28]?.x * width),
+        y: Math.floor(landmarks[28]?.y * height),
         key: 'r_ankle',
       };
-
       // custom
       const neck = {
         x: (l_shoulder.x + r_shoulder.x) / 2,
