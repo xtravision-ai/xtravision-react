@@ -15,3 +15,6 @@ export * from './hooks';
 
 // constants
 export { Features, ClassCategory, Assessment } from './constants';
+
+// //configs
+export { runtimeConfig } from "./config";

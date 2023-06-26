@@ -76,7 +76,7 @@ const ArcMeter = ({ reps }) => {
           width='64'
           height='32'
           rx='4'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(1)}
           stroke={getStroke(1)}
           opacity={getOpacity(1)}
@@ -88,7 +88,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-159.966 80.7979 157.083)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(2)}
           stroke={getStroke(2)}
           opacity={getOpacity(2)}
@@ -100,7 +100,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-139.955 96.7537 118.543)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(3)}
           stroke={getStroke(3)}
           opacity={getOpacity(3)}
@@ -112,7 +112,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-120.087 124.697 87.9724)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(4)}
           stroke={getStroke(4)}
           opacity={getOpacity(4)}
@@ -124,7 +124,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-100.02 161.765 68.5916)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(5)}
           stroke={getStroke(5)}
           opacity={getOpacity(5)}
@@ -137,7 +137,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-80.0257 203.079 63.0996)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(6)}
           stroke={getStroke(6)}
           opacity={getOpacity(6)}
@@ -150,7 +150,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-59.9742 243.892 72.1108)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(7)}
           stroke={getStroke(7)}
           opacity={getOpacity(7)}
@@ -162,7 +162,7 @@ const ArcMeter = ({ reps }) => {
           height='30'
           rx='3'
           transform='rotate(-40.0958 280.283 94.4454)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(8)}
           stroke={getStroke(8)}
           opacity={getOpacity(8)}
@@ -174,7 +174,7 @@ const ArcMeter = ({ reps }) => {
           height='32'
           rx='4'
           transform='rotate(-19.9304 304.497 127.642)'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(9)}
           stroke={getStroke(9)}
           opacity={getOpacity(9)}
@@ -185,7 +185,7 @@ const ArcMeter = ({ reps }) => {
           width='64'
           height='32'
           rx='4'
-          stroke-width='2'
+          strokeWidth='2'
           fill={getCol(10)}
           stroke={getStroke(10)}
           opacity={getOpacity(10)}

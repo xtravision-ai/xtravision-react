@@ -1,7 +1,8 @@
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import useWebSocket from "react-use-websocket";
+import { runtimeConfig } from "../config";
 import usePoseClassification from "../hooks/usePoseClassification";
-import { WS_URL } from "../provider/constants";
+import { API_SERVER_URL, WS_URL } from "../provider/constants";
 
 export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
@@ -24,6 +25,10 @@ interface XtraVisionAssessmentAppProps {
     assessment_config?: object;
     user_config?: object;
     session_id?: string | null;
+    pkgDetails?: {
+      name: string | null,
+      version: string | null,
+    }
   };
   frameSize: {
     width: number;
@@ -46,6 +51,9 @@ const XtraVisionAssessmentProvider = ({
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
     requestData?.isPreJoin ?? true
   );
+  const [initialSendingDone, setInitialSendingDone] = useState(false);
+
+  const [connectionDetails, setConnectionDetails] = useState() as any;
 
   let tempQueryParam = {}
 
@@ -62,7 +70,84 @@ const XtraVisionAssessmentProvider = ({
   }
 
   // IMP: set only once  
-  const [queryParams] = useState(tempQueryParam)
+  const [queryParams] = useState<any>(tempQueryParam)
+
+  useEffect(() => {
+
+    //TODO: change implementation later
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json();
+        setConnectionDetails({
+          ipAddress: data?.ip,
+          location: `${data}`
+        })
+      } catch (err) {
+        console.log("fetch ip details error:", err);
+      }
+    };
+    fetchData();
+  }, [])
+
+  const deviceDetails = {
+    osDetails: {
+      name: window.navigator.platform || "Unknown OS",
+      version: window.navigator.userAgent || "Unknown OS Version",
+      apiVersion: window.navigator.appVersion || "Unknown OS apiVersion",
+    },
+    // ignoring for now:
+    // manufacturerDetails: {
+    //   make: "Samsung",
+    //   model: "Galaxy S10",
+    //   variant: "SM-G973U"
+    // }
+  };
+
+  const sdkDetails = {
+    name: connectionData?.pkgDetails?.name ? connectionData?.pkgDetails?.name : runtimeConfig.PACKAGE_NAME || "Unknown SDK",
+    version: connectionData?.pkgDetails?.version ? connectionData?.pkgDetails?.version : runtimeConfig.PACKAGE_VERSION || "Unknown SDK Version",
+  };
+
+  const apiRequest = {
+    query: `mutation userSessionSaveMetaData($metaData: JSON, $requestedAt: Float) { 
+              userSessionSaveMetaData(metaData: $metaData, requestedAt: $requestedAt) { 
+                id
+              } 
+            }`,
+    variables: {
+      metaData: {
+        connectionDetails: connectionDetails,
+        deviceDetails: deviceDetails,
+        sdkDetails: sdkDetails
+      },
+      requestedAt: queryParams.requested_at
+    }
+  }
+
+  const WebSocketOpenHandler = async () => {
+    if (apiRequest && !initialSendingDone) {
+      try {
+        const response = await fetch(API_SERVER_URL, {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${connectionData.auth_token}`,
+          },
+          body: JSON.stringify(apiRequest),
+        })
+
+        if (response.ok) {
+          // setting this so that we dont send multiple times when wss dissconnects and reconnects
+          setInitialSendingDone(true);
+        } else {
+          console.error("Server returned an error :", response.status, response.statusText)
+        }
+      } catch (err) {
+        console.error("Error on server API request:", err);
+      }
+    }
+  };
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
     `${WS_URL}/assessment/fitness/${connectionData.assessment_name}`,
@@ -72,7 +157,10 @@ const XtraVisionAssessmentProvider = ({
       // reconnectInterval: 1000, //in 1 sec
       // reconnectAttempts: 5,
       // retryOnError: true,
-      // onOpen: (event: WebSocketEventMap['open']) => console.log("WS Open ===>", event),
+      onOpen: (event: WebSocketEventMap['open']) => {
+        console.log("WS Open ===>", event);
+        WebSocketOpenHandler();
+      },
       // onClose: (event: WebSocketEventMap['close']) => console.log("WS Close ===>", event),
       onError: (event: WebSocketEventMap['error']) => console.error("WS Error ===>", event),
     },

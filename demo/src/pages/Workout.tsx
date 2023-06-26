@@ -282,9 +282,13 @@ const AppContainer = ({
           if (!video.srcObject) {
             window.stream = stream;
             video.srcObject = stream;
-            video?.play();
-
-            setIsCamOn(true);
+            // this is giving me the error: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
+            const playResponse = video?.play();
+            if (playResponse !== undefined) {
+              playResponse.then(_ => {
+                setIsCamOn(true);
+              })
+            }
           }
         }
       })
@@ -529,6 +533,8 @@ const Workout = ({ history }) => {
   const requestData = {
     isPreJoin,
   };
+
+
 
   return (
     <XtraVisionAssessmentProvider

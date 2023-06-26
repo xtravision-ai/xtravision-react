@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import {
   useXtraVisionAssessmentContext,
@@ -36,8 +36,7 @@ const AppContainer = ({
       case "BURPEES":
       default:
         setDisplayText(
-          `In-Pose: ${additional_response?.in_pose ?? "false"} Reps-Count: ${
-            additional_response?.reps?.total ?? 0
+          `In-Pose: ${additional_response?.in_pose ?? "false"} Reps-Count: ${additional_response?.reps?.total ?? 0
           } `
         );
     }
@@ -162,8 +161,6 @@ const AssessmentPage = () => {
         setDisplayText={setDisplayText}
       />
     </XtraVisionAssessmentProvider>
-
-    
   );
 };
 
