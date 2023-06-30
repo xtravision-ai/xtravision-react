@@ -1,3 +1,4 @@
+import 'dotenv/config'
 // export const WS_URL = 'ws://localhost:8000/wss/v2';
 
 // // production url

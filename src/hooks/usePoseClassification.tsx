@@ -14,11 +14,13 @@ export default function usePoseClassification(
   canvasEleRef: any,
   isCamOn: boolean,
   sendJsonMessage: (msg: any) => void,
+  keyPoints?: any,
+  setKeyPoints?: (data: any) => void,
   isEduScreen?: boolean,
   frameSize?: {
     width: number,
     height: number,
-  },
+  }
 ) {
   let pose: any;
   const medpipeURL =
@@ -108,25 +110,33 @@ export default function usePoseClassification(
     }
 
     interval = setInterval(() => {
-      const keyPoints = Object.assign(tempKeyPointsRef.current, {});
+      const tempKeyPoints = Object.assign(tempKeyPointsRef.current, {});
       tempKeyPointsRef.current = {};
-      if (!_.isEmpty(keyPoints) && !_.isUndefined(isEduScreen)) {
+      if (!_.isEmpty(tempKeyPoints) && !_.isUndefined(isEduScreen)) {
         // WS SEND Kps -> 1s
-        sendJsonMessage({
-          timestamp: Date.now(),
-          user_keypoints: keyPoints,
-          isprejoin: isEduScreen,
-          // frame data
-          frame_width: _.isUndefined(frameSize) ? 640 : frameSize.width,
-          frame_height: _.isUndefined(frameSize) ? 480 : frameSize.height,
-        });
+        if (setKeyPoints) {
+          setKeyPoints({
+            timestamp: Date.now(),
+            user_keypoints: tempKeyPoints
+          });
+        }
       }
     }, 1000);
 
     return () => {
       cleanUp();
     };
-  }, [isCamOn, sendJsonMessage, isEduScreen]);
+  }, [isCamOn, isEduScreen]);
+
+  useEffect(() => {
+    sendJsonMessage({
+      isprejoin: isEduScreen,
+      // frame data
+      frame_width: _.isUndefined(frameSize) ? 640 : frameSize.width,
+      frame_height: _.isUndefined(frameSize) ? 480 : frameSize.height,
+      ...keyPoints
+    });
+  }, [keyPoints]);
 
   // draw landmarks
   const drawLandmarksHandler = (landmarks: any) => {
