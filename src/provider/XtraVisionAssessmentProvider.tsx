@@ -9,6 +9,7 @@ export interface IXtraVisionAssessmentContext {
   setIsCamOn: (isCamOn: boolean) => void;
   isPreJoin: boolean;
   setIsPreJoin: (isPreJoin: boolean) => void;
+  keyPoints: any;
 }
 
 export const XtraVisionAssessmentContext =
@@ -46,6 +47,7 @@ const XtraVisionAssessmentProvider = ({
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
     requestData?.isPreJoin ?? true
   );
+  const [keyPoints, setKeyPoints] = useState(null);
 
   let tempQueryParam = {}
 
@@ -61,7 +63,7 @@ const XtraVisionAssessmentProvider = ({
     tempQueryParam['assessment_config'] = encodeURIComponent(`${JSON.stringify(connectionData.assessment_config)}`);
   }
 
-  // IMP: set only once  
+  // IMP: set only once
   const [queryParams] = useState(tempQueryParam)
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
@@ -83,9 +85,11 @@ const XtraVisionAssessmentProvider = ({
     canvasElementRef,
     isCamOn,
     sendJsonMessage,
+    keyPoints,
+    setKeyPoints,
     isPreJoin,
     // frame data
-    frameSize,
+    frameSize
   );
 
   return (
@@ -96,6 +100,7 @@ const XtraVisionAssessmentProvider = ({
         setIsCamOn,
         isPreJoin,
         setIsPreJoin,
+        keyPoints
       }}
     >
       {children}
