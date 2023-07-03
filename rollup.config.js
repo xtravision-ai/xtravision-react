@@ -24,7 +24,10 @@ export default [
     ],
     plugins: [
       peerDepsExternal(),
-      resolve(),
+      resolve({
+        // not sure about events plugin so I put it to use our installed events plugin
+        preferBuiltins: true,
+      }),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
       terser(),

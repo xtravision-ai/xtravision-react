@@ -11,6 +11,10 @@ import { Assessment } from '../common';
 import RangeOfMotion from './components/RangeOfMotion';
 import TimeUnderLoad from './components/TimeUnderLoad';
 
+// Example of XtraVisionEventEmitter data
+// import { XtraVisionEventEmitter } from 'xtravision-react';
+// XtraVisionEventEmitter.on('onUserKeyPoints', (data: any) => {console.log('data.toString()');})
+
 declare global {
   interface Window {
     stream?: any;
