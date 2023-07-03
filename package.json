@@ -10,8 +10,12 @@
     "node": ">=10"
   },
   "keywords": [
-    "body keypoints", "pose detection", "body tracking", "body pose estimation", 
-    "xtravision.ai", "xtravision"
+    "body keypoints",
+    "pose detection",
+    "body tracking",
+    "body pose estimation",
+    "xtravision.ai",
+    "xtravision"
   ],
   "tags": [
     "react",
@@ -41,6 +45,7 @@
   "dependencies": {
     "@mediapipe/camera_utils": "^0.3.1640029074",
     "@mediapipe/pose": "^0.5.1635988162",
+    "events": "^3.3.0",
     "lodash": "^4.17.20",
     "react-use-websocket": "^2.9.1",
     "web-vitals": "^2.1.0"
