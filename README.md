@@ -29,6 +29,7 @@ import {
     useXtraVisionOnDemandContext,
     useXtraVisionAssessmentContext,
     XtraVisionAssessmentProvider,
+    XtraVisionEventEmitter, // optional
 } from "@xtravision/xtravision-react";
 ```
 
@@ -73,6 +74,13 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 ```javascript
         <video ref={videoElementRef} ></video>
         <!-- <canvas ref={canvasElementRef}></canvas>  // use canvas if you need skeleton -->
+  ```
+
+
+  - If you need live user key-points then you can use `XtraVisionEventEmitter`
+  ```javascript
+      XtraVisionEventEmitter.on('onUserKeyPoints', (data: any) => {console.log('data.toString()');})
+
   ```
 
 **NOTE:** For the full detailed code refer demo app

@@ -3,6 +3,9 @@ import { Camera } from '@mediapipe/camera_utils';
 import { Pose } from '@mediapipe/pose';
 import { useCallback, useEffect, useRef } from 'react';
 
+import XtraVisionEventEmitter from './../provider/XtraVisionEventEmitter'
+
+
 declare global {
   interface Window {
     stream?: any;
@@ -112,14 +115,18 @@ export default function usePoseClassification(
       tempKeyPointsRef.current = {};
       if (!_.isEmpty(keyPoints) && !_.isUndefined(isEduScreen)) {
         // WS SEND Kps -> 1s
+        const timestamp= Date.now();
         sendJsonMessage({
-          timestamp: Date.now(),
+          timestamp,
           user_keypoints: keyPoints,
           isprejoin: isEduScreen,
           // frame data
           frame_width: _.isUndefined(frameSize) ? 640 : frameSize.width,
           frame_height: _.isUndefined(frameSize) ? 480 : frameSize.height,
         });
+
+        // raise event
+        XtraVisionEventEmitter.emit('onUserKeyPoints', {timestamp, keyPoints})
       }
     }, 1000);
 
