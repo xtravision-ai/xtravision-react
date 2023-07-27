@@ -52,9 +52,11 @@ const XtraVisionAssessmentProvider = ({
   );
   let WS_URL = WS_PROD_URL;
 
-  if (libData?.serverEndpoint?.toLowerCase() === "staging") {
+  let  serverEndpoint = libData?.serverEndpoint?.toLowerCase();
+
+  if ( serverEndpoint === "staging") {
     WS_URL = WS_STAGING_URL;
-  } else if (libData?.serverEndpoint?.toLowerCase() === "local") {
+  } else if (serverEndpoint === "local") {
     WS_URL = WS_LOCAL_URL
   }
 

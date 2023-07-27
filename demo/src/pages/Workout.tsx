@@ -10,6 +10,7 @@ import Repetitions from './components/Repetitions';
 import { Assessment } from '../common';
 import RangeOfMotion from './components/RangeOfMotion';
 import TimeUnderLoad from './components/TimeUnderLoad';
+import { getFromLocalStorage } from '../utils/localStorage';
 
 // Example of XtraVisionEventEmitter data
 // import { XtraVisionEventEmitter } from 'xtravision-react';
@@ -494,10 +495,11 @@ const Workout = ({ history }) => {
     : '__AUTH_TOKEN__';
   let assessment_config = {};
   let user_config = {};
-  const selectedOption = history?.location?.state?.selectedOption.toLowerCase() ?? {
-    serverEnpoint: "production"
-  }
-  let libData = selectedOption;
+  const selectedOption =   getFromLocalStorage('serverEndpoint') ?? 'production';
+
+  let libData = {
+    serverEndpoint: selectedOption
+  };
 
   const [frameSize, setFrameSize] = useState({
     height: 480,
