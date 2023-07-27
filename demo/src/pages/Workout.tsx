@@ -494,7 +494,7 @@ const Workout = ({ history }) => {
     : '__AUTH_TOKEN__';
   let assessment_config = {};
   let user_config = {};
-  const selectedOption = history?.location?.state?.selectedOption ?? {
+  const selectedOption = history?.location?.state?.selectedOption.toLowerCase() ?? {
     serverEnpoint: "production"
   }
   let libData = selectedOption;
