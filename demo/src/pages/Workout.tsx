@@ -10,6 +10,7 @@ import Repetitions from './components/Repetitions';
 import { Assessment } from '../common';
 import RangeOfMotion from './components/RangeOfMotion';
 import TimeUnderLoad from './components/TimeUnderLoad';
+import { getFromLocalStorage } from '../utils/localStorage';
 
 // Example of XtraVisionEventEmitter data
 // import { XtraVisionEventEmitter } from 'xtravision-react';
@@ -245,6 +246,9 @@ const AppContainer = ({
   const { lastJsonMessage, isCamOn, setIsCamOn, isPreJoin, setIsPreJoin } =
     useXtraVisionAssessmentContext();
 
+  const repetitionsAssessment: string[] = [Assessment.HALF_SQUAT, Assessment.PUSH_UPS, Assessment.SIT_UPS_T2];
+  const timeUnderLoadAssessment: string[] = [Assessment.SIT_WALL, Assessment.SIT_AND_REACH_T2];
+
   if (lastJsonMessage?.error) {
     console.error('lastJsonMessage-error: ', lastJsonMessage.error);
   } else {
@@ -458,13 +462,13 @@ const AppContainer = ({
               </Button>
             </Box>
           </>
-        ) : assessmentName === Assessment.SQUATS ? (
+        ) : repetitionsAssessment.indexOf(assessmentName) > -1 ? (
           <Repetitions
             reps={lastJsonMessage?.data?.additional_response?.reps?.total ?? 0}
           />
-        ) : assessmentName === Assessment.RANGE_OF_MOTION ? (
+        ) : assessmentName === Assessment.BANDED_ALTERNATING_DIAGNOLS ? (
           <RangeOfMotion angles={lastJsonMessage?.data?.angles ?? {}} />
-        ) : assessmentName === Assessment.SIDE_FLAMINGO ? (
+        ) : timeUnderLoadAssessment.indexOf(assessmentName) > -1 ? (
           <TimeUnderLoad
             timeLeft={
               60 - (lastJsonMessage?.data?.additional_response?.seconds ?? 0)
@@ -494,6 +498,11 @@ const Workout = ({ history }) => {
     : '__AUTH_TOKEN__';
   let assessment_config = {};
   let user_config = {};
+  const selectedOption =   getFromLocalStorage('serverEndpoint') ?? 'production';
+
+  let libData = {
+    serverEndpoint: selectedOption
+  };
 
   const [frameSize, setFrameSize] = useState({
     height: 480,
@@ -538,6 +547,7 @@ const Workout = ({ history }) => {
       connectionData={connectionData}
       requestData={requestData}
       frameSize={frameSize}
+      libData={libData}
     >
       <AppContainer
         classes={classes}

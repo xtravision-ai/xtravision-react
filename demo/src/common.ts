@@ -24,8 +24,12 @@ export const backPoseConnections: Array<[number, number]> = [
 
 // new demo feature based
 export enum Assessment {
-  SQUATS = 'SQUATS',
+  HALF_SQUAT = 'HALF_SQUAT',
+  BANDED_ALTERNATING_DIAGNOLS = 'BANDED_ALTERNATING_DIAGNOLS',
+  SIT_WALL = 'SIT_WALL',
+  PUSH_UPS = 'PUSH_UPS',
+  SIT_AND_REACH_T2 = 'SIT_AND_REACH_T2',
+  SIT_UPS_T2 = 'SIT_UPS_T2',
   RANGE_OF_MOTION = 'RANGE_OF_MOTION',
-  SIDE_FLAMINGO = 'SIDE_FLAMINGO',
-  CARDIO = "CARDIO",
+  SIDE_FLAMINGO = 'SIDE_FLAMINGO'
 }

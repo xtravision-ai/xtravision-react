@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import usePoseClassification from "../hooks/usePoseClassification";
-import { WS_URL } from "../provider/constants";
+import { WS_LOCAL_URL, WS_PROD_URL, WS_STAGING_URL, WS_URL } from "../provider/constants";
 
 export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
@@ -32,6 +32,9 @@ interface XtraVisionAssessmentAppProps {
   requestData: {
     isPreJoin?: boolean;
   };
+  libData?: {
+    serverEndpoint?: string;
+  };
 }
 
 const XtraVisionAssessmentProvider = ({
@@ -41,11 +44,21 @@ const XtraVisionAssessmentProvider = ({
   connectionData,
   requestData,
   frameSize,
+  libData,
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
     requestData?.isPreJoin ?? true
   );
+  let WS_URL = WS_PROD_URL;
+
+  let  serverEndpoint = libData?.serverEndpoint?.toLowerCase();
+
+  if ( serverEndpoint === "staging") {
+    WS_URL = WS_STAGING_URL;
+  } else if (serverEndpoint === "local") {
+    WS_URL = WS_LOCAL_URL
+  }
 
   let tempQueryParam = {}
 
