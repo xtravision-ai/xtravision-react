@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppRoute } from '../Routes';
 import { makeStyles, Theme, Box } from '@material-ui/core';
 import { Assessment } from '../common';
+import { getFromLocalStorage, saveToLocalStorageWithExpiration } from '../utils/localStorage';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -300,6 +301,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Dashboard = ({ history }) => {
   const classes = useStyles();
 
+  const serverEndpoint = getFromLocalStorage('serverEndpoint') ?? 'production';
+  const [selectedOption, setSelectedOption] = useState(serverEndpoint);
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    saveToLocalStorageWithExpiration('serverEndpoint', event.target.value)
+  };
+
   const menuItems = [
     {
       name: 'Half Squat',
@@ -365,8 +374,8 @@ const Dashboard = ({ history }) => {
                 className={classes.cardButton}
                 onClick={(e) => {
                   e.preventDefault();
-
                   history.push(AppRoute.Workout, {
+                    selectedOption,
                     assessment_name: item.assessment_name,
                   });
                 }}
@@ -375,6 +384,29 @@ const Dashboard = ({ history }) => {
               </div>
             </div>
           ))}
+        </div>
+        <div style={{
+          
+          position: 'absolute',/* Position the div absolutely within the body */
+          bottom: '20px',/* Distance from the bottom of the body */
+          right: '20px', /* Distance from the right of the body */
+          padding: '10px',/* Add some padding for content spacing */
+          // border: '1px solid #ccc',/* Add a border for visibility */
+          fontSize: '20px',
+          fontWeight: 'normal',
+        }}>
+          {/* <label>Choose an Environment:   </label> */}
+          <select  onChange={handleOptionChange} style={{
+            fontWeight: 'bold',
+            fontSize: '20px',
+            backgroundColor: 'rgb(35 226 245)',
+          }}
+          defaultValue={serverEndpoint}
+          >
+            <option value="production">Production</option>
+            <option value="staging">Staging</option>
+            <option value="local">Local</option>
+          </select>
         </div>
       </div>
     </Box>
