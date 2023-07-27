@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppRoute } from '../Routes';
 import { makeStyles, Theme, Box } from '@material-ui/core';
 import { Assessment } from '../common';
@@ -299,6 +299,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Dashboard = ({ history }) => {
   const classes = useStyles();
+  const [selectedOption, setSelectedOption] = useState('production');
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const menuItems = [
     {
@@ -349,8 +354,8 @@ const Dashboard = ({ history }) => {
                 className={classes.cardButton}
                 onClick={(e) => {
                   e.preventDefault();
-
                   history.push(AppRoute.Workout, {
+                    selectedOption,
                     assessment_name: item.assessment_name,
                   });
                 }}
@@ -359,6 +364,40 @@ const Dashboard = ({ history }) => {
               </div>
             </div>
           ))}
+        </div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          fontSize: '40px',
+          gap: '20px',
+        }}>
+          <label>
+            <input
+              type="radio"
+              value="production"
+              checked={selectedOption === 'production'}
+              onChange={handleOptionChange}
+            />
+            Production
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="staging"
+              checked={selectedOption === 'staging'}
+              onChange={handleOptionChange}
+            />
+            Staging
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="local"
+              checked={selectedOption === 'local'}
+              onChange={handleOptionChange}
+            />
+            Local
+          </label>
         </div>
       </div>
     </Box>

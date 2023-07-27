@@ -494,6 +494,10 @@ const Workout = ({ history }) => {
     : '__AUTH_TOKEN__';
   let assessment_config = {};
   let user_config = {};
+  const selectedOption = history?.location?.state?.selectedOption ?? {
+    serverEnpoint: "production"
+  }
+  let libData = selectedOption;
 
   const [frameSize, setFrameSize] = useState({
     height: 480,
@@ -538,6 +542,7 @@ const Workout = ({ history }) => {
       connectionData={connectionData}
       requestData={requestData}
       frameSize={frameSize}
+      libData={libData}
     >
       <AppContainer
         classes={classes}
