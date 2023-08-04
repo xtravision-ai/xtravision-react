@@ -1,6 +1,6 @@
 {
   "name": "xtravision-react-demo",
-  "version": "2.3.0",
+  "version": "2.4.1",
   "private": true,
   "dependencies": {
     "@hot-loader/react-dom": "npm:@hot-loader/react-dom",
