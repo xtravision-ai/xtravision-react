@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import usePoseClassification from "../hooks/usePoseClassification";
-import { WS_LOCAL_URL, WS_PROD_URL, WS_STAGING_URL, WS_URL } from "../provider/constants";
+import { WS_LOCAL_URL, WS_PROD_URL, WS_STAGING_URL } from "../provider/constants";
 
 export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
