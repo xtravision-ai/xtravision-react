@@ -1,6 +1,11 @@
 
 # @xtravision/xtravision-react- Changelog
 
+
+
+### v2.4.2: (Thu Sept 28, 2023)
+- (sdk/update) Add MSK-Screener End Point along with screener_chat_id
+
 ### v2.4.1: (Fri Aug 4, 2023)
 - (sdk/fix) removed the process variable
 
