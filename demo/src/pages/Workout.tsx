@@ -534,6 +534,7 @@ const Workout = ({ history }) => {
     assessment_config,
     user_config,
     session_id: null,
+    screener_chat_id: null
   };
 
   const requestData = {
