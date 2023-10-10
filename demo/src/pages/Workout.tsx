@@ -234,6 +234,20 @@ type AppContainerProps = {
   canvasElementRef: any;
   assessmentName: string;
 };
+const { innerHeight, innerWidth } = window;
+
+const OutOfScreenMessage = ({ msg }) => {
+  const classes = useStyles({ innerHeight, innerWidth });
+
+  if (!msg) return <></>;
+
+  return (
+    <div className={classes.correctiveFB}>
+      {msg}
+    </div>
+  );
+};
+
 const AppContainer = ({
   classes,
   history,
@@ -248,6 +262,7 @@ const AppContainer = ({
 
   const repetitionsAssessment: string[] = [Assessment.HALF_SQUAT, Assessment.PUSH_UPS, Assessment.SIT_UPS_T2];
   const timeUnderLoadAssessment: string[] = [Assessment.SIT_WALL, Assessment.SIT_AND_REACH_T2];
+  const [outOfScreenFeedbackMsg, setOutOfScreenFeedbackMsg] = useState<string | null>(null);
 
   if (lastJsonMessage?.error) {
     console.error('lastJsonMessage-error: ', lastJsonMessage.error);
@@ -268,6 +283,7 @@ const AppContainer = ({
 
     if (lastJsonMessage?.data?.additional_response?.reps?.total === 10)
       history.push(AppRoute.HomePage);
+      setOutOfScreenFeedbackMsg(lastJsonMessage?.data?.out_of_screen_feedback?.code);
   }, [lastJsonMessage]);
 
   const onCancel = () => {
@@ -480,6 +496,8 @@ const AppContainer = ({
           <></>
         )}
       </div>
+      {/* Out of Screen Feedback Text */}
+      <OutOfScreenMessage msg={outOfScreenFeedbackMsg} />
     </div>
   );
 };
