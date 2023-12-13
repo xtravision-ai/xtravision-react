@@ -55,7 +55,7 @@ export default function usePoseClassification(
     if (videoEleRef.current && pose) {
       const camera = new Camera(videoEleRef.current, {
         onFrame: async () => {
-          await pose?.send({ image: videoEleRef.current });
+          videoEleRef.current && await pose?.send({ image: videoEleRef.current });
         },
         width: 640,
         height: 480,
