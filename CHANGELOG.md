@@ -2,6 +2,8 @@
 # @xtravision/xtravision-react- Changelog
 
 
+### v2.4.3: (Wed Dec 13, 2023)
+- (sdk/fix) Avoid calling pose model while videoRef becomes null
 
 ### v2.4.2: (Thu Sept 28, 2023)
 - (sdk/update) Add MSK-Screener End Point along with screener_chat_id
