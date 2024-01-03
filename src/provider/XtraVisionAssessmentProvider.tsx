@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import usePoseClassification from "../hooks/usePoseClassification";
-import { WS_LOCAL_URL, WS_PROD_URL, WS_STAGING_URL, WS_URL } from "../provider/constants";
+import { WS_LOCAL_URL, WS_PROD_URL, WS_STAGING_URL } from "../provider/constants";
 
 export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
@@ -24,6 +24,7 @@ interface XtraVisionAssessmentAppProps {
     assessment_config?: object;
     user_config?: object;
     session_id?: string | null;
+    screener_chat_id?: string | null;
   };
   frameSize: {
     width: number;
@@ -74,11 +75,20 @@ const XtraVisionAssessmentProvider = ({
     tempQueryParam['assessment_config'] = encodeURIComponent(`${JSON.stringify(connectionData.assessment_config)}`);
   }
 
+  let urlPath = `assessment/fitness/${connectionData.assessment_name}`
+
+  // IMP: For MSK-Screening App
+  // use for MSK screening app
+  tempQueryParam['screener_chat_id'] =  connectionData.screener_chat_id
+  if (connectionData.screener_chat_id) {
+    urlPath = `msk_screener/${connectionData.assessment_name}`
+  }
+
   // IMP: set only once  
   const [queryParams] = useState(tempQueryParam)
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(
-    `${WS_URL}/assessment/fitness/${connectionData.assessment_name}`,
+    `${WS_URL}/${urlPath}`,
     {
       queryParams: queryParams,
       shouldReconnect: (e) => true, // will attempt to reconnect on all close events

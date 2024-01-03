@@ -24,9 +24,7 @@ export default function usePoseClassification(
   },
 ) {
   let pose: any;
-  const medpipeURL =
-    process.env.REACT_APP_MEDIAPIPE_CLOUDFRONT_URL ??
-    `https://cdn.jsdelivr.net/npm/@mediapipe/pose`;
+  const medpipeURL = `https://cdn.jsdelivr.net/npm/@mediapipe/pose`;
   const poseOptions = {
     modelComplexity: 2,
     smoothLandmarks: true,
@@ -57,7 +55,7 @@ export default function usePoseClassification(
     if (videoEleRef.current && pose) {
       const camera = new Camera(videoEleRef.current, {
         onFrame: async () => {
-          await pose?.send({ image: videoEleRef.current });
+          videoEleRef.current && await pose?.send({ image: videoEleRef.current });
         },
         width: 640,
         height: 480,
@@ -115,7 +113,7 @@ export default function usePoseClassification(
       tempKeyPointsRef.current = {};
       if (!_.isEmpty(keyPoints) && !_.isUndefined(isEduScreen)) {
         // WS SEND Kps -> 1s
-        const timestamp= Date.now();
+        const timestamp = Date.now();
         sendJsonMessage({
           timestamp,
           user_keypoints: keyPoints,
@@ -126,7 +124,7 @@ export default function usePoseClassification(
         });
 
         // raise event
-        XtraVisionEventEmitter.emit('onUserKeyPoints', {timestamp, keyPoints})
+        XtraVisionEventEmitter.emit('onUserKeyPoints', { timestamp, keyPoints })
       }
     }, 1000);
 

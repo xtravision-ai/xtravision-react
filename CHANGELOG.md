@@ -1,6 +1,16 @@
 
 # @xtravision/xtravision-react- Changelog
 
+
+### v2.4.3: (Wed Dec 13, 2023)
+- (sdk/fix) Avoid calling pose model while videoRef becomes null
+
+### v2.4.2: (Thu Sept 28, 2023)
+- (sdk/update) Add MSK-Screener End Point along with screener_chat_id
+
+### v2.4.1: (Fri Aug 4, 2023)
+- (sdk/fix) removed the process variable
+
 ### v2.4.0: (Thu Jul 27, 2023)
 - (sdk/update) Add provision to change url: prod/staging/local
 - (DemoApp/update) Add provision to change url: prod/staging/local
