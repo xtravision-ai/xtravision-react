@@ -13,7 +13,7 @@ yarn bootstrap
 # Now jump into demo folder to start testing
 cd demo 
 ```
-(Assessment Setup) Do the below changes in AssessmentPage.tx manually (demo/src/pages/Workout.tsx):  
+(Assessment Setup) Do the below changes in Workout.tx manually (demo/src/pages/Workout.tsx):  
 ```react
   // Your Auth Token
   const authToken ="_AUTH_TOKEN_";
