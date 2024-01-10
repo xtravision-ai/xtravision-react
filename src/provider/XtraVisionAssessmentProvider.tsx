@@ -1,7 +1,8 @@
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import usePoseClassification from "../hooks/usePoseClassification";
 import { WS_LOCAL_URL, WS_PROD_URL, WS_STAGING_URL } from "../provider/constants";
+import _ from "lodash";
 
 export interface IXtraVisionAssessmentContext {
   lastJsonMessage: JSON;
@@ -35,6 +36,7 @@ interface XtraVisionAssessmentAppProps {
   };
   libData?: {
     serverEndpoint?: string;
+    sendDataFlag?: boolean
   };
 }
 
@@ -53,6 +55,17 @@ const XtraVisionAssessmentProvider = ({
   );
   let WS_URL = WS_PROD_URL;
 
+  const [internalLibVariable, setInternalLibVariable] = useState(libData);
+
+  useEffect(() => {
+    setInternalLibVariable(libData);
+  }, [libData]);
+
+  let sendDataFlag = true
+  if (internalLibVariable && !_.isUndefined(internalLibVariable.sendDataFlag)){
+    sendDataFlag = internalLibVariable.sendDataFlag
+  }
+  
   let  serverEndpoint = libData?.serverEndpoint?.toLowerCase();
 
   if ( serverEndpoint === "staging") {
@@ -109,6 +122,7 @@ const XtraVisionAssessmentProvider = ({
     isPreJoin,
     // frame data
     frameSize,
+    sendDataFlag
   );
 
   return (

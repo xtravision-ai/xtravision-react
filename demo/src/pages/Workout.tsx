@@ -517,10 +517,31 @@ const Workout = ({ history }) => {
   let assessment_config = {};
   let user_config = {};
   const selectedOption =   getFromLocalStorage('serverEndpoint') ?? 'production';
+  const [libData, setLibData] = useState({
+    // serverEndpoint: selectedOption,
+    // sendDataFlag: true,
+  });
 
-  let libData = {
-    serverEndpoint: selectedOption
-  };
+  // IMP:  If you want to send to server after specific condition then take reference from below code
+  // const [libData, setLibData] = useState({
+  //   serverEndpoint: selectedOption,
+  //   sendDataFlag: false,
+  // });
+
+  // useEffect(() => {
+  //   // Connection established with server successfully, but data sent after 10 seconds
+  //   if (!libData.sendDataFlag) {
+  //     const timeoutId = setTimeout(() => {
+  //       setLibData((prevLibData) => ({
+  //         ...prevLibData,
+  //         sendDataFlag: true,
+  //       }));
+  //     }, 10 * 1000);
+
+  //     // Clean up the timeout to avoid memory leaks
+  //     return () => clearTimeout(timeoutId);
+  //   }
+  // }, [libData]);
 
   const [frameSize, setFrameSize] = useState({
     height: 480,
