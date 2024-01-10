@@ -1,10 +1,9 @@
-import _ from 'lodash';
-import { Camera } from '@mediapipe/camera_utils';
-import { Pose } from '@mediapipe/pose';
-import { useCallback, useEffect, useRef } from 'react';
+import _ from "lodash";
+import { Camera } from "@mediapipe/camera_utils";
+import { Pose } from "@mediapipe/pose";
+import { useCallback, useEffect, useRef } from "react";
 
-import XtraVisionEventEmitter from './../provider/XtraVisionEventEmitter'
-
+import XtraVisionEventEmitter from "./../provider/XtraVisionEventEmitter";
 
 declare global {
   interface Window {
@@ -19,9 +18,10 @@ export default function usePoseClassification(
   sendJsonMessage: (msg: any) => void,
   isEduScreen?: boolean,
   frameSize?: {
-    width: number,
-    height: number,
+    width: number;
+    height: number;
   },
+  sendDataFlag = true // if this flag is false then data will not send to server
 ) {
   let pose: any;
   const medpipeURL = `https://cdn.jsdelivr.net/npm/@mediapipe/pose`;
@@ -48,14 +48,15 @@ export default function usePoseClassification(
     pose.setOptions(poseOptions);
     pose.onResults(resultsCallback);
 
-    console.log('Model loaded');
+    console.log("Model loaded");
   }, []);
 
   const startPoseModel = useCallback(() => {
     if (videoEleRef.current && pose) {
       const camera = new Camera(videoEleRef.current, {
         onFrame: async () => {
-          videoEleRef.current && await pose?.send({ image: videoEleRef.current });
+          videoEleRef.current &&
+            (await pose?.send({ image: videoEleRef.current }));
         },
         width: 640,
         height: 480,
@@ -68,8 +69,8 @@ export default function usePoseClassification(
     window?.stream?.getTracks()?.forEach((track: any) => track.stop());
 
     if (videoEleRef.current === null) {
-      return
-    };
+      return;
+    }
 
     const stream = videoEleRef.current.srcObject as MediaStream;
     stream?.getTracks()?.forEach((track) => track.stop());
@@ -85,7 +86,6 @@ export default function usePoseClassification(
       tempKeyPointsRef.current[Date.now()] = { landmarks };
       drawLandmarksHandler(landmarks);
     }
-
   }, []);
 
   // start/stop pose model on `isCamOn`
@@ -111,7 +111,11 @@ export default function usePoseClassification(
     interval = setInterval(() => {
       const keyPoints = Object.assign(tempKeyPointsRef.current, {});
       tempKeyPointsRef.current = {};
-      if (!_.isEmpty(keyPoints) && !_.isUndefined(isEduScreen)) {
+      if (
+        !_.isEmpty(keyPoints) &&
+        !_.isUndefined(isEduScreen) &&
+        sendDataFlag
+      ) {
         // WS SEND Kps -> 1s
         const timestamp = Date.now();
         sendJsonMessage({
@@ -124,24 +128,27 @@ export default function usePoseClassification(
         });
 
         // raise event
-        XtraVisionEventEmitter.emit('onUserKeyPoints', { timestamp, keyPoints })
+        XtraVisionEventEmitter.emit("onUserKeyPoints", {
+          timestamp,
+          keyPoints,
+        });
       }
     }, 1000);
 
     return () => {
       cleanUp();
     };
-  }, [isCamOn, sendJsonMessage, isEduScreen]);
+  }, [isCamOn, sendJsonMessage, isEduScreen, sendDataFlag]);
 
   // draw landmarks
   const drawLandmarksHandler = (landmarks: any) => {
     // no need to draw anything
     if (!canvasEleRef || !canvasEleRef.current) {
-      return
+      return;
     }
 
     const canvasEl = canvasEleRef.current;
-    const ctx = canvasEl?.getContext('2d');
+    const ctx = canvasEl?.getContext("2d");
 
     if (canvasEl && ctx) {
       canvasEl.height = canvasEl.clientHeight;
@@ -157,99 +164,99 @@ export default function usePoseClassification(
       const l_eye = {
         x: Math.floor(landmarks[2]?.x * width),
         y: Math.floor(landmarks[2]?.y * height),
-        key: 'l_eye',
+        key: "l_eye",
       };
       const r_eye = {
         x: Math.floor(landmarks[5]?.x * width),
         y: Math.floor(landmarks[5]?.y * height),
-        key: 'r_eye',
+        key: "r_eye",
       };
       const l_mouth = {
         x: Math.floor(landmarks[9]?.x * width),
         y: Math.floor(landmarks[9]?.y * height),
-        key: 'l_mouth',
+        key: "l_mouth",
       };
       const l_shoulder = {
         x: Math.floor(landmarks[11]?.x * width),
         y: Math.floor(landmarks[11]?.y * height),
-        key: 'l_shoulder',
+        key: "l_shoulder",
       };
       const r_shoulder = {
         x: Math.floor(landmarks[12]?.x * width),
         y: Math.floor(landmarks[12]?.y * height),
-        key: 'r_shoulder',
+        key: "r_shoulder",
       };
       const l_elbow = {
         x: Math.floor(landmarks[13]?.x * width),
         y: Math.floor(landmarks[13]?.y * height),
-        key: 'l_elbow',
+        key: "l_elbow",
       };
       const r_elbow = {
         x: Math.floor(landmarks[14]?.x * width),
         y: Math.floor(landmarks[14]?.y * height),
-        key: 'r_elbow',
+        key: "r_elbow",
       };
       const l_wrist = {
         x: Math.floor(landmarks[15]?.x * width),
         y: Math.floor(landmarks[15]?.y * height),
-        key: 'l_wrist',
+        key: "l_wrist",
       };
       const r_wrist = {
         x: Math.floor(landmarks[16]?.x * width),
         y: Math.floor(landmarks[16]?.y * height),
-        key: 'r_wrist',
+        key: "r_wrist",
       };
       const l_hip = {
         x: Math.floor(landmarks[23]?.x * width),
         y: Math.floor(landmarks[23]?.y * height),
-        key: 'l_hip',
+        key: "l_hip",
       };
       const r_hip = {
         x: Math.floor(landmarks[24]?.x * width),
         y: Math.floor(landmarks[24]?.y * height),
-        key: 'r_hip',
+        key: "r_hip",
       };
       const l_knee = {
         x: Math.floor(landmarks[25]?.x * width),
         y: Math.floor(landmarks[25]?.y * height),
-        key: 'l_knee',
+        key: "l_knee",
       };
       const r_knee = {
         x: Math.floor(landmarks[26]?.x * width),
         y: Math.floor(landmarks[26]?.y * height),
-        key: 'r_knee',
+        key: "r_knee",
       };
       const l_ankle = {
         x: Math.floor(landmarks[27]?.x * width),
         y: Math.floor(landmarks[27]?.y * height),
-        key: 'l_ankle',
+        key: "l_ankle",
       };
       const r_ankle = {
         x: Math.floor(landmarks[28]?.x * width),
         y: Math.floor(landmarks[28]?.y * height),
-        key: 'r_ankle',
+        key: "r_ankle",
       };
       // custom
       const neck = {
         x: (l_shoulder.x + r_shoulder.x) / 2,
         y: (l_shoulder.y + l_mouth.y) / 1.8,
-        key: 'neck',
+        key: "neck",
       };
       const pelvis = {
         x: (l_hip.x + r_hip.x) / 2,
         y: (l_hip.y + l_hip.y) / 2.1,
-        key: 'pelvis',
+        key: "pelvis",
       };
       const c_back = {
         x: (l_shoulder.x + r_shoulder.x) / 2,
         y: (neck.y + pelvis.y) / 2.1,
-        key: 'c_back',
+        key: "c_back",
       };
 
       // draw connectors
       const gradLn = ctx.createLinearGradient(40, 210, 460, 290);
-      gradLn.addColorStop(0, '#00B0FF');
-      gradLn.addColorStop(1, '#18FFFF');
+      gradLn.addColorStop(0, "#00B0FF");
+      gradLn.addColorStop(1, "#18FFFF");
 
       ctx.beginPath();
       // ctx.moveTo(neck.x, neck.y);
@@ -299,7 +306,7 @@ export default function usePoseClassification(
 
       ctx.lineWidth = 10;
       ctx.strokeStyle = gradLn;
-      ctx.lineCap = 'round';
+      ctx.lineCap = "round";
       ctx.stroke();
       ctx.closePath();
 
@@ -324,7 +331,7 @@ export default function usePoseClassification(
         ctx.beginPath();
         ctx.arc(el.x, el.y, 10, 0, 2 * Math.PI, false);
         ctx.lineWidth = 5;
-        ctx.strokeStyle = '#FFFFFF';
+        ctx.strokeStyle = "#FFFFFF";
         ctx.stroke();
         ctx.closePath();
       });
