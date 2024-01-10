@@ -2,6 +2,9 @@
 # @xtravision/xtravision-react- Changelog
 
 
+### v2.5.0: (Wed Jan 10, 2024)
+- Implemented the capability to grant control to the client app, enabling it to determine when the SDK will send data to the XtraVision Server.
+
 ### v2.4.3: (Wed Dec 13, 2023)
 - (sdk/fix) Avoid calling pose model while videoRef becomes null
 
