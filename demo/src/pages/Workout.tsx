@@ -260,7 +260,7 @@ const AppContainer = ({
   const { lastJsonMessage, isCamOn, setIsCamOn, isPreJoin, setIsPreJoin } =
     useXtraVisionAssessmentContext();
 
-  const repetitionsAssessment: string[] = [Assessment.HALF_SQUAT, Assessment.PUSH_UPS, Assessment.SIT_UPS_T2];
+  const repetitionsAssessment: string[] = [Assessment.SQUATS, Assessment.HALF_SQUAT, Assessment.PUSH_UPS, Assessment.SIT_UPS_T2];
   const timeUnderLoadAssessment: string[] = [Assessment.SIT_WALL, Assessment.SIT_AND_REACH_T2];
   const [outOfScreenFeedbackMsg, setOutOfScreenFeedbackMsg] = useState<string | null>(null);
 

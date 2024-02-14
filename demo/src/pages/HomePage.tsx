@@ -311,8 +311,8 @@ const Dashboard = ({ history }) => {
 
   const menuItems = [
     {
-      name: 'Half Squat',
-      assessment_name: Assessment.HALF_SQUAT,
+      name: 'Squats',
+      assessment_name: Assessment.SQUATS,
       backgroundImage: `url('/Xtra Cards/sa.jpg')`,
     },
     {
