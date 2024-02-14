@@ -57,7 +57,7 @@ const { lastJsonMessage, isCamOn, setIsCamOn } = useXtraVisionAssessmentContext(
 
 ```
 
-- wrap the component in the context provider and pass the results from the previous context:
+- wrap your component in the xtravision context provider and pass the results from the previous context:
 
 ```javascript
     <XtraVisionAssessmentProvider
