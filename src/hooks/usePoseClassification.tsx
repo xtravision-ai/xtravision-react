@@ -21,7 +21,11 @@ export default function usePoseClassification(
     width: number;
     height: number;
   },
-  sendDataFlag = true // if this flag is false then data will not send to server
+  // if this flag is false then data will not send to server
+  sendDataFlag = true, 
+  // IMP: Sometimes, assessment specific data is required along with WS data. 
+  // This data is dynamic. Append such information in this object and it will send automatically
+  wsEventData?: any
 ) {
   let pose: any;
   const medpipeURL = `https://cdn.jsdelivr.net/npm/@mediapipe/pose`;
@@ -111,21 +115,32 @@ export default function usePoseClassification(
     interval = setInterval(() => {
       const keyPoints = Object.assign(tempKeyPointsRef.current, {});
       tempKeyPointsRef.current = {};
+
+      // console.log('---11111- eventData', {eventData})
+
       if (
         !_.isEmpty(keyPoints) &&
         !_.isUndefined(isEduScreen) &&
         sendDataFlag
       ) {
+        
         // WS SEND Kps -> 1s
         const timestamp = Date.now();
-        sendJsonMessage({
+
+        let objectToSend = {
           timestamp,
           user_keypoints: keyPoints,
           isprejoin: isEduScreen,
           // frame data
           frame_width: _.isUndefined(frameSize) ? 640 : frameSize.width,
-          frame_height: _.isUndefined(frameSize) ? 480 : frameSize.height,
-        });
+          frame_height: _.isUndefined(frameSize) ? 480 : frameSize.height
+        }
+        
+        if (_.isObject(wsEventData)) {
+          objectToSend = {...objectToSend, ...wsEventData}
+        }
+
+        sendJsonMessage(objectToSend);
 
         // raise event
         XtraVisionEventEmitter.emit("onUserKeyPoints", {
@@ -138,7 +153,7 @@ export default function usePoseClassification(
     return () => {
       cleanUp();
     };
-  }, [isCamOn, sendJsonMessage, isEduScreen, sendDataFlag]);
+  }, [isCamOn, sendJsonMessage, isEduScreen, sendDataFlag, wsEventData]);
 
   // draw landmarks
   const drawLandmarksHandler = (landmarks: any) => {

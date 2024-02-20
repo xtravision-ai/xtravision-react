@@ -38,6 +38,8 @@ interface XtraVisionAssessmentAppProps {
     serverEndpoint?: string;
     sendDataFlag?: boolean
   };
+  // any extra data need to send along with WS-data then add here
+  eventData?: any;
 }
 
 const XtraVisionAssessmentProvider = ({
@@ -48,6 +50,7 @@ const XtraVisionAssessmentProvider = ({
   requestData,
   frameSize,
   libData,
+  eventData = {}
 }: XtraVisionAssessmentAppProps) => {
   const [isCamOn, setIsCamOn] = useState<boolean>(false);
   const [isPreJoin, setIsPreJoin] = useState<boolean>(
@@ -56,7 +59,7 @@ const XtraVisionAssessmentProvider = ({
   let WS_URL = WS_PROD_URL;
 
   const [internalLibVariable, setInternalLibVariable] = useState(libData);
-
+  
   useEffect(() => {
     setInternalLibVariable(libData);
   }, [libData]);
@@ -114,6 +117,8 @@ const XtraVisionAssessmentProvider = ({
     },
   );
 
+  let wsEventData = eventData;
+
   usePoseClassification(
     videoElementRef,
     canvasElementRef,
@@ -122,7 +127,8 @@ const XtraVisionAssessmentProvider = ({
     isPreJoin,
     // frame data
     frameSize,
-    sendDataFlag
+    sendDataFlag,
+    wsEventData
   );
 
   return (
