@@ -267,7 +267,7 @@ const AppContainer = ({
   if (lastJsonMessage?.error) {
     console.error('lastJsonMessage-error: ', lastJsonMessage.error);
   } else {
-    console.log('lastJsonMessage: ', lastJsonMessage?.data);
+    // console.log('lastJsonMessage: ', lastJsonMessage?.data);
 
     // const additional_response = lastJsonMessage?.data?.additional_response;
     // console.log(additional_response);
@@ -518,7 +518,7 @@ const Workout = ({ history }) => {
   let user_config = {};
   const selectedOption =   getFromLocalStorage('serverEndpoint') ?? 'production';
   const [libData, setLibData] = useState({
-    // serverEndpoint: selectedOption,
+    serverEndpoint: selectedOption,
     // sendDataFlag: true,
   });
 
@@ -547,6 +547,28 @@ const Workout = ({ history }) => {
     height: 480,
     width: 640,
   });
+
+  // // use this event for eye-hand coordination assessment
+  // const [eventData, SetEventData] = useState<any>(
+  //   {'p1': 1, 'p2': [1,2], 'p3': {'a':'a', b: 'b'}}
+  // )
+
+  // useEffect(() => {
+  //   let  i =1
+  //       const timeoutId = setInterval(() => {
+  //         SetEventData((prevData) => {
+  //           const newData = { 'p1' : ++i, 'p2': [2], 'p3': {'a':'a1', b: 'b2'}};
+  //           return {...prevData, ...newData};
+  //         });
+          
+  //       }, 5 * 1000);
+  
+  //       // Clean up the timeout to avoid memory leaks
+  //       return () => clearTimeout(timeoutId);
+      
+  //   }, []);
+
+
 
   useEffect(() => {
     const handleReSize = () => {
@@ -588,6 +610,7 @@ const Workout = ({ history }) => {
       requestData={requestData}
       frameSize={frameSize}
       libData={libData}
+      // eventData={eventData}
     >
       <AppContainer
         classes={classes}
